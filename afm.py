@@ -8,6 +8,8 @@ from scipy.special import sph_harm
 import vec3
 import bsphere
 
+import braggvectors
+
 from pylab import figure, plot, show, savefig, close
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -20,8 +22,12 @@ import hashlib
 # and crystal parameters that define C,S sums
 def khash( N, nafm, Nr, kin, kout, kipol):
     kh = hashlib.sha224( str(kin) + str(kout) + str(kipol) ).hexdigest() 
-    tag = '%d_%d_%d_%d_%s'%(N, nafm, Nr, kh)
+    tag = '%d_%d_%d_%s'%(N, nafm, Nr, kh)
     return tag
+
+from scipy import stats
+from uncertainties import unumpy, ufloat
+
 
 
 verbose = False
@@ -29,7 +35,7 @@ verbose = False
 class crystal():
     """Contains information about crystal. 
        Used to calculate scattering of light"""
-    def __init__(self, latsize, afmsize, spacing):
+    def __init__(self, latsize, afmsize, spacing, kin_out=None):
         # crystal settings
         self.latsize = latsize # number of lattice sites on the side
         self.afmsize = afmsize # number of lattice sites with afm
@@ -39,6 +45,23 @@ class crystal():
         self.x, self.y, self.z = np.mgrid[ 0:self.latsize, \
                                            0:self.latsize, \
                                            0:self.latsize ]
+
+        # default values for scattering parameters
+        self.set_detuning( 0. )
+        self.set_pbragg( 250. )
+        self.lBragg = braggvectors.l671
+        self.sunits( ) 
+
+        if kin_out == None:
+            self.set_kvectors( braggvectors.kin, braggvectors.kout ,\
+                               braggvectors.kipol)
+        else:
+            self.set_kvectors( kin_out[0], kin_out[1],\
+                               braggvectors.kipol)
+        
+        self.set_v0( [20.,20.,20.] ) 
+        
+        
 
         # crystal visualization settings
         self.fig = None
@@ -69,7 +92,11 @@ class crystal():
         self.font_size = 20
         #---scatter options---
         self.point_size = 216
-    
+   
+ 
+    def sunits(self ): 
+        # lBragg is the wavelength of the Bragg probe in nm
+        self.sunits = 9. * (self.lBragg**2.) / 16 / (np.pi**2) 
         
 
     def set_pbragg( self, pbragg):
@@ -78,10 +105,13 @@ class crystal():
         Isat = 5.21 # mW/cm^2
         self.isat = 2.*(pbragg/1000.) / np.pi / (w0**2) / Isat
 
-    def set_kvectors( self, kin, kout, kpol):
+    def set_kvectors( self, kin, kout, kipol):
         self.kin = kin
         self.kout = kout
-        self.kpol = kpol
+        self.kipol = kipol
+        self.pol()
+        self.Crandom = None
+        self.Srandom = None
 
     def set_v0( self, v0):
         self.v0 = v0
@@ -91,6 +121,10 @@ class crystal():
 
     def set_detuning( self, det):
         self.det = det
+        self.d12 = 76./5.9 
+        # det is with respect to in between 1 and 2 
+        self.det2 = self.det + self.d12/2.
+        self.det1 = self.det - self. d12/2.
 
 
     def shuffle_spins(self):
@@ -140,6 +174,7 @@ class crystal():
                            color = 'blue', marker='o', s=self.point_size)
 
         self.axes.scatter( spindn[0], spindn[1], spindn[2],
+                           color = 'blue', marker='o', s=self.point_size)
     def show(self):
         self.make_plot()
         if self.fig:
@@ -150,7 +185,7 @@ class crystal():
         try:
           kin = self.kin
           kout = self.kout
-          kpol = self.kpol
+          kipol = self.kipol
         except Exception as e:
           print "k vectors have not been defined in the crystal"
           print "program will stop"
@@ -212,7 +247,7 @@ class crystal():
         try:
           kin = self.kin
           kout = self.kout
-          kpol = self.kpol
+          kipol = self.kipol
         except Exception as e:
           print "k vectors have not been defined in the crystal"
           print "program will stop"
@@ -243,7 +278,7 @@ class crystal():
         try:
           kin = self.kin
           kout = self.kout
-          kpol = self.kpol
+          kipol = self.kipol
         except Exception as e:
           print "k vectors have not been defined in the crystal"
           print "program will stop"
@@ -333,7 +368,7 @@ class crystal():
         self.dwtof = dw
         return self.dwtof
 
-    def alpha_beta( self, det):
+    def alpha_beta( self):
         try:
           det = self.det
         except Exception as e:
@@ -342,13 +377,8 @@ class crystal():
           print e
           exit()
 
-        # Spacing between states 1 and 2 in units of the linewidth
-        d12 = 76./5.9 
-        # det is with respect to in between 1 and 2 
-        det2 = det + d12/2.
-        det1 = det - d12/2.
-        f1 = -1. / ( 2 * det1 + 1j)
-        f2 = -1. / ( 2 * det2 + 1j)
+        f1 = -1. / ( 2 * self.det1 + 1j)
+        f2 = -1. / ( 2 * self.det2 + 1j)
 
         self.alpha = 1/4. * np.abs( f1+f2 )**2.
         self.beta  = np.abs( f1-f2  )**2.
@@ -359,7 +389,7 @@ class crystal():
             print "\talpha = ", self.alpha
             print "\tbeta = ", self.beta
 
-    def alpha_beta_Pbroad( self, det, sat):
+    def alpha_beta_Pbroad( self):
         try:
           det = self.det
         except Exception as e:
@@ -375,13 +405,8 @@ class crystal():
           print e
           exit()
 
-        # Spacing between states 1 and 2 in units of the linewidth
-        d12 = 76./5.9 
-        # det is with respect to in between 1 and 2 
-        det2 = det + d12/2.
-        det1 = det - d12/2.
-        f1 = -1. / ( 2 * det1/np.sqrt(1+isat) + 1j)
-        f2 = -1. / ( 2 * det2/np.sqrt(1+isat) + 1j)
+        f1 = -1. / ( 2 * self.det1/np.sqrt(1+isat) + 1j)
+        f2 = -1. / ( 2 * self.det2/np.sqrt(1+isat) + 1j)
 
         self.alpha_Pbroad = 1/4. * np.abs( f1+f2 )**2.
         self.beta_Pbroad  = np.abs( f1-f2  )**2.
@@ -392,6 +417,51 @@ class crystal():
             print "\talpha = ", self.alpha_Pbroad
             print "\tbeta = ", self.beta_Pbroad
         return self.alpha_Pbroad, self.beta_Pbroad
+
+    def coherent(self):
+        '''Returns fraction of scattering that is elastic'''
+        try:
+          det = self.det
+        except Exception as e:
+          print "detuning has not been defined in the crystal"
+          print "program will stop"
+          print e
+          exit()
+        try:
+          isat = self.isat 
+        except Exception as e:
+          print "isat (from Pbragg) has not been defined in the crystal"
+          print "program will stop"
+          print e
+          exit()
+
+        # Saturation parameter
+        SP = 2. * isat * ( 0.5 / (1.+4.*(self.det1**2)) + 0.5 / (1.+4.*(self.det2**2))) 
+        self.coh =  1. / (1. + SP)
+        return self.coh
+
+    def ODfactor(self):
+
+        #Average distance for photon to travel to outside of sample (nm)
+        dz = self.latsize * self.a / 2. 
+ 
+        #On-resonace cross section of single atom (nm^2)
+        sigm = 3.*np.pi*(self.lBragg/2./np.pi)**2 
+
+        #Lorentzian lineshape
+        sigm = sigm * ( 0.5/ (1+4*self.det1**2) + 0.5/ (1+4*self.det2**2) ) 
+ 
+        #Density (1 per site)
+        nc = 1. / (self.a**3) 
+
+        #Optical density 
+        OD = nc * sigm * dz
+        #print "Optical density at det = %.2f --> OD = %.3f . e^(-OD) = %e" % (det,OD,np.exp(-OD)) 
+         
+        self.odfactor = np.exp(-1.*OD) 
+        return self.odfactor
+
+    ############# CRYSTAL AND MAGNETIC STRUCTURE SUMS
 
     def S( self, ki, kf ):
         if verbose and False:
@@ -442,7 +512,7 @@ class crystal():
 
 
         
-    def saveCS(Nr, C, S):
+    def saveCS(self,Nr, C, S):
         tag =  khash( self.latsize, self.afmsize, Nr, self.kin, self.kout, self.kipol) 
         try:
             CSdict = pickle.load( open(CSdictfile,"rb") ) 
@@ -453,22 +523,72 @@ class crystal():
         pickle.dump( CSdict, open(CSdictfile,"wb") ) 
     
     
-    def loadCS(nafm, Nr, kout):
+    def loadCS(self,Nr):
         tag =  khash( self.latsize, self.afmsize, Nr, self.kin, self.kout, self.kipol) 
         try:
             CSdict = pickle.load( open(CSdictfile,"rb") )
             Cr, Sr =  CSdict['C'+tag], CSdict['S'+tag] 
-            print "Loaded C, S values from pickle file:\n\t%s" % tag 
-            return Cr, Sr
+            #print "\nLoaded C, S values from pickle file:\n\t%s" % tag
+            self.Crandom = Cr
+            self.Srandom = Sr 
         except:
-            print "Error loading C, S from pickle file:\n\t%s" % tag
+            print "\nError loading C, S from pickle file:\n\t%s" % tag
             print "C,S will be calculated"
             C, S = self.CS_random( Nr)
             self.saveCS(Nr, C, S)
-    
-            return None,None
-    
- 
+            self.Crandom = C
+            self.Srandom = S
+
+        return self.Crandom,self.Srandom
+
+
+    ############# FUNCTIONS TO FACILITATE THE CREATION OF PLOTS
+
+    def dw_time( self, time): 
+        '''This function is used to plot the time dependence of the
+           Debye-Waller factor''' 
+        self.set_timeofflight(time)
+        return self.debyewaller_time() 
+
+    def sigma_incoh_det( self, Nr, det, time):
+        '''This function is used to plot the inelastic cross section 
+           dependence on detuning, and time'''
+
+        self.set_detuning(det)
+        self.set_timeofflight(time)
+        if self.Crandom == None or self.Srandom==None:
+            self.loadCS(Nr)
+        self.alpha_beta_Pbroad()
+
+        crystalpart = self.alpha_Pbroad * ( self.x.size )
+
+        magneticpart = self.beta_Pbroad * ( self.x.size )
+
+        vals =  self.sunits * self.polsum \
+               * ( crystalpart + magneticpart)
+        return ufloat( vals, 0. ) 
+
+    def sigma_coh_det( self, Nr, det, time):
+        '''This function is used to plot the elastic cross section 
+           dependence on detuning, and time'''
+
+        self.set_detuning(det)
+        self.set_timeofflight(time)
+        if self.Crandom == None or self.Srandom==None:
+            self.loadCS(Nr)
+        self.alpha_beta_Pbroad()
+       
+        crystalpart = self.alpha_Pbroad * ( self.x.size + \
+                      self.debyewaller_time() * self.Crandom * \
+                      self.coherent() * self.ODfactor() )
+
+        magneticpart = self.beta_Pbroad * ( self.x.size + \
+                      self.debyewaller_time() * self.Srandom * \
+                      self.coherent() * self.ODfactor() )
+
+        vals = self.sunits * self.polsum \
+               * ( crystalpart + magneticpart)
+        return ufloat( np.mean(vals), stats.sem(vals) ) 
 
             
 
