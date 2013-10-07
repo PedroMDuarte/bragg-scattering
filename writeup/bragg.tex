@@ -1,0 +1,323 @@
+\documentclass[11pt,letter]{article}
+\usepackage[top=0.65in,bottom=0.9in,left=0.85in,right=0.85in]{geometry}
+
+%\def\baselinestretch{1.25}
+\def\baselinestretch{1.0}
+
+\usepackage[greek, english]{babel}
+\usepackage{multicol}
+
+% The use of the times package forces the use of the type-1 times
+% roman font, but the times roman font does not look nice.
+% Besides the times roman font still does not print correctly on
+% the dopy printer.
+%\usepackage{times}
+
+
+\usepackage{fancyhdr}
+\usepackage[dvips]{color}
+\usepackage{amsmath}
+\usepackage{bbold}
+
+\newcommand{\bv}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\Lc}{\ensuremath{L_{\mathrm{c}}}}
+\newcommand{\dsig}[1]{\ensuremath{ \frac{ d\,\sigma_{#1} }{d\,\Omega} }}
+
+\begin{document}
+
+\section{ Calculation of scattering cross section}
+
+The differential scattering cross section has two componets, one which is due
+to elastic scattering of photons (the delta-function peak in the fluorescence
+spectrum) and the other one which is due to inelastic scattering.   
+
+The elastic part is derived in Ted's paper:
+\begin{equation}
+\begin{split}
+\dsig{E} =&   \frac{9}{4k^{2}} 
+              \sum_{\lambda_{f}}  | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} ) 
+                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*}  ) 
+                                 |^{2} \\
+          &   \times \sum_{ \sigma,\sigma', j, j' } [ \langle \hat{n}_{j\sigma}\hat{n}_{j'\sigma'}
+              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle 
+              \bar{f}_{\sigma} {\bar{f}_{\sigma'}}^{*} ] 
+\end{split}
+\end{equation}
+
+The following notation is used: 
+
+\begin{center}
+  \begin{tabular}{ r  l  }
+    $k$ & Magnitude of $k$-vector for incoming photon,  $\frac{2\pi}{671\,\mathrm{nm}}$   \\ 
+    $\bv{e}_{\bv{k}_{f} \lambda_{f}}$  & Polarization vector of outgoing photon  \\ 
+    $\bv{e}_{\bv{k}_{i} \lambda_{i}}$  & Polarization vector of incoming photon  \\ 
+    $\bv{e}_{m}$  & Polarization that couples to optical transition  \\ 
+    $\hat{n}_{j\sigma}$ & Number operator at site $j$ for atoms in state $\sigma$   \\ 
+    $\bv{K}$ &  Momentum transfer of light scattering, $\bv{k}_{f} - \bv{k}_{i}$  \\ 
+    $\bar{f}_{\sigma}$ & Detuning dependent portion of the scattering amplitude, $\frac{\Gamma/2}{\Delta_{\sigma} + i \Gamma/2 }$ \\ 
+  \end{tabular}
+\end{center}
+
+In addition to the elastic part, the inelastic scattering cross section for the
+sample has to be considered.   This can be obtained from the cross section of a
+single atom and and then multiplied by the number of atoms in the sample.
+Interference effects are not present for the inelastic component.   
+
+\begin{equation}
+\begin{split}
+\dsig{I} =&  \frac{9}{4k^{2}} 
+              \sum_{\lambda_{f}}  | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} ) 
+                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*}  ) 
+                                 |^{2} 
+              \sum_{j\sigma}
+                     \frac{\langle \hat{n}_{\sigma} \rangle}{1+ 4\Delta_{\sigma}^{2} + 2 I / I_{\mathrm{sat}} } 
+\end{split}
+\end{equation}
+
+Finally we abbreviate the sum over final polarizations as 
+\begin{equation} 
+ \Lambda =       \sum_{\lambda_{f}}  | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} ) 
+                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*}  ) 
+                                 |^{2}
+\end{equation}
+to obtain 
+
+\begin{equation}
+\begin{split}
+\dsig{E} =&   \frac{9\Lambda}{4k^{2}} 
+               \sum_{ \sigma,\sigma', j, j' } [ \langle \hat{n}_{j\sigma}\hat{n}_{j'\sigma'}
+              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle 
+              \bar{f}_{\sigma} {\bar{f}_{\sigma'}}^{*} ] \\  
+\dsig{I} =&  \frac{9\Lambda}{4k^{2}} 
+              \sum_{j\sigma}
+                     \frac{\langle \hat{n}_{\sigma} \rangle}{1+ 4\Delta_{\sigma}^{2} + 2 I / I_{\mathrm{sat}} } 
+\end{split}
+\end{equation}
+
+\subsection{ Crystal and magnetic structure factor } 
+
+We will begin by disecting the sum that appears in the elastic cross section.   The thermal average factorizes and 
+\begin{equation}
+\begin{split}
+\langle  \hat{n}_{j\sigma}\hat{n}_{j'\sigma'} \rangle = &\, \langle (\frac{1}{2}  + \sigma\hat{S}_{zj} )( \frac{1}{2} + \sigma'\hat{S}_{j'} ) \rangle \\
+       = &\,  \frac{1}{4} + \frac{1}{2} \langle \sigma \hat{S}_{zj} \rangle +
+\frac{1}{2} \langle \sigma'\hat{S}_{zj'} \rangle + \langle \sigma\sigma'\hat{S}_{zj}\hat{S}_{zj'}
+\rangle \\
+\end{split} 
+\end{equation}
+For this last step
+\begin{center}
+  \begin{tabular}{ c  }
+    $\hat{n}_{i\uparrow} + \hat{n}_{i\downarrow} = 1$   \\ 
+    $\sigma = \pm 1$ \\
+    $\hat{S}_{zi} = \frac{1}{2}( \hat{n}_{i\uparrow} - \hat{n}_{i\downarrow} )$ 
+  \end{tabular}
+\end{center}
+We can manually perform the sums over $\sigma\sigma'$ for each of this four terms and define $\alpha$, $\beta$, and $\kappa$,
+\begin{equation}
+\begin{split}
+\frac{1}{4} \sum_{\sigma\sigma'} \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\, 
+            \frac{1}{4}(\bar{f}_{\uparrow} + \bar{f}_{\downarrow})( \bar{f}_{\uparrow}^{*} + \bar{f}_{\downarrow}^{*} ) \\
+       =&\, \frac{1}{4} | \bar{f}_{\uparrow} + \bar{f}_{\downarrow} | ^{2} \equiv \alpha
+\end{split} 
+\end{equation} 
+
+\begin{equation}
+\begin{split}
+\frac{1}{2} \sum_{\sigma\sigma'} \sigma'\bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\,  
+  \frac{1}{2} ( 
+            - \bar{f}_{\downarrow}\bar{f}_{\downarrow}^{*} 
+            + \bar{f}_{\downarrow}\bar{f}_{\uparrow}^{*} 
+            - \bar{f}_{\uparrow}\bar{f}_{\downarrow}^{*} 
+            + \bar{f}_{\uparrow}\bar{f}_{\uparrow}^{*} ) \equiv \kappa 
+\end{split} 
+\end{equation} 
+
+\begin{equation}
+\begin{split}
+\frac{1}{2} \sum_{\sigma\sigma'} \sigma \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\, 
+  \frac{1}{2} ( 
+            - \bar{f}_{\downarrow}\bar{f}_{\downarrow}^{*} 
+            - \bar{f}_{\downarrow}\bar{f}_{\uparrow}^{*} 
+            + \bar{f}_{\uparrow}\bar{f}_{\downarrow}^{*} 
+            + \bar{f}_{\uparrow}\bar{f}_{\uparrow}^{*} ) \equiv \kappa^{*}
+\end{split} 
+\end{equation} 
+
+\begin{equation}
+\begin{split}
+\sum_{\sigma\sigma'} \sigma\sigma' \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\, 
+            (\bar{f}_{\uparrow} + \bar{f}_{\downarrow})( \bar{f}_{\uparrow}^{*} + \bar{f}_{\downarrow}^{*} ) \\
+       =&\,  | \bar{f}_{\uparrow} - \bar{f}_{\downarrow} | ^{2} \equiv \beta
+\end{split} 
+\end{equation}
+
+The elastic cross section is then 
+\begin{equation}
+\begin{split}
+\dsig{E} =&   \frac{9\Lambda}{4k^{2}} 
+               \sum_{ j j' }  \langle 
+              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle 
+             \left( \alpha + \langle \hat{S}_{zj}\rangle \kappa + \langle \hat{S}_{zj'} \rangle \kappa^{*} 
+                     + \langle \hat{S}_{zj} \hat{S}_{zj'} \rangle \beta \right)   
+\end{split}
+\end{equation}
+
+\subsection{Debye-Waller factor} 
+
+The position operators $\hat{\bv{r}}_{j}$,$\hat{\bv{r}}_{j'}$  inside the exponential in the thermal average can be replaced by the position vector of the lattice sites plus a displacement operator with respect to the lattice site.   
+\begin{equation}
+\begin{split} 
+\langle e^{ i \bv{K} \cdot (  \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle = &   
+e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
+\langle e^{ i \bv{K} \cdot (  \Delta\hat{\bv{r}}_{j} - \Delta\hat{\bv{r}}_{j'} )  } \rangle \\   
+= & e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
+\langle e^{ i \bv{K} \cdot (  \Delta\hat{\bv{r}}_{j} - \Delta\hat{\bv{r}}_{j'} )  } \rangle \\ 
+= & e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
+\langle e^{ i \bv{K} \cdot  \Delta\hat{\bv{r}}_{j}} \rangle \langle    e^{ -i \bv{K} \cdot  \Delta\hat{\bv{r}}_{j'}   } \rangle \\ 
+\end{split}
+\end{equation} 
+The last step follows since the operators $\Delta\hat{\bv{r}}_{j}$ and
+$\Delta\hat{\bv{r}_{j'}}$  act on different particles.
+The equality $\langle e^{\hat{A}} \rangle = e^{\frac{1}{2} \langle \hat{A}^{2} \rangle }$ is used here, 
+which is valid for a simple harmonic osscilator where $\hat{A}$ is any linear
+combination of displacement and momentum operators of the oscillator.  This leaves us with 
+\begin{equation}
+\begin{split} 
+\langle e^{ i \bv{K} \cdot (  \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle = &   
+ e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
+ e^{ -\frac{1}{2} \langle (\bv{K} \cdot  \Delta\hat{\bv{r}}_{j})^{2} \rangle }
+ e^{ -\frac{1}{2} \langle (\bv{K} \cdot  \Delta\hat{\bv{r}}_{j'})^{2}  \rangle }  \\
+ = &  
+ e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
+ e^{ -\langle (\bv{K} \cdot  \Delta\hat{\bv{r}})^{2}  \rangle } \\
+ = &  
+ e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
+ e^{ -2W} 
+\end{split}
+\end{equation} 
+In the last step we made use of the fact that in our sample all the atoms are
+in the same harmonic oscillator state, so the expectation value is be
+independent of $j$.   The second exponential with the expectation value is the
+Debye-Waller factor, generally written as $e^{-2W}$.  Expanding the dot product inside the Debye-Waller exponential leaves us with
+\begin{equation}
+\begin{split} 
+\langle e^{ i \bv{K} \cdot (  \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle  
+ = &  
+ e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) }
+ \prod_{i=x,y,z}  e^{ - K_{i}^{2} \langle \Delta r_{i}^{2} \rangle  } 
+\end{split}
+\end{equation}
+In an isotropic lattice all three expectation values are the same and equal to  
+\begin{equation}
+\langle \Delta r_{i}^{2} \rangle = \frac{\hbar}{m\omega}\left(n+\frac{1}{2}  \right) = \frac{\lambda^{2}}{8 \pi^{2}\sqrt{V_{0}}} ( 1 + 2n) 
+\end{equation}
+so the Debye-Waller factor is 
+\begin{equation}
+e^{-2W} = \exp\left[-K^{2} \frac{\lambda^{2}}{8\pi^{2} \sqrt{V_{0}}} ( 1+2n) \right]
+\end{equation}
+In our case, where we only occupy the first band of the lattice then $n=0$, and  
+\begin{equation}
+e^{-2W} = \exp\left[-K^{2} \frac{\lambda^{2}}{8\pi^{2} \sqrt{V_{0}}} \right]
+\end{equation}
+
+\subsection{Crystal and Structure factors }
+
+Putting it all back together 
+\begin{multline}
+\dsig{E} =  \frac{9\Lambda}{4k^{2}} e^{-2W} \left(
+               \alpha \sum_{ j j' }      e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}
+            +  \kappa \sum_{ j j' } \langle \hat{S}_{zj} \rangle e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})} \right. \\
+  \left.    +  \kappa^{*} \sum_{ j j' } \langle \hat{S}_{zj'} \rangle e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}
+            +  \beta \sum_{j j'} \langle \hat{S}_{zj} \hat{S}_{zj'} \rangle e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}  \right) 
+\end{multline}
+
+The two terms in the center can be simplified by noting that as $N$ gets larger one of the sums approaches a delta-function,  
+\begin{equation}
+\sum_{j} e^{i \bv{K} \cdot \bv{R}_{j} }  =  \sum_{\bv{n} \in \mathbb{Z}^{3} } \delta \left( \bv{n} - \bv{K}\frac{a}{2\pi} \right) 
+\end{equation}
+so those two terms will be zero unless $\bv{K}$ is zero or a reciprocal lattice vector.   Even if $\bv{K}=0$ we would then be left with a sum over $\langle\hat{S}_{zj}\rangle$, which is zero in our case since we have a sample without spin imbalance.   Since we cannot shine light in or image along a lattice vector then the two terms in the center can be ignored, leaving us with 
+\begin{equation}
+\begin{split}
+\dsig{E} =&  
+             \frac{9\Lambda}{4k^{2}} e^{-2W} \left(
+               \alpha \sum_{ j j' }      e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}
+	    +  \beta \sum_{j j'} \langle \hat{S}_{zj} \hat{S}_{zj'} \rangle
+            e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}  \right) \\
+         =&
+             \frac{9\Lambda}{4k^{2}} e^{-2W} 
+             \left(
+               \alpha C(\bv{K})  
+	    +  \beta S(\bv{K})  \right)
+\end{split} 
+\end{equation}
+Where in the last step we have the defined the crystal and magnetic structure factors. 
+
+\subsection{Coherent and Incoherent scattering}
+
+\begin{equation}
+\begin{split} 
+\dsig{} = & \dsig{E} + \dsig{I}  \\
+        = &\frac{9\Lambda}{4k^{2}} 
+          \left(
+               \alpha C(\bv{K})  
+	    +  \beta S(\bv{K}) 
+            +  \sum_{j\sigma}
+                     \frac{\langle \hat{n}_{\sigma} \rangle}{1+ 4\Delta_{\sigma}^{2} + 2 I / I_{\mathrm{sat}} } 
+          \right)
+\end{split}
+\end{equation}
+ 
+\subsection{ Crystal structure factor dependence on \bv{Q}}
+
+\begin{equation}
+C(\bv{Q}) = \sum_{jk} e^{i \bv{Q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} 
+\end{equation}
+
+We can make the substitution $\bv{r}_{k} = \bv{R}_{j} -
+\bv{R}_{k}$.  For an infinite crystal, the sum over all pairs $jk$ may be replaced by the sum over all
+sites $j$ and then sum over all $\bv{r}_{k}$.
+ 
+\begin{equation}
+C(\bv{Q}) = N\sum_{k} e^{i \bv{Q} \cdot \bv{r}_{k}} 
+\end{equation}
+
+\subsection{Magnetic structure factor dependence on \bv{Q}}
+
+\begin{equation}
+S(\bv{Q}) = \sum_{jk} e^{i \bv{Q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} \langle S_{zj} S_{zk} \rangle
+\end{equation}
+
+In the zero temperature AFM state there is a staggered magnetization, such that 
+
+\begin{equation}
+\langle S_{zj}S_{zk} \rangle = e^{i \bv{q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} 
+\ \ \ \mathrm{where} \ \ \  
+\bv{q} = \frac{2\pi}{a} \left( \frac{1}{2}\, \frac{1}{2}\, \frac{1}{2} \right)
+\end{equation}
+
+At finite temperature, the staggered magnetization will have a finite correlation length \Lc, which results in 
+
+\begin{equation}
+\langle S_{zj}S_{zk} \rangle = e^{i \bv{q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} e^{-|\bv{R}_{j} -\bv{R}_{k} |/ \Lc }
+ \ \ \ \mathrm{where} \ \ \   
+\bv{q} = \frac{2\pi}{a} \left( \frac{1}{2}\, \frac{1}{2}\, \frac{1}{2} \right)
+\end{equation}
+
+\begin{equation}
+S(\bv{Q}) = \sum_{jk} e^{i (\bv{Q} + \bv{q} )\cdot (\bv{R}_{j} - \bv{R}_{k} )} e^{-|\bv{R}_{j} -\bv{R}_{k} |/ \Lc }
+\end{equation}
+
+At this point we can make the substitution $\bv{r}_{k} = \bv{R}_{j} -
+\bv{R}_{k}$.  For an infinite crystal, the sum over all pairs $jk$ may be replaced by the sum over all
+sites $j$ and then sum over all $\bv{r}_{k}$. 
+
+\begin{equation}
+S(\bv{Q}) = \sum_{jk} e^{i (\bv{Q} + \bv{q} )\cdot \bv{r}_{k} } e^{-r_{k}/ \Lc } = N \sum_{k} e^{i (\bv{Q} + \bv{q} )\cdot \bv{r}_{k} } e^{-r_{k}/ \Lc }
+\end{equation}
+
+\end{document}
+
+
+
+

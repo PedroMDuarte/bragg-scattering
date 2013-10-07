@@ -16,7 +16,11 @@ from mpl_toolkits.mplot3d import Axes3D
 # Pickle will be used to store and retrieve 
 # previously calculated C and S sums
 import cPickle as pickle
-CSdictfile = 'CSafmdict.pck'
+
+import os
+path = os.path.dirname ( os.path.abspath(__file__) )
+CSdictfile = path + '/CSafmdict.pck'
+
 import hashlib
 # A hash is created to uniquely identify a set of kvectors
 # and crystal parameters that define C,S sums
@@ -122,7 +126,8 @@ class crystal():
     def set_detuning( self, det):
         self.det = det
         self.d12 = 76./5.9 
-        # det is with respect to in between 1 and 2 
+        # det is with respect to in between 1 and 2
+        # The units are linewidths 
         self.det2 = self.det + self.d12/2.
         self.det1 = self.det - self. d12/2.
 
@@ -471,7 +476,7 @@ class crystal():
         phase = np.exp( 1j * (ki.x-kf.x)*self.x*self.a + \
                         1j * (ki.y-kf.y)*self.y*self.a + \
                         1j * (ki.z-kf.z)*self.z*self.a )
-        sfactor = np.abs( np.sum( phase*self.spin ) )**2
+        sfactor = np.abs( np.sum( phase*self.spin ) )**2 - np.sum( np.abs(phase*self.spin)**2)
         if verbose:
             print "\tS = ", sfactor
         return sfactor
@@ -485,7 +490,7 @@ class crystal():
         phase = np.exp( 1j * (ki.x-kf.x)*self.x*self.a + \
                         1j * (ki.y-kf.y)*self.y*self.a + \
                         1j * (ki.z-kf.z)*self.z*self.a )
-        cfactor = np.abs( np.sum( phase ) )**2
+        cfactor = np.abs( np.sum( phase ) )**2 - np.sum( np.abs(phase)**2)
         if verbose:
             print "\tC = ", cfactor
         return cfactor
@@ -541,8 +546,46 @@ class crystal():
 
         return self.Crandom,self.Srandom
 
+    def loadCSlcorr(self, Nsize, Lc):
+        x, y, z = np.mgrid[ 0:Nsize, \
+                            0:Nsize, \
+                            0:Nsize ]
+        x = x - Nsize/2
+        y = y - Nsize/2
+        z = z - Nsize/2
+
+        Ntot = len(x.flat) 
+        
+        # S factor
+        Q = (self.kout - self.kin)
+        q = (braggvectors.kA2 - braggvectors.kin )
+        for i in range(3): 
+          q[i] = np.abs(q[i])
+        spins = np.exp( 1j * self.a * ( q[0]*x + q[1]*y + q[2]*z ) ) 
+        phase = np.exp( 1j * self.a * ( Q[0]*x + Q[1]*y + Q[2]*z ) )
+        lcorr = np.exp(-1. * np.sqrt( x**2 + y**2 + z**2 ) / Lc ) 
+        sfactor = Ntot *  np.sum( spins*phase*lcorr )
+
+        tol = 1e-16
+        sfactor = np.real( sfactor ) 
+
+        
+        # C factor
+        cfactor = Ntot *  np.sum( phase )
+        cfactor = np.real( cfactor ) 
+        
+        self.Clcorr = cfactor
+        self.Slcorr = sfactor
+
+        return cfactor, sfactor
 
     ############# FUNCTIONS TO FACILITATE THE CREATION OF PLOTS
+
+    def dw_v0( self, v0):
+        '''This function is used to plot the lattice depth dependence 
+           of the Debye-Waller factor''' 
+        self.set_v0([v0,v0,v0])
+        return self.debyewaller()
 
     def dw_time( self, time): 
         '''This function is used to plot the time dependence of the
@@ -591,6 +634,27 @@ class crystal():
         return ufloat( np.mean(vals), stats.sem(vals) ) 
 
             
+    def sigma_coh_det_Lc( self, Nsize, det, time, Lc):
+        '''This function is used to plot the elastic cross section 
+           dependence on detuning, and time'''
+
+        self.set_detuning(det)
+        self.set_timeofflight(time)
+        self.loadCSlcorr(Nsize, Lc)
+
+        self.alpha_beta_Pbroad()
+       
+        crystalpart = self.alpha_Pbroad * (
+                      self.debyewaller_time() * self.Clcorr * \
+                      self.coherent() * self.ODfactor() )
+
+        magneticpart = self.beta_Pbroad * ( 
+                      self.debyewaller_time() * self.Slcorr * \
+                      self.coherent() * self.ODfactor() )
+
+        vals = self.sunits * self.polsum \
+               * ( crystalpart + magneticpart)
+        return ufloat( np.mean(vals), 0. ) 
 
     
  

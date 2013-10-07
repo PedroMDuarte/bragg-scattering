@@ -172,9 +172,9 @@ class Bloch():
         # List of colors for Bloch vectors, default = ['b','g','r','y']
         self.vector_color = ['g', '#CC6600', 'b', 'r']
         #: Width of Bloch vectors, default = 5
-        self.vector_width = 5
+        self.vector_width = 0.3
         #: Style of Bloch vectors, default = '-|>' (or 'simple')
-        self.vector_style = '-|>'
+        self.vector_style = 'simple'#'-|>'
         #: Sets the width of the vectors arrowhead
         self.vector_mutation = 20
 
