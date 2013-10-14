@@ -21,74 +21,49 @@ rc('font',**{'family':'serif'})
 N = 40 
 nafm = 8
 
-A1 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA1))
-A2 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA2))
-Er = 20. 
-A1.set_v0([Er, Er, Er])
-A2.set_v0([Er, Er, Er])
-
-#A1.set_pbragg(0.0002)
-#A2.set_pbragg(0.0002)
-
-# Calculate Bragg scattering 100 for MIT experiment
-# Q vector for bragg scattering
-lRb = 780. 
-l1064 = 1064.
-Qmit = 4*np.pi/l1064 * vec3.vec3( 0, -1., 0) # 2pi/a
-QUmit = Qmit/abs(Qmit)
-
-ThetaMIT = np.arccos( abs(Qmit)/2. / ( 2.*np.pi / lRb ) )
-print 
-print "Bragg angle for MIT 100 experiment = %.2f" % (ThetaMIT*180./np.pi)
-kinMIT = vec3.vec3()
-kinMIT.set_spherical( 2.*np.pi/lRb, np.pi/2., np.pi/2. - ThetaMIT)
-koutMIT = kinMIT + Qmit
-
-AMIT = afm.crystal(N, nafm, bv.l1064/2, (kinMIT,koutMIT))
-AMIT.mass = 87.
-AMIT.set_v0( [15.,15.,15.])
-
-
 
 # Plot the decay of the debye-waller factor 
 # as a function of time  
-figure3 = plt.figure(figsize=(6.,4.5))
-gs3 = matplotlib.gridspec.GridSpec( 1,1) 
+figure3 = plt.figure(figsize=(10.,8.))
+gs3 = matplotlib.gridspec.GridSpec( 2,2) 
 figure3.suptitle('')
-axDW = plt.subplot( gs3[0,0] )
+axHHH = plt.subplot( gs3[0,0] )
+ax100 = plt.subplot( gs3[0,1] )
+axN1  = plt.subplot( gs3[1,0] )
+axN2  = plt.subplot( gs3[1,1] )
 
-time =  np.linspace( 0., 30., 200) 
-A2DWtof = np.array([A2.dw_time(t)  for t in time ])
-A1DWtof = np.array([A1.dw_time(t)  for t in time ])
-mitDWtof = np.array([AMIT.dw_time(t) for t in time ])
 
-axDW.plot( time, A2DWtof ,\
-            '.-', mec='green', c='green',\
-            mew=1.0, ms=3.,\
-            marker='o', mfc='limegreen', \
-            label='A2 Debye-Waller TOF, 20$E_{r}$') 
+time =  np.linspace( 0., 10., 200) 
+lw=1.5 
+Er = 20. 
+def plotdw( ax, kin, kout, c='black', lt='-', label=None):
+    crys = afm.crystal( N, nafm, bv.l1064/2, (kin,kout) ) 
+    crys.set_v0([Er, Er, Er])
+    y = np.array( [ crys.dw_time(t) for t in time ] ) 
+    ax.plot( time, y, lt, c=c, lw=lw, label=label)  
 
-axDW.plot( time, A1DWtof ,\
-            '.-', mec='blue', c='blue',\
-            mew=1.0, ms=3.,\
-            marker='o', mfc='lightblue', \
-            label='A1 Debye-Waller TOF, 20$E_{r}$')
 
-axDW.plot( time, mitDWtof ,\
-            '.-', mec='black', c='black',\
-            mew=1.0, ms=3.,\
-            marker='o', mfc='gray', \
-            label='MIT Debye-Waller TOF, 15$E_{r}$') 
-axDW.grid()
-axDW.set_xlabel('time of flight ($\mu$s)')
+axes = [ axHHH, ax100, axN1, axN2 ] 
+kins = [ bv.kin, bv.kin100, bv.ksquad[1], bv.ksquad[5] ]  
+instr = [ 'HHH', '100', '#1', '#5' ]  
+kouts = [ bv.kA1, bv.kA2 ]
+camstr = ['A1', 'A2'] 
+colors = ['red', 'green', 'blue']
 
-axDW.legend(loc='best',numpoints=1,\
-         prop={'size':10}, \
-         handlelength=1.1,handletextpad=0.5)
-#axDWR.legend(loc='best',numpoints=1,\
-#         prop={'size':10}, \
-#         handlelength=1.1,handletextpad=0.5)
-    
+for i,ax in enumerate(axes):
+    for j,ko in enumerate(kouts):
+        plotdw( ax , kins[i], ko, c=colors[j], \
+                label='Input = %s, Cam=%s, v0=%dEr'%(instr[i],camstr[j],Er)  ) 
+    ax.legend(loc='best',numpoints=2,\
+             prop={'size':8}, \
+             handlelength=3.1,handletextpad=0.5)
+    ax.grid()
+    ax.set_xlabel('time of flight ($\mu$s)')
+    ax.set_ylabel('Debye-Waller factor')
+    ax.set_title('kInput = %s'%instr[i])
+    #ax.set_xlim(0., 50.)
+    ax.set_ylim(0., 1.)
+
 gs3.tight_layout(figure3, rect=[0,0.0,1.0,0.96])
 outfile = 'DWtof_plot_%.1fEr.png' % Er
 figure3.savefig(outfile, dpi=250)
@@ -97,17 +72,28 @@ figure3.savefig(outfile, dpi=250)
 
 # Plot the decay of A2/A1  
 # as a function of time  
-figure2 = plt.figure(figsize=(4.,3.5))
-gs2 = matplotlib.gridspec.GridSpec( 1,1) 
+A1 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA1))
+A2 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA2))
+A1.set_v0([Er, Er, Er])
+A2.set_v0([Er, Er, Er])
+
+
+figure2 = plt.figure(figsize=(8.,7.))
+gs2 = matplotlib.gridspec.GridSpec( 2,2) 
 figure2.suptitle('')
 ax = plt.subplot( gs2[0,0] )
+axA1 = plt.subplot( gs2[1,0] )
+axA2 = plt.subplot( gs2[1,1] )
 
 time =  np.linspace( 0., 100., 1000)
 Nr = 320 
 normTOF = A2.sigma_coh_det(Nr,0.,100.) / A1.sigma_coh_det(Nr,0.,100.)
 R_DWtof = [A2.sigma_coh_det(Nr,0.,t)/A1.sigma_coh_det(Nr,0.,t) / normTOF  for t in time ]
-A1_DWtof = [A1.sigma_coh_det(Nr,0.,t)  for t in time ]
-A2_DWtof = [A2.sigma_coh_det(Nr,0.,t)  for t in time ]
+
+normTOF1 = A1.sigma_coh_det(Nr,0.,100.) 
+A1_DWtof = [A1.sigma_coh_det(Nr,0.,t)/normTOF1  for t in time ]
+normTOF2 = A2.sigma_coh_det(Nr,0.,100.)
+A2_DWtof = [A2.sigma_coh_det(Nr,0.,t)/normTOF2  for t in time ]
 
 print
 print normTOF
@@ -137,14 +123,39 @@ ax.errorbar(time, a2a1, yerr=a2a1err,\
 
 ax.grid()
 ax.set_xlabel('time of flight ($\mu$s)')
+labelstr='N=40, nafm=8, %.1f$E_{r}$ A1' % Er
+y = np.array( [val.nominal_value for val in A1_DWtof ] ) 
+np.savetxt('DW100_A1_%.1fEr.dat' % Er, np.transpose( np.vstack( (time,y))))
+axA1.plot(time, y,\
+            '.-', color=lcolor, mfc=fcolor, \
+            mew=1.0, ms=3.,\
+            alpha = 1.0, \
+            marker='o', label=labelstr)
+
+labelstr='N=40, nafm=8, %.1f$E_{r}$ A2' % Er
+y = np.array( [val.nominal_value for val in A2_DWtof ] ) 
+np.savetxt('DW100_A2_%.1fEr.dat' % Er, np.transpose( np.vstack( (time,y))))
+axA2.plot(time, y,\
+            '.-', color=lcolor, mfc=fcolor, \
+            mew=1.0, ms=3.,\
+            alpha = 1.0, \
+            marker='o', label=labelstr)
 ax.set_ylabel(r'$\frac{S_{\mathrm{B}}}{S_{\mathrm{db}}}$',rotation=0,fontsize=24,labelpad=10)
-ax.legend(loc='best',numpoints=1,\
-         prop={'size':10}, \
-         handlelength=1.1,handletextpad=0.5)
-ax.set_xlim(0.,10.)
+
+
+axA1.set_ylabel('ANDOR1',labelpad=10,fontsize=14)
+axA2.set_ylabel('ANDOR2',labelpad=10,fontsize=14)
+titlestr='N=%d,  nafm=%d,  %.1f$E_{r}$' % (N,nafm,Er)
+for axs in [ax, axA1, axA2]:
+    axs.grid()
+    axs.set_xlabel('time of flight ($\mu$s)')
+    #axs.legend(loc='best',numpoints=1,\
+    #         prop={'size':10}, \
+    #         handlelength=1.1,handletextpad=0.5)
+    axs.set_xlim(0.,10.)
 
 gs2.tight_layout(figure2, rect=[0,0.0,1.0,0.96])
-outfile = 'A2A1tof_plot_%.1fEr.png' % Er
+outfile = 'tof_plot_%.1fEr.png' % Er
 figure2.savefig(outfile, dpi=250)
 
 
