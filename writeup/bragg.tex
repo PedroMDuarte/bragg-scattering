@@ -28,7 +28,7 @@
 
 \section{Scattering of light by an array of atoms}
 
-In our experiment we observe the scattering of photons from atoms confined in an optical lattice, here we treat this situation by obtaining the the field scattered from a single atom and then summing the field contributions from all the atoms coherently at the location of our detector.  
+In our experiment we observe the scattering of photons from atoms confined in an optical lattice, here we treat this situation by obtaining the the field scattered from a single atom and then summing the field contributions from all the atoms coherently at the location of our detector.  The main goal of this document is to find the connection between the intensity that we measure in our cameras and the spin structure factor as it is calculated by the theorists in our collaboration.  
 
 \subsection{Coherent and Incoherent scattering}
 
@@ -57,7 +57,7 @@ We can elucidate the coherence properties of the scattered light if we rewrite t
 \begin{equation} 
     S_{\pm}( t - r_{D}/c) = \langle S_{\pm}(t-r_{D}/c) \rangle + \delta S_{\pm}(t-r_{D}/c) 
 \end{equation} 
-at the same time defining the difference $\delta$ between $S_{\pm}$ and its
+at the same time defining the difference $\delta S$ between $S_{\pm}$ and its
 average value.   Writing $S$ this way will allow us to distinguish between two
 components in the radiated light,  the radiation of the average dipole $\langle
 S_{\pm}\rangle$ which is the radiation of a classical oscillating dipole with
@@ -67,7 +67,7 @@ is well defined relative to the incident field because this radiation comes
 form the fluctuating part of the atomic dipole.  Dropping the time-dependencies
 (since we are interested in the steady-state solution only) we have
 \begin{equation} 
-\langle I \rangle = \eta^{2} \langle S_{+}\rangle \langle S_{-} \rangle + \eta^{2} \langle \delta S_{+} \delta S_{-} \rangle 
+I  = \eta^{2} \langle S_{+}\rangle \langle S_{-} \rangle + \eta^{2} \langle \delta S_{+} \delta S_{-} \rangle 
 \end{equation}
 where we have used the fact that by definition $\langle \delta S_{\pm} \rangle = 0$.The first and second terms of this equation are the coherent and incoherent intensity which can be calculated by using the steady-state solutions to the optical Bloch equations
 \begin{equation}
@@ -82,13 +82,19 @@ where we have used the fact that by definition $\langle \delta S_{\pm} \rangle =
 \end{equation}
 Here $s$ is the saturation parameter
 \begin{equation}
-s = \frac{ 2  I/I_{\mathrm{sat}} } { 1 + 4 \Delta^{2} } 
+s = \frac{ 2  I_{\mathrm{p}}/I_{\mathrm{sat}} } { 1 + 4 \Delta^{2} } 
 \end{equation}
+with $I_{\mathrm{p}}$ being the intensity of the probe beam.  
 
 
 \subsection{Resonant scattering cross-section}
 
-It is seen that coherent and incoherent scattering can be treated independently by thinking about it as an effective value of $\rho_{ee}$ that results for coherent and incoherent scattered light.  In our treatment this is what we will do and we will separate the coherent and incoherent part of the scattering.   Now we will turn onto the evaluation of the proportionality factor $\eta$ which will contain the angular dependence of the scattered intensity.  
+It is seen that coherent and incoherent scattering can be treated independently
+by thinking about it as an effective value of $\rho_{ee}$ that results for
+coherent and incoherent scattered light.  In our treatment this is what we will
+do and we will separate the coherent and incoherent part of the scattering.
+Now we will turn onto the evaluation of the proportionality factor $\eta$ which
+will contain the angular dependence of the scattered intensity.  
 
 
 Using the source-field expression for the scattered field allowed us to separate the scattered light into the coherent and incoherent components.  Now we are interested in calculating the angular dependence of the transition matrix element, between the following inital and final states
@@ -534,13 +540,11 @@ And if we now return to the expression for the intensity at the detector we have
 \end{multline}
 
 \begin{multline}
+\label{eq:finalIdetector}
 \langle I \rangle =
  \left( 
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
-     \frac{9}{24\pi} 
-  \sum_{\lambda }
-        | (\bv{\varepsilon}_{-}\cdot \bv{\varepsilon}'_{\lambda} )
-                        (\bv{\varepsilon}\cdot \bv{\varepsilon}_{-} ) |^{2} 
+     \frac{9}{24\pi} \Lambda 
   \right) \times \\
   \sum_{m<n} 
     \frac{ s_{m} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
@@ -555,384 +559,307 @@ And if we now return to the expression for the intensity at the detector we have
   + \sum_{n}  \frac{1}{2}
     \frac{ s_{n} } { 1 + s_{n} } 
 \end{multline}
+where we have defined for brevity
+\begin{equation}
+ \Lambda = 
+  \sum_{\lambda }
+        | (\bv{\varepsilon}_{-}\cdot \bv{\varepsilon}'_{\lambda} )
+                        (\bv{\varepsilon}\cdot \bv{\varepsilon}_{-} ) |^{2} 
+\end{equation} 
 It is good to see that for time-of-flight, where the Debye-Waller goes to zero due to large extent of the expanding atom wavefunctions,  this formula reduces to the the standard uncorrelated scattering for $N$ atoms with $\rho_{ee} = \frac{1}{2} \frac{s}{1+s}$.
 
-\section{Numerical calculation}
 
-For the numerical calculation of the scattered intensity we will consider a lattice with $L\times L\times L$ sites in which there is a core of size $L_{\mathrm{AFM}} \times L_{\mathrm{AFM}} \times L_{\mathrm{AFM}}$ in which the atoms have antiferromagnetically ordered spins.   The distribution of the spins outside the core is random, but the spin imbalance is constrained to be zero, that is there is an equal number of atoms in state $|1\rangle$ and state $|2\rangle $  occupying the $L^{3}$ sites in the lattice. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{ Calculation of scattering cross section}
-
-\subsection{Coherent and Incoherent scattering}
-
-The differential scattering cross section has two componets, one which is due
-to elastic scattering of photons (the delta-function peak in the fluorescence
-spectrum) and the other one which is due to inelastic scattering.  A single driven two-level atom scatters photons at a rate
-equal to 
+\subsection{ Low intensity and large detuning limit}
+We start from Eq.~(\ref{eq:finalIdetector}) and concentrate on the two sums, the first of which is 
 \begin{equation} 
-\Gamma_{\mathrm{tot}} = \Gamma \rho_{ee} = \frac{\Gamma}{2} \frac{S}{1+S} 
-\end{equation} 
-where $\Gamma$ is the natural linewidth of the transition, and  $\rho_{ee}$ is the excited state population and $S$ is the saturation parameter given by 
-\begin{equation}
-S = \frac{ 2  I/I_{\mathrm{sat}} } { 1 + 4 \Delta^{2} } 
+  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re 
+  \sum_{m<n} 
+               e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+    \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }
+    \left(
+         4\Delta_{m} \Delta_{n} 
+      + 2i \Delta_{m} 
+      - 2i \Delta_{n}
+      + 1
+    \right)  
 \end{equation}
-where $I$ is the intensity of the driving laser, and $\Delta$ is its detuning in units of the natural linewidth.  Here $I_{\mathrm{sat}}$ is defined such that $I/I_{\mathrm{sat}} = (\Omega / \Gamma)^{2}$, where $\Omega$ is the Rabi frequency.  
+where for simplicity we have now written the detunings in units of $\Gamma$.  We will split this up further into four terms 
+\begin{align} 
+  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 4 \Delta_{m} \Delta_{n} \\
+  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{m}  \\
+  -\frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{n}  \\
+  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }   
+\end{align}
 
-The formula for the scattering rate is familiar to all of us, but what is not
-always present in our minds are the coherence properties of the emitted
-radiation.    I won't go into the details here, but the treatment starts by
-writing the electric field emitted by the two-level system using the
-source-field expression (this can be found in Loudon, or in the book called
-Atom-Photon Interactions by Cohen-Tannoudji).   This expression links the
-emmited electric field to the raising and lowering operators of the two-level
-system.  With this in hand the first order correlation function of the emmited
-light can be calculated in the steady-state.   The bottom line is that the
-quantum fluctuations in the two-level system give rise to a component of the
-spectrum that is incoherent.  It can be shown that the scattering rate for
-coherent photons is given by 
-\begin{equation} 
-\Gamma_{\mathrm{coh}} = \frac{\Gamma_{\mathrm{tot}}}{ 1+S }  
-\end{equation}
-and the incoherent part follows from $\Gamma_{\mathrm{incoh}} + \Gamma_{\mathrm{coh}} = \Gamma_{\mathrm{tot}}$.
+In the low intensity limit, and for a detuning such that $4\Delta_{m}^{2}, 4\Delta_{n}^{2} \gg 1 $ these four tend respectively to 
+\begin{align} 
+    e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{1}{ 4 \Delta_{m} \Delta_{n} }  \\
+    e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{i}{ 8 \Delta_{m} \Delta_{n}^{2}} \\
+  - e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{i}{ 8 \Delta_{m}^{2} \Delta_{n} } \\
+    e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{1}{ 16 \Delta_{m}^{2} \Delta_{n}^{2} }
+\end{align}
+Furthermore, if we detune the light in between the two spin states then we can
+use $\frac{1}{2\Delta_{m}} = \frac{1}{|\Delta|}S_{zm}$, where
+$S_{zm}=\pm\frac{1}{2}$ is the spin state of the atom in site $m$, to obtain
+\begin{align} 
+    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}  \\
+    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+       i S_{zm} \\
+  - e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }
+       i S_{zn} \\  
+    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ 16 |\Delta|^{4} }  \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+\end{align}
+We identify the first term and the last term as related to the spin structure factor and crystal structure factor that appear in Ted's
+paper.   We have also two other terms show up here, which Ted discards in his
+derivation, see more details on Sec.~\ref{sec:Ted}.    As was stated at the beginning of this document, our main goal here is to connect the intensity measured with our CCD to the spin-structure factor that is calculated by the theorists.   In this last equation we see that the spin structure factor is going to have the main contribution to the intensity, as it goes as $ |\Delta|^{-2} $, whereas the other terms go as larger powers of $1/|\Delta|$.  
 
-The consideration of the coherent and incoherent fractions of the scattered
-light is important for our experiment since Bragg scattering is the result of
-the interference of the coherent photons.   We operate in a range of detunings
-that is close enough to the atomic transitions such that the incoherent
-fraction plays a role in our observations.  In some sense we want to be in this
-regime because this allows us to have a signal on our cameras on every shot,
-regardless of whether we have an ordered sample.  In this way we can quantify
-Bragg by noticing how much does the signal on the cameras changes upon the
-appereance of order in the sample. 
-
-Later on we will use the scattering amplitude for a single atom to obtain the
-differential scatteirng cross-section for our array of $N$ atoms (this is what is done in Ted's paper).  The
-scattering amplitude for an atom in state $\sigma$ is 
+If we neglect terms other than the spin structure factor then  in the low intensity and large detuning limit (with the detuning set in between the two spin states) we obtain 
 \begin{equation}
-f_{\sigma} = -\frac{3}{2k} 
-              (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} ) 
-              (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*}  )
-              \frac{\Gamma/2} { \Delta_{\sigma} + i \Gamma/2 } 
-\end{equation} 
-Here we define the coherent and incoherent amplitudes as 
+\langle I \rangle =
+ \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) \times 
+  \left(
+    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}  
+  +  \frac{I/I_{sat}}{ 4 \Delta^{2} } N
+  \right)
+\end{equation}
+where we have made use of $s_{n}/(1+s_{n}) \approx (I/I_{\mathrm{sat}})/ \Delta_{n}^{2}$ to carry out the sum over $n$ in Eq.~(\ref{eq:finalIdetector}).  We then manipulate the $n<m$ sum and the real part to obtain
+\begin{equation}
+\langle I \rangle =
+ \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) \times 
+  \left(
+    e^{-2W} \frac{I/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \sum_{m n}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}  
+  + (1- e^{-2W}) \frac{I/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+  \right)
+\end{equation}
+In this formula the spin structure factor appears explicitly, we pull out some factors and get  
+\begin{equation}
+\langle I \rangle =
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda
+ \frac{I/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+  \left(
+   1 + 
+    e^{-2W} \left( \frac{4}{ N }  \sum_{m n}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}  - 1 \right )
+     \right)
+\end{equation}
+After time-of-flight the Debye-Waller factor goes to zero due to the expanding size of the atomic wavefunctions and so  
+\begin{equation}
+\langle I \rangle_{\mathrm{TOF}} =
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda
+ \frac{I/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+\end{equation}
+giving finally 
+\begin{equation}
+ \frac{I}{I_{\mathrm{TOF}}} = 1 +  e^{-2W}( S(\bv{Q}) - 1 ) 
+\end{equation}
+This has the expected form (we got this from David Huse), and it defines the spin structure factor as 
+\begin{equation}
+    S(\bv{Q}) =  \frac{4}{ N }  \sum_{m n}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}  
+\end{equation}
+
+IMPORTANT REMARK:   We note here that this derivation which relates the observed intensity to the spin structure factor relies on the saturation parameter being much less than 1.   In our case we have $I/I_{\mathrm{sat}}\approx 25$ and $\Delta\approx 6.5$ which gives a saturation parameter of $s=0.3$ which is less than 1 but maybe not entirely negligible.   In the near future we will attempt to use the exact expression for the intensity at the detector which considers saturation effects to determine what kind of corrections do we need to make to connect between our measurement and the exact spin structure factor. 
+
+\subsection{Walk through Ted's derivation to find missing terms}\label{sec:Ted}
+
+We start with Ted's formula for the differential cross section
 \begin{equation}
 \begin{split}
-f_{\mathrm{c},\sigma} = & f_{\sigma} \sqrt{ \frac{1}{  1+S_{\sigma}  }}  \\
-f_{\mathrm{i},\sigma} = & f_{\sigma} \sqrt{\frac{S_{\sigma}}{  1+S_{\sigma} } } 
-\end{split}
-\end{equation}
-such that if one were to caculate coherent and incoherent cross sections, then their sum would lead to the familiar result.  This treatment is clearly incomplete because the coherent and incoherent photons can definitely interfere with each other to produce a certain intensity at a certain direction.   In any case it would be very complicated to treat the problem exactly and this idea serves as a crude first approximation since the effects of this interference between coherent and incohernt photons are expected to average out given the randomness in the phase of the incoherent light.  
-
-\subsection{Summation for a collection of atoms} 
-
-With the above in mind we can proceed to calculate the incoherent and coherent cross section for a collection of atoms and to calculate the total cross section we will add them up in the end. The procedure for the coherent part is derived in Ted's paper.  Here we follow the same procedure, except that we use the coherent fraction of the scattering amplitude. 
-\begin{equation}
-\begin{split}
-\dsig{E} =&   \frac{9}{4k^{2}} 
-              \sum_{\lambda_{f}}  | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} ) 
-                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*}  ) 
+\dsig{} =& \frac{9}{4k^{2}}
+              \sum_{\lambda_{f}} | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} )
+                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*} )
                                  |^{2} \\
-          &   \times \sum_{ \sigma,\sigma', j, j' } [ \langle \hat{n}_{j\sigma}\hat{n}_{j'\sigma'}
-              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle 
-              \bar{f}_{\sigma} {\bar{f}_{\sigma'}}^{*} ] 
+          & \times \sum_{ \sigma,\sigma', j, j' } [ \langle \hat{n}_{j\sigma}\hat{n}_{j'\sigma'}
+              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} ) } \rangle
+              \bar{f}_{\sigma} {\bar{f}_{\sigma'}}^{*} ]
 \end{split}
 \end{equation}
-
-The following notation is used: 
-
-\begin{center}
-  \begin{tabular}{ r  l  }
-    $k$ & Magnitude of $k$-vector for incoming photon,  $\frac{2\pi}{671\,\mathrm{nm}}$   \\ 
-    $\bv{e}_{\bv{k}_{f} \lambda_{f}}$  & Polarization vector of outgoing photon  \\ 
-    $\bv{e}_{\bv{k}_{i} \lambda_{i}}$  & Polarization vector of incoming photon  \\ 
-    $\bv{e}_{m}$  & Polarization that couples to optical transition  \\ 
-    $\hat{n}_{j\sigma}$ & Number operator at site $j$ for atoms in state $\sigma$   \\ 
-    $\bv{K}$ &  Momentum transfer of light scattering, $\bv{k}_{f} - \bv{k}_{i}$  \\ 
-    $\bar{f}_{\sigma}$ & Detuning dependent portion of the scattering amplitude, $\frac{\Gamma/2}{\Delta_{\sigma} + i \Gamma/2 }\sqrt{\frac{1}{1+S_{\sigma} }}$ \\ 
-  \end{tabular}
-\end{center}
-
-In addition to the elastic part, the inelastic scattering cross section for the
-sample has to be considered.   This can be obtained from the cross section of a
-single atom and and then multiplied by the number of atoms in the sample.
-Interference effects are not present for the inelastic component, and the incoherent fraction factor is included at the end of the expression.  
+and we abbreviate the sum over final polarizations as
 \begin{equation}
-\begin{split}
-\dsig{I} =&  \frac{9}{4k^{2}} 
-              \sum_{\lambda_{f}}  | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} ) 
-                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*}  ) 
-                                 |^{2} 
-              \sum_{j\sigma}
-              \frac{\langle \hat{n}_{\sigma} \rangle}
-              {1+ 4\Delta_{\sigma}^{2} + 2 I / I_{\mathrm{sat}} }
-              \frac{S_{\sigma}}{  1+S_{\sigma} } 
-\end{split}
-\end{equation}
-
-Finally we abbreviate the sum over final polarizations as 
-\begin{equation} 
- \Lambda =       \sum_{\lambda_{f}}  | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} ) 
-                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*}  ) 
+ \Lambda = \sum_{\lambda_{f}} | (\bv{e}_{\bv{k}_{f} \lambda_{f}}^{*} \cdot \bv{e}_{m} )
+                                   (\bv{e}_{m}^{*} \cdot \bv{e}_{\bv{k}_{i} \lambda_{i}}^{*} )
                                  |^{2}
 \end{equation}
-to obtain 
+to obtain
 
 \begin{equation}
 \begin{split}
-\dsig{E} =&   \frac{9\Lambda}{4k^{2}} 
+\dsig{} =& \frac{9\Lambda}{4k^{2}}
                \sum_{ \sigma,\sigma', j, j' } [ \langle \hat{n}_{j\sigma}\hat{n}_{j'\sigma'}
-              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle 
-              \bar{f}_{\sigma} {\bar{f}_{\sigma'}}^{*} ] \\  
-\dsig{I} =&  \frac{9\Lambda}{4k^{2}} 
-              \sum_{j\sigma}
-                     \frac{\langle \hat{n}_{\sigma} \rangle}{1+ 4\Delta_{\sigma}^{2} + 2 I / I_{\mathrm{sat}} }
-             \frac{S_{\sigma}}{  1+S_{\sigma} } 
+              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} ) } \rangle
+              \bar{f}_{\sigma} {\bar{f}_{\sigma'}}^{*} ] \\
 \end{split}
 \end{equation}
 
 
-We will begin by disecting the sum that appears in the elastic cross section.   The thermal average factorizes and 
+We will begin by disecting the sum that appears in the elastic cross section. The thermal average factorizes and
 \begin{equation}
 \begin{split}
-\langle  \hat{n}_{j\sigma}\hat{n}_{j'\sigma'} \rangle = &\, \langle (\frac{1}{2}  + \sigma\hat{S}_{zj} )( \frac{1}{2} + \sigma'\hat{S}_{j'} ) \rangle \\
-       = &\,  \frac{1}{4} + \frac{1}{2} \langle \sigma \hat{S}_{zj} \rangle +
+\langle \hat{n}_{j\sigma}\hat{n}_{j'\sigma'} \rangle = &\, \langle (\frac{1}{2} + \sigma\hat{S}_{zj} )( \frac{1}{2} + \sigma'\hat{S}_{j'} ) \rangle \\
+       = &\, \frac{1}{4} + \frac{1}{2} \langle \sigma \hat{S}_{zj} \rangle +
 \frac{1}{2} \langle \sigma'\hat{S}_{zj'} \rangle + \langle \sigma\sigma'\hat{S}_{zj}\hat{S}_{zj'}
 \rangle \\
-\end{split} 
+\end{split}
 \end{equation}
 For this last step
 \begin{center}
-  \begin{tabular}{ c  }
-    $\hat{n}_{i\uparrow} + \hat{n}_{i\downarrow} = 1$   \\ 
+  \begin{tabular}{ c }
+    $\hat{n}_{i\uparrow} + \hat{n}_{i\downarrow} = 1$ \\
     $\sigma = \pm 1$ \\
-    $\hat{S}_{zi} = \frac{1}{2}( \hat{n}_{i\uparrow} - \hat{n}_{i\downarrow} )$ 
+    $\hat{S}_{zi} = \frac{1}{2}( \hat{n}_{i\uparrow} - \hat{n}_{i\downarrow} )$
   \end{tabular}
 \end{center}
 We can manually perform the sums over $\sigma\sigma'$ for each of this four terms and define $\alpha$, $\beta$, and $\kappa$,
 \begin{equation}
 \begin{split}
-\frac{1}{4} \sum_{\sigma\sigma'} \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\, 
+\frac{1}{4} \sum_{\sigma\sigma'} \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\,
             \frac{1}{4}(\bar{f}_{\uparrow} + \bar{f}_{\downarrow})( \bar{f}_{\uparrow}^{*} + \bar{f}_{\downarrow}^{*} ) \\
        =&\, \frac{1}{4} | \bar{f}_{\uparrow} + \bar{f}_{\downarrow} | ^{2} \equiv \alpha
-\end{split} 
-\end{equation} 
+\end{split}
+\end{equation}
 
 \begin{equation}
 \begin{split}
-\frac{1}{2} \sum_{\sigma\sigma'} \sigma'\bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\,  
-  \frac{1}{2} ( 
-            - \bar{f}_{\downarrow}\bar{f}_{\downarrow}^{*} 
-            + \bar{f}_{\downarrow}\bar{f}_{\uparrow}^{*} 
-            - \bar{f}_{\uparrow}\bar{f}_{\downarrow}^{*} 
-            + \bar{f}_{\uparrow}\bar{f}_{\uparrow}^{*} ) \equiv \kappa 
-\end{split} 
-\end{equation} 
+\frac{1}{2} \sum_{\sigma\sigma'} \sigma'\bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\,
+  \frac{1}{2} (
+            - \bar{f}_{\downarrow}\bar{f}_{\downarrow}^{*}
+            + \bar{f}_{\downarrow}\bar{f}_{\uparrow}^{*}
+            - \bar{f}_{\uparrow}\bar{f}_{\downarrow}^{*}
+            + \bar{f}_{\uparrow}\bar{f}_{\uparrow}^{*} ) \equiv \kappa
+\end{split}
+\end{equation}
 
 \begin{equation}
 \begin{split}
-\frac{1}{2} \sum_{\sigma\sigma'} \sigma \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\, 
-  \frac{1}{2} ( 
-            - \bar{f}_{\downarrow}\bar{f}_{\downarrow}^{*} 
-            - \bar{f}_{\downarrow}\bar{f}_{\uparrow}^{*} 
-            + \bar{f}_{\uparrow}\bar{f}_{\downarrow}^{*} 
+\frac{1}{2} \sum_{\sigma\sigma'} \sigma \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\,
+  \frac{1}{2} (
+            - \bar{f}_{\downarrow}\bar{f}_{\downarrow}^{*}
+            - \bar{f}_{\downarrow}\bar{f}_{\uparrow}^{*}
+            + \bar{f}_{\uparrow}\bar{f}_{\downarrow}^{*}
             + \bar{f}_{\uparrow}\bar{f}_{\uparrow}^{*} ) \equiv \kappa^{*}
-\end{split} 
-\end{equation} 
+\end{split}
+\end{equation}
 
 \begin{equation}
 \begin{split}
-\sum_{\sigma\sigma'} \sigma\sigma' \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\, 
+\sum_{\sigma\sigma'} \sigma\sigma' \bar{f}_{\sigma} \bar{f}_{\sigma'}^{*} = &\,
             (\bar{f}_{\uparrow} + \bar{f}_{\downarrow})( \bar{f}_{\uparrow}^{*} + \bar{f}_{\downarrow}^{*} ) \\
-       =&\,  | \bar{f}_{\uparrow} - \bar{f}_{\downarrow} | ^{2} \equiv \beta
-\end{split} 
+       =&\, | \bar{f}_{\uparrow} - \bar{f}_{\downarrow} | ^{2} \equiv \beta
+\end{split}
 \end{equation}
 
-The elastic cross section is then 
+The elastic cross section is then
 \begin{equation}
 \begin{split}
-\dsig{E} =&   \frac{9\Lambda}{4k^{2}} 
-               \sum_{ j j' }  \langle 
-              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle 
-             \left( \alpha + \langle \hat{S}_{zj}\rangle \kappa + \langle \hat{S}_{zj'} \rangle \kappa^{*} 
-                     + \langle \hat{S}_{zj} \hat{S}_{zj'} \rangle \beta \right)   
+\dsig{E} =& \frac{9\Lambda}{4k^{2}}
+               \sum_{ j j' } \langle
+              e^{ i \bv{K} \cdot ( \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} ) } \rangle
+             \left( \alpha + \langle \hat{S}_{zj}\rangle \kappa + \langle \hat{S}_{zj'} \rangle \kappa^{*}
+                     + \langle \hat{S}_{zj} \hat{S}_{zj'} \rangle \beta \right)
 \end{split}
 \end{equation}
 
-\subsection{Debye-Waller factor} 
+In the Bragg scattering paper by Ted, the two central terms are ignored, but there is no mention of why they are ignored.  As we saw above they also appear in the treatement of scattering that we have undertaken here.  
 
-The position operators $\hat{\bv{r}}_{j}$,$\hat{\bv{r}}_{j'}$  inside the exponential in the thermal average can be replaced by the position vector of the lattice sites plus a displacement operator with respect to the lattice site.   
-\begin{equation}
-\begin{split} 
-\langle e^{ i \bv{K} \cdot (  \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle = &   
-e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
-\langle e^{ i \bv{K} \cdot (  \Delta\hat{\bv{r}}_{j} - \Delta\hat{\bv{r}}_{j'} )  } \rangle \\   
-= & e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
-\langle e^{ i \bv{K} \cdot (  \Delta\hat{\bv{r}}_{j} - \Delta\hat{\bv{r}}_{j'} )  } \rangle \\ 
-= & e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
-\langle e^{ i \bv{K} \cdot  \Delta\hat{\bv{r}}_{j}} \rangle \langle    e^{ -i \bv{K} \cdot  \Delta\hat{\bv{r}}_{j'}   } \rangle \\ 
-\end{split}
-\end{equation} 
-The last step follows since the operators $\Delta\hat{\bv{r}}_{j}$ and
-$\Delta\hat{\bv{r}_{j'}}$  act on different particles.
-The equality $\langle e^{\hat{A}} \rangle = e^{\frac{1}{2} \langle \hat{A}^{2} \rangle }$ is used here, 
-which is valid for a simple harmonic osscilator where $\hat{A}$ is any linear
-combination of displacement and momentum operators of the oscillator.  This leaves us with 
-\begin{equation}
-\begin{split} 
-\langle e^{ i \bv{K} \cdot (  \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle = &   
- e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
- e^{ -\frac{1}{2} \langle (\bv{K} \cdot  \Delta\hat{\bv{r}}_{j})^{2} \rangle }
- e^{ -\frac{1}{2} \langle (\bv{K} \cdot  \Delta\hat{\bv{r}}_{j'})^{2}  \rangle }  \\
- = &  
- e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
- e^{ -\langle (\bv{K} \cdot  \Delta\hat{\bv{r}})^{2}  \rangle } \\
- = &  
- e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) } 
- e^{ -2W} 
-\end{split}
-\end{equation} 
-In the last step we made use of the fact that in our sample all the atoms are
-in the same harmonic oscillator state, so the expectation value is be
-independent of $j$.   The second exponential with the expectation value is the
-Debye-Waller factor, generally written as $e^{-2W}$.  Expanding the dot product inside the Debye-Waller exponential leaves us with
-\begin{equation}
-\begin{split} 
-\langle e^{ i \bv{K} \cdot (  \hat{\bv{r}}_{j} - \hat{\bv{r}}_{j'} )  } \rangle  
- = &  
- e^{i \bv{K} \cdot ( \bv{R}_{j} - \bv{R}_{j'} ) }
- \prod_{i=x,y,z}  e^{ - K_{i}^{2} \langle \Delta r_{i}^{2} \rangle  } 
-\end{split}
-\end{equation}
-In an isotropic lattice all three expectation values are the same and equal to  
-\begin{equation}
-\langle \Delta r_{i}^{2} \rangle = \frac{\hbar}{m\omega}\left(n+\frac{1}{2}  \right) = \frac{\lambda^{2}}{8 \pi^{2}\sqrt{V_{0}}} ( 1 + 2n) 
-\end{equation}
-so the Debye-Waller factor is 
-\begin{equation}
-e^{-2W} = \exp\left[-K^{2} \frac{\lambda^{2}}{8\pi^{2} \sqrt{V_{0}}} ( 1+2n) \right]
-\end{equation}
-In our case, where we only occupy the first band of the lattice then $n=0$, and  
-\begin{equation}
-e^{-2W} = \exp\left[-K^{2} \frac{\lambda^{2}}{8\pi^{2} \sqrt{V_{0}}} \right]
-\end{equation}
 
-\subsection{Crystal and Structure factors }
+\section{Numerical calculations}
 
-Putting it all back together 
-\begin{multline}
-\dsig{E} =  \frac{9\Lambda}{4k^{2}} e^{-2W} \left(
-               \alpha \sum_{ j j' }      e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}
-            +  \kappa \sum_{ j j' } \langle \hat{S}_{zj} \rangle e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})} \right. \\
-  \left.    +  \kappa^{*} \sum_{ j j' } \langle \hat{S}_{zj'} \rangle e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}
-            +  \beta \sum_{j j'} \langle \hat{S}_{zj} \hat{S}_{zj'} \rangle e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}  \right) 
-\end{multline}
+For the numerical calculation of the scattered intensity we will consider a
+lattice with $L\times L\times L$ sites in which there is a core of size
+$L_{\mathrm{AFM}} \times L_{\mathrm{AFM}} \times L_{\mathrm{AFM}}$ in which the
+atoms have antiferromagnetically ordered spins.   The distribution of the spins
+outside the core is random, but the spin imbalance is constrained to be zero,
+that is there is an equal number of atoms in state $|1\rangle$ and state
+$|2\rangle $  occupying the $L^{3}$ sites in the lattice. 
 
-PAY ATTENTION TO WHAT IS GOING ON HERE:
+The reults of the numerical calculation will be presented in a later version of this document as the implementation has not been finished yet.  
 
-The two terms in the center can be simplified by noting that as $N$ gets larger one of the sums approaches a delta-function,  
-\begin{equation}
-\sum_{j} e^{i \bv{K} \cdot \bv{R}_{j} }  =  \sum_{\bv{n} \in \mathbb{Z}^{3} } \delta \left( \bv{n} - \bv{K}\frac{a}{2\pi} \right) 
-\end{equation}
-so those two terms will be zero unless $\bv{K}$ is zero or equal to a
-reciprocal lattice vector.   The second option is not a possibility in our setup since
-we cannot shine light in or image along a lattice vector.  If $\bv{K}=0$ we
-would then be left with a sum over $\langle\hat{S}_{zj}\rangle$, which is zero
-in our case since we have a sample without spin imbalance.   This leaves us with
-\begin{equation}
-\begin{split}
-\dsig{E} =&  
-             \frac{9\Lambda}{4k^{2}} e^{-2W} \left(
-               \alpha \sum_{ j j' }      e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}
-	    +  \beta \sum_{j j'} \langle \hat{S}_{zj} \hat{S}_{zj'} \rangle
-            e^{i\bv{K}\cdot(\bv{R}_{j}-\bv{R}_{j'})}  \right) \\
-         =&
-             \frac{9\Lambda}{4k^{2}} e^{-2W} 
-             \left(
-               \alpha C(\bv{K})  
-	    +  \beta S(\bv{K})  \right)
-\end{split} 
-\end{equation}
-In the last step we have the defined the crystal and magnetic structure factors. 
 
-Summing the elastic and inelastic cross sections we obtain:
-\begin{equation}
-\begin{split} 
-\dsig{} = & \dsig{E} + \dsig{I}  \\
-        = &\frac{9\Lambda}{4k^{2}} 
-          \left(
-               \alpha C(\bv{K})  
-	    +  \beta S(\bv{K}) 
-            +  \sum_{j\sigma}
-                     \frac{\langle \hat{n}_{\sigma} \rangle}{1+ 4\Delta_{\sigma}^{2} + 2 I / I_{\mathrm{sat}} } 
-            \frac{S_{\sigma}}{  1+S_{\sigma} }
-          \right)
-\end{split}
-\end{equation}
-
-From here one, if one specifies a certain state of the atoms without entanglement (i.e. just a product of single site eigenstates of $\hat{S_{z}}$)  then the summations can be performed using a computer.   It is at this point that I have written a computer program that generates configurations with and AFM core in the center and a random distribution of the remaining spins in the center.   For a given AFM core size many realizations of the ramdom distribution outside the core are averaged to obtain an estimate for the differential cross section. 
  
-\subsection{ Analytical dependence of crystal and magnetic structure factors on \bv{Q}}
-
-\subsubsection{Crystal}
-
-\begin{equation}
-C(\bv{Q}) = \sum_{jk} e^{i \bv{Q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} 
-\end{equation}
-
-We can make the substitution $\bv{r}_{k} = \bv{R}_{j} -
-\bv{R}_{k}$.  For an infinite crystal, the sum over all pairs $jk$ may be replaced by the sum over all
-sites $j$ and then sum over all $\bv{r}_{k}$.
- 
-\begin{equation}
-C(\bv{Q}) = N\sum_{k} e^{i \bv{Q} \cdot \bv{r}_{k}} 
-\end{equation}
-
-\subsubsection{Magnetic}
-
-\begin{equation}
-S(\bv{Q}) = \sum_{jk} e^{i \bv{Q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} \langle S_{zj} S_{zk} \rangle
-\end{equation}
-
-In the zero temperature AFM state there is a staggered magnetization, such that 
-
-\begin{equation}
-\langle S_{zj}S_{zk} \rangle = e^{i \bv{q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} 
-\ \ \ \mathrm{where} \ \ \  
-\bv{q} = \frac{2\pi}{a} \left( \frac{1}{2}\, \frac{1}{2}\, \frac{1}{2} \right)
-\end{equation}
-
-At finite temperature, the staggered magnetization will have a finite correlation length \Lc, which results in 
-
-\begin{equation}
-\langle S_{zj}S_{zk} \rangle = e^{i \bv{q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} e^{-|\bv{R}_{j} -\bv{R}_{k} |/ \Lc }
- \ \ \ \mathrm{where} \ \ \   
-\bv{q} = \frac{2\pi}{a} \left( \frac{1}{2}\, \frac{1}{2}\, \frac{1}{2} \right)
-\end{equation}
-
-\begin{equation}
-S(\bv{Q}) = \sum_{jk} e^{i (\bv{Q} + \bv{q} )\cdot (\bv{R}_{j} - \bv{R}_{k} )} e^{-|\bv{R}_{j} -\bv{R}_{k} |/ \Lc }
-\end{equation}
-
-At this point we can make the substitution $\bv{r}_{k} = \bv{R}_{j} -
-\bv{R}_{k}$.  For an infinite crystal, the sum over all pairs $jk$ may be replaced by the sum over all
-sites $j$ and then sum over all $\bv{r}_{k}$. 
-
-\begin{equation}
-S(\bv{Q}) = \sum_{jk} e^{i (\bv{Q} + \bv{q} )\cdot \bv{r}_{k} } e^{-r_{k}/ \Lc } = N \sum_{k} e^{i (\bv{Q} + \bv{q} )\cdot \bv{r}_{k} } e^{-r_{k}/ \Lc }
-\end{equation}
+%\subsection{ Analytical dependence of crystal and magnetic structure factors on \bv{Q}}
+%
+%\subsubsection{Crystal}
+%
+%\begin{equation}
+%C(\bv{Q}) = \sum_{jk} e^{i \bv{Q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} 
+%\end{equation}
+%
+%We can make the substitution $\bv{r}_{k} = \bv{R}_{j} -
+%\bv{R}_{k}$.  For an infinite crystal, the sum over all pairs $jk$ may be replaced by the sum over all
+%sites $j$ and then sum over all $\bv{r}_{k}$.
+% 
+%\begin{equation}
+%C(\bv{Q}) = N\sum_{k} e^{i \bv{Q} \cdot \bv{r}_{k}} 
+%\end{equation}
+%
+%\subsubsection{Magnetic}
+%
+%\begin{equation}
+%S(\bv{Q}) = \sum_{jk} e^{i \bv{Q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} \langle S_{zj} S_{zk} \rangle
+%\end{equation}
+%
+%In the zero temperature AFM state there is a staggered magnetization, such that 
+%
+%\begin{equation}
+%\langle S_{zj}S_{zk} \rangle = e^{i \bv{q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} 
+%\ \ \ \mathrm{where} \ \ \  
+%\bv{q} = \frac{2\pi}{a} \left( \frac{1}{2}\, \frac{1}{2}\, \frac{1}{2} \right)
+%\end{equation}
+%
+%At finite temperature, the staggered magnetization will have a finite correlation length \Lc, which results in 
+%
+%\begin{equation}
+%\langle S_{zj}S_{zk} \rangle = e^{i \bv{q} \cdot (\bv{R}_{j} - \bv{R}_{k} )} e^{-|\bv{R}_{j} -\bv{R}_{k} |/ \Lc }
+% \ \ \ \mathrm{where} \ \ \   
+%\bv{q} = \frac{2\pi}{a} \left( \frac{1}{2}\, \frac{1}{2}\, \frac{1}{2} \right)
+%\end{equation}
+%
+%\begin{equation}
+%S(\bv{Q}) = \sum_{jk} e^{i (\bv{Q} + \bv{q} )\cdot (\bv{R}_{j} - \bv{R}_{k} )} e^{-|\bv{R}_{j} -\bv{R}_{k} |/ \Lc }
+%\end{equation}
+%
+%At this point we can make the substitution $\bv{r}_{k} = \bv{R}_{j} -
+%\bv{R}_{k}$.  For an infinite crystal, the sum over all pairs $jk$ may be replaced by the sum over all
+%sites $j$ and then sum over all $\bv{r}_{k}$. 
+%
+%\begin{equation}
+%S(\bv{Q}) = \sum_{jk} e^{i (\bv{Q} + \bv{q} )\cdot \bv{r}_{k} } e^{-r_{k}/ \Lc } = N \sum_{k} e^{i (\bv{Q} + \bv{q} )\cdot \bv{r}_{k} } e^{-r_{k}/ \Lc }
+%\end{equation}
 
 \bibliographystyle{osa}
 \bibliography{bragg}
