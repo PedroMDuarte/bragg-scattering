@@ -89,16 +89,10 @@ with $I_{\mathrm{p}}$ being the intensity of the probe beam.
 
 \subsection{Resonant scattering cross-section}
 
-It is seen that coherent and incoherent scattering can be treated independently
-by thinking about it as an effective value of $\rho_{ee}$ that results for
-coherent and incoherent scattered light.  In our treatment this is what we will
-do and we will separate the coherent and incoherent part of the scattering.
 Now we will turn onto the evaluation of the proportionality factor $\eta$ which
-will contain the angular dependence of the scattered intensity.  
-
-
-Using the source-field expression for the scattered field allowed us to separate the scattered light into the coherent and incoherent components.  Now we are interested in calculating the angular dependence of the transition matrix element, between the following inital and final states
-\begin{equation}
+will contain the angular dependence of the scattered intensity. This is done by considering the  
+transition
+matrix element between the following inital and final states \begin{equation}
 \begin{split}
     | \varphi_{i} \rangle = & | g ; \bv{k}\bv{\varepsilon} \rangle \\
     | \varphi_{f} \rangle = & | g ; \bv{k}'\bv{\varepsilon}' \rangle \\
@@ -234,7 +228,8 @@ careful not to use this in the term in the denominator) to obtain
 The number of final states with energy between $\hbar c k'$ and $\hbar c ( k' + \mathrm{d}k')$  whose wave vector points inside the solid angle $\mathrm{d} \Omega'$ equals 
 \begin{equation}
     \rho( \hbar c k') \hbar c \mathrm{d} k' \mathrm{d} \Omega ' = \frac{L^{3}}{8 \pi^{3} }  k'^{2} \mathrm{d} k' \mathrm{d} \Omega' 
-\end{equation} 
+\end{equation}
+and we use sthis to sum over $k'$ and obtain the total transition rate 
 \begin{equation}
 \begin{split}
   \sum_{fu'} w_{fi} = & 
@@ -279,9 +274,9 @@ From here we can write down the intensity at a detector located at $\bv{r}_{D}$ 
 \begin{equation}
 \begin{split}
 I  =& \frac{1}{r_{D}^{2}} \frac{ \mathrm{d} \sigma } { \mathrm{d} \Omega'}
-      I_{\mathrm{probe}} 
+      I_{\mathrm{p}} 
    =   \frac{1}{r_{D}^{2}} \frac{ \mathrm{d} \sigma } { \mathrm{d} \Omega'}
-      \frac{\hbar c k^{3}\Gamma}{6 \pi} \frac{I_{\mathrm{probe}}}{I_{\mathrm{sat}}}  \\ 
+      \frac{\hbar c k^{3}\Gamma}{6 \pi} \frac{I_{\mathrm{p}}}{I_{\mathrm{sat}}}  \\ 
    =& \frac{\hbar c k \Gamma}{r_{D}^{2}}  
     \frac{9}{4 (6\pi)} 
         |(\bv{\varepsilon}_{-}\cdot \bv{\varepsilon}' )
@@ -293,7 +288,7 @@ I  =& \frac{1}{r_{D}^{2}} \frac{ \mathrm{d} \sigma } { \mathrm{d} \Omega'}
         { 4(\Delta/\Gamma)^{2} + 1 }
 \end{split}
 \end{equation}
-and if we identify the last term as $\rho_{ee}$ (in the limit of low intensity) we can write down an expression for $\eta$ which was defined back in Eq.~(\ref{eq:Idef}), 
+and if we identify the last term in the product as $\rho_{ee}$ (in the limit of low intensity) we can write down an expression for $\eta$ which was defined back in Eq.~(\ref{eq:Idef}), 
 \begin{equation}
   \eta = \left[ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
     \frac{9}{24\pi} \right]^{1/2} 
@@ -301,7 +296,7 @@ and if we identify the last term as $\rho_{ee}$ (in the limit of low intensity) 
                        (\bv{\varepsilon}\cdot \bv{\varepsilon}_{-} ) 
       \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
 \end{equation}
-Notice that we used the limit of low intensity to identify $\rho_{ee}$.  The factor $\eta$ which contains the angular part of the scattered photon distribution should not be affected if we use the expression for $\rho_{ee}$ that can be obtained from the optical Bloch equations, which is valid for any intensity since the Bloch equations are not a perturbative treatment. 
+Notice that we used the limit of low intensity to identify $\rho_{ee}$.  The factor $\eta$ which contains the angular part of the scattered photon distribution should not be affected if we use the expression for $\rho_{ee}$ that can be obtained from the optical Bloch equations, which is valid for any intensity, since the Bloch equations are not a perturbative treatment. 
 
 \subsection{Summation for a collection of atoms} 
 
@@ -316,12 +311,12 @@ For a collection of atoms, the resulting fied is the sum of the field produced b
 where we have labeled the atoms with the indices $m$ and $n$.  Dropping the time dependence
 \begin{equation}
 \begin{split}
-\langle I \rangle = &
+ I = &
     \sum_{mn}  \eta_{m}\eta_{n}^{*}  
               \left\langle S_{m+}S_{n-} \right\rangle
 \end{split} 
 \end{equation}
-Using $S=\langle S \rangle + \delta $, as we did above to obtain the coherent and icoherent parts of the intensity, we obtain
+Using $S=\langle S \rangle + \delta S$, as we did above to obtain the coherent and icoherent parts of the intensity, we obtain
 \begin{equation}
 \begin{split}
 \langle I \rangle = &
@@ -337,31 +332,31 @@ Using $S=\langle S \rangle + \delta $, as we did above to obtain the coherent an
 The steady state solutions of the optical Bloch equations will be used to evaluate the expectation values and we state them here:
 \begin{gather} 
     \langle S_{\pm} \rangle =  u \pm i v  \\
-    u =  \frac{ \Delta }{ \Gamma  \sqrt{ I / I_{\mathrm{sat}}} } \frac{s}{ 1 + s } \\
-    v =  \frac{ 1 } { 2 \sqrt{ I / I_{\mathrm{sat}}} } \frac{s}{1+s} \\
+    u =  \frac{ \Delta }{ \Gamma  \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } \frac{s}{ 1 + s } \\
+    v =  \frac{ 1 } { 2 \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } \frac{s}{1+s} \\
 \end{gather}
-Putting this back in the equation for $\langle I \rangle$  
+Putting this back in the equation for $I$  
 \begin{multline}
-\langle I \rangle = 
+ I = 
   \sum_{mn}  \eta_{m}\eta_{n}^{*}
     \left(
-    \frac{ \Delta_{m} }{ \Gamma  \sqrt{ I / I_{\mathrm{sat}}} } 
+    \frac{ \Delta_{m} }{ \Gamma  \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
     \frac{s_{m}}{ 1 + s_{m} } 
    + i 
-    \frac{ 1 } { 2 \sqrt{ I / I_{\mathrm{sat}}} } \frac{s_{m}}{1+s_{m}} 
+    \frac{ 1 } { 2 \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } \frac{s_{m}}{1+s_{m}} 
     \right) 
     \left(
-    \frac{ \Delta_{n} }{ \Gamma  \sqrt{ I / I_{\mathrm{sat}}} } 
+    \frac{ \Delta_{n} }{ \Gamma  \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
     \frac{s_{n}}{ 1 + s_{n} } 
    - i 
-    \frac{ 1 } { 2 \sqrt{ I / I_{\mathrm{sat}}} } \frac{s_{n}}{1+s_{n}} 
+    \frac{ 1 } { 2 \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } \frac{s_{n}}{1+s_{n}} 
     \right) \\
    + \sum_{n} | \eta_{n}|^{2} \frac{1}{2} \frac{ s_{n}^{2} } { (1 + s _{n} )^{2} } 
 \end{multline}
 \begin{multline}
-\langle I \rangle = 
+ I  = 
   \sum_{mn}  \eta_{m}\eta_{n}^{*}
-    \frac{ s_{m} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+    \frac{ s_{m} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
     \left(
         \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
       + i \frac{ \Delta_{n} }{ 2 \Gamma } 
@@ -372,9 +367,9 @@ Putting this back in the equation for $\langle I \rangle$
 \end{multline}
 We proceed to split up the first sum into same-atom ($n=m$) and different atom ($n<m$) parts 
 \begin{multline}
-\langle I \rangle = 
+ I  = 
   \sum_{m<n} 
-    \frac{ s_{m} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+    \frac{ s_{m} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
     \left(
         \eta_{m}\eta_{n}^{*}
     \left(
@@ -393,7 +388,7 @@ We proceed to split up the first sum into same-atom ($n=m$) and different atom (
     \right) 
     \right)  \\
   + \sum_{n}  |\eta_{n}|^{2}
-    \frac{ s_{n} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{n} )( 1+s_{n} ) }
+    \frac{ s_{n} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{n} )( 1+s_{n} ) }
     \left(
         \frac{ \Delta_{n} \Delta_{n} }{ \Gamma^{2} } 
       + \frac{1}{4}  
@@ -402,15 +397,15 @@ We proceed to split up the first sum into same-atom ($n=m$) and different atom (
 \end{multline}
 
 \begin{multline}
-\langle I \rangle = 
+ I  = 
   \sum_{m<n} 
     \frac{ s_{m} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
     2 \Re\left[ 
-        \eta_{n}\eta_{m}^{*}
+        \eta_{m}\eta_{n}^{*}
     \left(
         \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
-      + i \frac{ \Delta_{m} }{ 2 \Gamma } 
-      - i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
       + \frac{1}{4}  
     \right) \right] \\
   + \sum_{n}  |\eta_{n}|^{2}
@@ -460,10 +455,13 @@ Similarly for $\eta_{m}\eta_{n}^{*}$
       \langle u'_{m} | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}_{m}} | u_{m}  \rangle \\
 \end{split}
 \end{equation}
-In this case we cannot use the closure relation.   We simplify the treatment by
-considering only final states for the atom that are the same as the initial
-state $u'=u$ (these are going to have the largest matrix elements), so the sum
-is discarded.  Furthermore we take the center of mass state of the atoms to be the ground state of the single lattice site harmonic oscilator.  This leaves us with 
+In this case we cannot use the closure relation because $n,m$ refer to
+different atoms.   We simplify the treatment by considering only final states
+for the atom that are the same as the initial state $u'=u$ (these are going to
+have the largest matrix elements anyways), so the sum over $u'_{m},u'_{n}$ is
+discarded.  We take the center of mass state of the atoms to be the
+ground state of the single lattice site harmonic oscilator.  This leaves us
+with 
 \begin{equation}
 \begin{split}
  \sum_{\lambda } \eta_{m}\eta_{n}^{*} = & 
@@ -478,7 +476,10 @@ is discarded.  Furthermore we take the center of mass state of the atoms to be t
 
 \subsubsection{Debye-Waller factor} 
 
-For the center of mass expectation values we perform a translation of the vector $\bv{r}_{n}$ such that the position of the atom has a zero expectation value $\langle \bv{r}_{n} \rangle = 0$.  A phase factor comes out that depends on the position $\bv{R}_{n}$ of the lattice site in which the atom is located: 
+For the center of mass expectation values we perform a translation $\bv{R}_{n}$ of the
+coordinate system such that the position of the atom has a zero expectation
+value $\langle \bv{r}_{n} \rangle = 0$.  A phase factor comes out that depends
+on the position $\bv{R}_{n}$ of the lattice site in which the atom is located:
 \begin{equation}
       \langle 0_{n} | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | 0_{n}  \rangle 
     = e^{-i(\bv{k}'-\bv{k}) \cdot\bv{R}_{n}} 
@@ -515,9 +516,9 @@ Putting this back in the expression for $\eta_{m}\eta_{n}^{*}$ we get
 \end{equation}
 And if we now return to the expression for the intensity at the detector we have 
 \begin{multline}
-\langle I \rangle = 
+ I  = 
   \sum_{m<n} 
-    \frac{ s_{m} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+    \frac{ s_{m} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
     2 \Re\left[ 
          \sum_{\lambda } \frac{\hbar c k \Gamma}{r_{D}^{2}}  
             \frac{9}{24\pi} 
@@ -527,8 +528,8 @@ And if we now return to the expression for the intensity at the detector we have
     \left.
     \left(
         \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
-      + i \frac{ \Delta_{m} }{ 2 \Gamma } 
-      - i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
       + \frac{1}{4}  
     \right) \right] \\ 
   + \sum_{n}  \frac{1}{2}
@@ -541,19 +542,19 @@ And if we now return to the expression for the intensity at the detector we have
 
 \begin{multline}
 \label{eq:finalIdetector}
-\langle I \rangle =
+ I  =
  \left( 
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda 
   \right) \times \\
   \sum_{m<n} 
-    \frac{ s_{m} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+    \frac{ s_{m} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
     2 \Re\left[ 
                e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } e^{-2W}  
     \left(
         \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
-      + i \frac{ \Delta_{m} }{ 2 \Gamma } 
-      - i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
       + \frac{1}{4}  
     \right) \right]  
   + \sum_{n}  \frac{1}{2}
@@ -572,45 +573,45 @@ It is good to see that for time-of-flight, where the Debye-Waller goes to zero d
 \subsection{ Low intensity and large detuning limit}
 We start from Eq.~(\ref{eq:finalIdetector}) and concentrate on the two sums, the first of which is 
 \begin{equation} 
-  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re 
+  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re 
   \sum_{m<n} 
                e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
     \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }
     \left(
          4\Delta_{m} \Delta_{n} 
-      + 2i \Delta_{m} 
-      - 2i \Delta_{n}
+      + 2i \Delta_{n} 
+      - 2i \Delta_{m}
       + 1
     \right)  
 \end{equation}
 where for simplicity we have now written the detunings in units of $\Gamma$.  We will split this up further into four terms 
 \begin{align} 
-  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 4 \Delta_{m} \Delta_{n} \\
-  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
-      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{m}  \\
-  -\frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{n}  \\
-  \frac{  e^{-2W}}{2I/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+  -\frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{m}  \\
+  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }   
 \end{align}
 
 In the low intensity limit, and for a detuning such that $4\Delta_{m}^{2}, 4\Delta_{n}^{2} \gg 1 $ these four tend respectively to 
 \begin{align} 
-    e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+    e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{1}{ 4 \Delta_{m} \Delta_{n} }  \\
-    e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+    e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      \frac{i}{ 8 \Delta_{m} \Delta_{n}^{2}} \\
-  - e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      \frac{i}{ 8 \Delta_{n} \Delta_{m}^{2}} \\
+  - e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      \frac{i}{ 8 \Delta_{m}^{2} \Delta_{n} } \\
-    e^{-2W} 2(I/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      \frac{i}{ 8 \Delta_{n}^{2} \Delta_{m} } \\
+    e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{1}{ 16 \Delta_{m}^{2} \Delta_{n}^{2} }
 \end{align}
@@ -618,56 +619,60 @@ Furthermore, if we detune the light in between the two spin states then we can
 use $\frac{1}{2\Delta_{m}} = \frac{1}{|\Delta|}S_{zm}$, where
 $S_{zm}=\pm\frac{1}{2}$ is the spin state of the atom in site $m$, to obtain
 \begin{align} 
-    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n} & 
+    e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       S_{zm}S_{zn}  \\
-    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
+    e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-       i S_{zm} \\
-  - e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
+       i S_{zn} \\
+  - e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }
-       i S_{zn} \\  
+       i S_{zm} \\  
     e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ 16 |\Delta|^{4} }  \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
 \end{align}
 We identify the first term and the last term as related to the spin structure factor and crystal structure factor that appear in Ted's
 paper.   We have also two other terms show up here, which Ted discards in his
-derivation, see more details on Sec.~\ref{sec:Ted}.    As was stated at the beginning of this document, our main goal here is to connect the intensity measured with our CCD to the spin-structure factor that is calculated by the theorists.   In this last equation we see that the spin structure factor is going to have the main contribution to the intensity, as it goes as $ |\Delta|^{-2} $, whereas the other terms go as larger powers of $1/|\Delta|$.  
-
-If we neglect terms other than the spin structure factor then  in the low intensity and large detuning limit (with the detuning set in between the two spin states) we obtain 
+derivation, see more details on Sec.~\ref{sec:Ted}.    As was stated at the
+beginning of this document, our main goal here is to connect the intensity
+measured by our cameras with the spin-structure factor that is calculated by the
+theorists.   In this last equation we see that the first term, the one related to the spin structure factor, is
+going to have the main contribution to the intensity because it goes as $
+|\Delta|^{-2} $, whereas the other terms go as larger powers of $1/|\Delta|$.  
+If we neglect terms other than the spin structure factor then,  in the low intensity and large detuning limit (with the detuning set in between the two spin states), we obtain 
 \begin{equation}
-\langle I \rangle =
+ I  =
  \left( 
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda 
   \right) \times 
   \left(
-    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n}  
+    e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n}  
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       S_{zm}S_{zn}  
-  +  \frac{I/I_{sat}}{ 4 \Delta^{2} } N
+  +  \frac{I_{\mathrm{p}}/I_{sat}}{ 4 \Delta^{2} } N
   \right)
 \end{equation}
-where we have made use of $s_{n}/(1+s_{n}) \approx (I/I_{\mathrm{sat}})/ \Delta_{n}^{2}$ to carry out the sum over $n$ in Eq.~(\ref{eq:finalIdetector}).  We then manipulate the $n<m$ sum and the real part to obtain
+where we have made use of $s_{n}/(1+s_{n}) \approx (I_{\mathrm{p}}/I_{\mathrm{sat}})/ \Delta_{n}^{2}$ to carry out the sum over $n$ in Eq.~(\ref{eq:finalIdetector}).  We then manipulate the $n<m$ sum and the real part to obtain
 \begin{equation}
-\langle I \rangle =
+ I  =
  \left( 
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda 
   \right) \times 
   \left(
-    e^{-2W} \frac{I/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \sum_{m n}  
+    e^{-2W} \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \sum_{m n}  
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       S_{zm}S_{zn}  
-  + (1- e^{-2W}) \frac{I/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+  + (1- e^{-2W}) \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
   \right)
 \end{equation}
 In this formula the spin structure factor appears explicitly, we pull out some factors and get  
 \begin{equation}
-\langle I \rangle =
+ I  =
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda
- \frac{I/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+ \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
   \left(
    1 + 
     e^{-2W} \left( \frac{4}{ N }  \sum_{m n}  
@@ -677,10 +682,10 @@ In this formula the spin structure factor appears explicitly, we pull out some f
 \end{equation}
 After time-of-flight the Debye-Waller factor goes to zero due to the expanding size of the atomic wavefunctions and so  
 \begin{equation}
-\langle I \rangle_{\mathrm{TOF}} =
+ I_{\mathrm{TOF}} =
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda
- \frac{I/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+ \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
 \end{equation}
 giving finally 
 \begin{equation}
@@ -693,7 +698,15 @@ This has the expected form (we got this from David Huse), and it defines the spi
       S_{zm}S_{zn}  
 \end{equation}
 
-IMPORTANT REMARK:   We note here that this derivation which relates the observed intensity to the spin structure factor relies on the saturation parameter being much less than 1.   In our case we have $I/I_{\mathrm{sat}}\approx 25$ and $\Delta\approx 6.5$ which gives a saturation parameter of $s=0.3$ which is less than 1 but maybe not entirely negligible.   In the near future we will attempt to use the exact expression for the intensity at the detector which considers saturation effects to determine what kind of corrections do we need to make to connect between our measurement and the exact spin structure factor. 
+IMPORTANT REMARK:   We note here that this derivation which relates the
+observed intensity to the spin structure factor relies on the saturation
+parameter being much less than 1.   In our case we have
+$I_{\mathrm{p}}/I_{\mathrm{sat}}\approx 25$ and $\Delta\approx 6.5$ which gives a saturation
+parameter of $s=0.3$ which is less than 1, but maybe not entirely negligible.
+In the near future we will attempt to use the exact expression for the
+intensity at the detector which considers saturation effects to determine what
+kind of corrections do we need to make to connect between our measurement and
+the exact spin structure factor. 
 
 \subsection{Walk through Ted's derivation to find missing terms}\label{sec:Ted}
 
@@ -807,8 +820,115 @@ outside the core is random, but the spin imbalance is constrained to be zero,
 that is there is an equal number of atoms in state $|1\rangle$ and state
 $|2\rangle $  occupying the $L^{3}$ sites in the lattice. 
 
-The reults of the numerical calculation will be presented in a later version of this document as the implementation has not been finished yet.  
-
+For the numerical calculation we start from Eq.~(\ref{eq:finalIdetector}) and replace the sum over $m<n$ with an unrestricted sum over $m,n$.  This removes the real part, and we have to subract again some $m=n$ terms, the result is 
+\begin{multline}
+ I  =
+ \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) \times \\
+  \frac{ e^{-2W} }{ 4 (I_{\mathrm{p}}/I_{\mathrm{sat}})} \sum_{mn} 
+    \frac{ s_{m} s_{n} } { ( 1+s_{m} )( 1+s_{n} ) }
+               e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }
+    \left(
+        4 \Delta_{m} \Delta_{n}
+      + 2 i \Delta_{n} 
+      - 2 i \Delta_{m}
+      + 1
+    \right)  
+  + \sum_{n}  \frac{1}{2}
+    \frac{ s_{n} } { 1 + s_{n} } \left( 1 - \frac{e^{-2W}}{1+s_{n}} \right)
+\end{multline}
+To facilitate the numerical calculation we will split this up as 
+\begin{multline}
+ I  =
+ \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) \times \\
+  \left[
+  \frac{ e^{-2W} }{ 4 (I_{\mathrm{p}}/I_{\mathrm{sat}})}
+  \left( 
+    2 \sum_{m}  
+    \frac{ s_{m} }
+         {  1 + s_{m} } \Delta_{m} e^{i\bv{Q}\cdot\bv{R}_{m} }
+    2 \sum_{n} 
+    \frac{ s_{n} }
+         {  1 + s_{n} } \Delta_{n} e^{-i\bv{Q}\cdot\bv{R}_{n} }  \right. \right.\\
+    + 2i\sum_{m}  
+    \frac{ s_{m} }
+         {  1 + s_{m} } e^{i\bv{Q}\cdot\bv{R}_{m} }
+    \sum_{n} 
+    \frac{ s_{n} }
+         {  1 + s_{n} } \Delta_{n} e^{-i\bv{Q}\cdot\bv{R}_{n} }   \\
+    - 2i\sum_{m}  
+    \frac{ s_{m} }
+         {  1 + s_{m} } \Delta_{m} e^{i\bv{Q}\cdot\bv{R}_{m} }
+    \sum_{n} 
+    \frac{ s_{n} }
+         {  1 + s_{n} } e^{-i\bv{Q}\cdot\bv{R}_{n} }   \\
+    \left.
+    +\sum_{m}  
+    \frac{ s_{m} }
+         {  1 + s_{m} } e^{i\bv{Q}\cdot\bv{R}_{m} }
+    \sum_{n} 
+    \frac{ s_{n} }
+         {  1 + s_{n} } e^{-i\bv{Q}\cdot\bv{R}_{n} }  \right) \\
+   \left.
+  + \sum_{n}  \frac{1}{2}
+    \frac{ s_{n} } { 1 + s_{n} } \left( 1 - \frac{e^{-2W}}{1+s_{n}} \right) \right]
+\end{multline}
+The following sums appear and we define some shorthand notation for them
+\begin{align} 
+     \Phi \equiv & 
+     \sum_{m}  
+    \frac{ s_{m} }
+         {  1 + s_{m} } \Delta_{m} e^{i\bv{Q}\cdot\bv{R}_{m} } \\
+     \Upsilon \equiv &
+     \sum_{m}  
+    \frac{ s_{m} }
+         {  1 + s_{m} } e^{i\bv{Q}\cdot\bv{R}_{m} } \\
+     S \equiv & 
+     \sum_{n}  
+     \frac{ s_{n} } { 1 + s_{n} }  \\
+     V \equiv & 
+     \sum_{n}  
+     \frac{ s_{n} } { (1 + s_{n})^{2}}  \\
+\end{align}
+We can then write the intensity as 
+\begin{equation}
+\begin{split}
+ I  = &
+ \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right)
+  \left[
+  \frac{ e^{-2W} }{ 4 (I_{\mathrm{p}}/I_{\mathrm{sat}})}
+  \left( 
+    4 \Phi \Phi^{*}
+    + 2i \Upsilon \Phi^{*} 
+    - 2i \Phi \Upsilon^{*}
+    + \Upsilon \Upsilon^{*}  
+          \right)
+  + \frac{1}{2}S - \frac{ e^{-2W}}{2} V 
+\right] \\ 
+\end{split}
+\end{equation}
+For the numerical evaluation we will use $\frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{48\pi}$  as a unit for the intensity, so we can finally simplify the expression to
+\begin{equation}
+\begin{split}
+  I  = &
+ \Lambda 
+  \left[
+  S + 
+  e^{-2W} \left(  
+  \frac{ | \Upsilon - 2 i \Phi |^{2} }{  2 (I_{\mathrm{p}}/I_{\mathrm{sat}})}
+   - V \right)
+  \right] \\ 
+\end{split}
+\end{equation}
 
  
 %\subsection{ Analytical dependence of crystal and magnetic structure factors on \bv{Q}}
