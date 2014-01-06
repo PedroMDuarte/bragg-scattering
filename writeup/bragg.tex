@@ -28,6 +28,8 @@
 \newcommand{\Lc}{\ensuremath{L_{\mathrm{c}}}}
 \newcommand{\dsig}[1]{\ensuremath{ \frac{ d\,\sigma_{#1} }{d\,\Omega} }}
 
+\newcommand{\iisat}{\ensuremath{I_{\mathrm{p}}/I_{\mathrm{sat}}}}
+
 \begin{document}
 
 \section{Scattering of light by an array of atoms}
@@ -96,7 +98,7 @@ steady-state solutions to the optical Bloch equations given by
 where $s$ is the saturation parameter for an incident probe with intensity
 $I_{\mathrm{p}}$:
 \begin{equation}
-s = \frac{ 2  I_{\mathrm{p}}/I_{\mathrm{sat}} } { 1 + 4(\Delta/\Gamma)^{2} } 
+s = \frac{ 2  \iisat } { 1 + 4(\Delta/\Gamma)^{2} } 
 \end{equation}
 The coherent and incoherent intensities are
 \begin{equation}
@@ -401,7 +403,7 @@ evaluate the expectation values and we obtain for $I$
 \begin{multline}
  I  = 
   \sum_{mn}  \eta_{m}\eta_{n}^{*}
-    \frac{ s_{m} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+    \frac{ s_{m} s_{n} } { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
     \left(
         \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
       + i \frac{ \Delta_{n} }{ 2 \Gamma } 
@@ -420,7 +422,7 @@ We proceed to split up the first sum into same-atom ($n=m$) and different atom
 \begin{multline}
  I  = 
   \sum_{m<n} 
-    \frac{ s_{m} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+    \frac{ s_{m} s_{n} } { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
     \left(
         \eta_{m}\eta_{n}^{*}
     \left(
@@ -439,7 +441,7 @@ We proceed to split up the first sum into same-atom ($n=m$) and different atom
     \right) 
     \right)  \\
   + \sum_{n}  |\eta_{n}|^{2}
-    \frac{ s_{n} s_{n} } { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{n} )( 1+s_{n} ) }
+    \frac{ s_{n} s_{n} } { (\iisat) ( 1+s_{n} )( 1+s_{n} ) }
     \left(
         \frac{ \Delta_{n} \Delta_{n} }{ \Gamma^{2} } 
       + \frac{1}{4}  
@@ -578,7 +580,7 @@ have
  I  = 
   \sum_{m<n} 
     \frac{ s_{m} s_{n} } 
-         { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+         { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
     2 \Re\left[ 
             \frac{\hbar c k \Gamma}{r_{D}^{2}}  
             \frac{9}{24\pi}  \Lambda
@@ -604,7 +606,7 @@ have
   \right) \times \\
   \sum_{m<n} 
     \frac{ s_{m} s_{n} } 
-         { (I_{\mathrm{p}}/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+         { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
     2 \Re\left[ 
                e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } e^{-2W}  
     \left(
@@ -635,7 +637,7 @@ Note:  To see this more clearly and at the same time check the prefactors that s
 We start from Eq.~(\ref{eq:finalIdetector}) and concentrate on the two sums,
 the first of which is 
 \begin{equation} 
-  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re 
+  \frac{  e^{-2W}}{2\iisat} \Re 
   \sum_{m<n} 
                e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
     \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }
@@ -646,64 +648,106 @@ the first of which is
       + 1
     \right)  
 \end{equation}
-where for simplicity we have now written the detunings in units of $\Gamma$.  We will split this up further into four terms 
+where for simplicity we have now written the detunings in units of $\Gamma$.
+We will split this up further into four terms 
 \begin{align} 
-  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+  \frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 4 \Delta_{m} \Delta_{n} \\
-  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+  \frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{n}  \\
-  -\frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+  -\frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{m}  \\
-  \frac{  e^{-2W}}{2I_{\mathrm{p}}/I_{\mathrm{sat}}} \Re \sum_{m<n} & 
+  \frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }   
 \end{align}
 
-In the low intensity limit, and for a detuning such that $4\Delta_{m}^{2}, 4\Delta_{n}^{2} \gg 1 $ these four tend respectively to 
+For a detuning such that $4\Delta_{m}^{2}, 4\Delta_{n}^{2} \gg 1 $ we have
+\begin{equation}
+  \frac{s}{1+s} \approx \frac{2 \iisat }
+                             { 4 \Delta^{2} + 2 \iisat }
+\end{equation}
+
+
+
+and the four terms above go respectively to  
 \begin{align} 
-    e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+     e^{-2W} 2(\iisat)\Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      \frac{1}{ 4 \Delta_{m} \Delta_{n} }  \\
-    e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      \frac{ 4 \Delta_{m} \Delta_{n} } 
+           {(4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+ }  \\
+     e^{-2W} 2(\iisat)\Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      \frac{i}{ 8 \Delta_{n} \Delta_{m}^{2}} \\
-  - e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      \frac{ 2 i \Delta_{n} } 
+           {(4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+ }   \\
+    -e^{-2W} 2(\iisat) \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      \frac{i}{ 8 \Delta_{n}^{2} \Delta_{m} } \\
-    e^{-2W} 2(I_{\mathrm{p}}/I_{\mathrm{sat}}) \Re \sum_{m<n} & 
+      \frac{ 2 i \Delta_{m} } 
+           {(4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+ }   \\
+     e^{-2W} 2(\iisat)\Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      \frac{1}{ 16 \Delta_{m}^{2} \Delta_{n}^{2} }
+      \frac{ 1} { (4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+}   
 \end{align}
+%\begin{align} e^{-2W} 2(\iisat) \Re \sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} -
+%\bv{R}_{n} ) } \frac{1}{ 4 \Delta_{m} \Delta_{n} }  \\ e^{-2W} 2(\iisat) \Re
+%\sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } \frac{i}{ 8 \Delta_{n}
+%\Delta_{m}^{2}} \\ - e^{-2W} 2(\iisat) \Re \sum_{m<n} & e^{ i \bv{Q}(
+%\bv{R}_{m} - \bv{R}_{n} ) } \frac{i}{ 8 \Delta_{n}^{2} \Delta_{m} } \\ e^{-2W}
+%2(\iisat) \Re \sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } \frac{1}{
+%16 \Delta_{m}^{2} \Delta_{n}^{2} } \end{align}
 Furthermore, if we detune the light in between the two spin states then we can
-use $\frac{1}{2\Delta_{m}} = \frac{1}{|\Delta|}S_{zm}$, where
-$S_{zm}=\pm\frac{1}{2}$ is the spin state of the atom in site $m$, to obtain
+use $\Delta_{m} = 2|\Delta|S_{zm}$, where $S_{zm}=\pm\frac{1}{2}$ is
+the spin state of the atom in site $m$, to obtain
 \begin{align} 
-    e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n} & 
+     e^{-2W} 2(\iisat)
+      \frac{ 16 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat)^{2} }  
+       \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-      S_{zm}S_{zn}  \\
-    e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
+      S_{zm}S_{zn}\\
+     e^{-2W} 2(\iisat)
+      \frac{ 4 i |\Delta| } 
+           {(4 \Delta^{2} + 2 \iisat)^{2} }  
+      \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
-       i S_{zn} \\
-  - e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & 
-      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }
-       i S_{zm} \\  
-    e^{-2W} \frac{2I/I_{\mathrm{sat}}}{ 16 |\Delta|^{4} }  \Re \sum_{m<n} & 
+      S_{zn}  \\
+    -e^{-2W} 2(\iisat) 
+      \frac{ 4 i |\Delta|} 
+           {(4 \Delta^{2} + 2 \iisat)^{2} }  
+      \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+        S_{zm} \\
+     e^{-2W} 2(\iisat)
+      \frac{ 1} { (4 \Delta^{2} + 2 \iisat)^{2} }   
+       \Re \sum_{m<n} & 
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
 \end{align}
-We identify the first term and the last term as related to the spin structure factor and crystal structure factor.
-%%%%% that appear in Ted's
-%%%%%paper.   We have also two other terms show up here, which Ted discards in his
-%%%%%derivation, see more details on Sec.~\ref{sec:Ted}.    As was stated at the
-%%%%%beginning of this document, our main goal here is to connect the intensity
-%%%%%measured by our cameras with the spin-structure factor that is calculated by the
-%%%%%theorists.   
-In this last equation we see that the first term, the one related to the spin structure factor, is
-going to have the main contribution to the intensity because it goes as $
-|\Delta|^{-2} $, whereas the other terms go as larger powers of $1/|\Delta|$.  
-If we neglect terms other than the spin structure factor then,  in the low intensity and large detuning limit (with the detuning set in between the two spin states), we obtain 
+%\begin{align} e^{-2W} \frac{2\iisat}{ |\Delta|^{2} }  \Re \sum_{m<n} & e^{ i
+%\bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } S_{zm}S_{zn}  \\ e^{-2W} \frac{2\iisat}{ 4
+%|\Delta|^{3} }  \Re \sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } i
+%S_{zn} \\ - e^{-2W} \frac{2\iisat}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & e^{ i
+%\bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } i S_{zm} \\  e^{-2W}
+%\frac{2I/I_{\mathrm{sat}}}{ 16 |\Delta|^{4} }  \Re \sum_{m<n} & e^{ i \bv{Q}(
+%\bv{R}_{m} - \bv{R}_{n} ) } \end{align}
+We identify the first term and the last term as related to the spin structure
+factor and crystal structure factor.
+%%%%% that appear in Ted's %%%%paper.   We have also two other terms show up
+%here, which Ted discards in his %%%%derivation, see more details on
+%Sec.~\ref{sec:Ted}.    As was stated at the %%%%beginning of this document,
+%our main goal here is to connect the intensity %%%%measured by our cameras
+%with the spin-structure factor that is calculated by the %%%%theorists.   
+In this last equation we see that the first term, the one related to the spin
+structure factor, is going to have the main contribution to the intensity
+because it goes as $ |\Delta|^{-2} $, whereas the other terms go as larger
+powers of $1/|\Delta|$.  If we neglect terms other than the spin structure
+factor then,  we obtain 
 \begin{equation}
  I  =
  \left( 
@@ -711,13 +755,13 @@ If we neglect terms other than the spin structure factor then,  in the low inten
      \frac{9}{24\pi} \Lambda 
   \right) \times 
   \left(
-    e^{-2W} \frac{2I_{\mathrm{p}}/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \Re \sum_{m<n}  
+    e^{-2W} \frac{2\iisat}{ |\Delta|^{2} }  \Re \sum_{m<n}  
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       S_{zm}S_{zn}  
   +  \frac{I_{\mathrm{p}}/I_{sat}}{ 4 \Delta^{2} } N
   \right)
 \end{equation}
-where we have made use of $s_{n}/(1+s_{n}) \approx (I_{\mathrm{p}}/I_{\mathrm{sat}})/ \Delta_{n}^{2}$ to carry out the sum over $n$ in Eq.~(\ref{eq:finalIdetector}).  We then manipulate the $n<m$ sum and the real part to obtain
+where we have made use of $s_{n}/(1+s_{n}) \approx (\iisat)/ \Delta_{n}^{2}$ to carry out the sum over $n$ in Eq.~(\ref{eq:finalIdetector}).  We then manipulate the $n<m$ sum and the real part to obtain
 \begin{equation}
  I  =
  \left( 
@@ -725,10 +769,10 @@ where we have made use of $s_{n}/(1+s_{n}) \approx (I_{\mathrm{p}}/I_{\mathrm{sa
      \frac{9}{24\pi} \Lambda 
   \right) \times 
   \left(
-    e^{-2W} \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ |\Delta|^{2} }  \sum_{m n}  
+    e^{-2W} \frac{\iisat}{ |\Delta|^{2} }  \sum_{m n}  
       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
       S_{zm}S_{zn}  
-  + (1- e^{-2W}) \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+  + (1- e^{-2W}) \frac{\iisat}{ 4|\Delta|^{2} }  N
   \right)
 \end{equation}
 In this formula the spin structure factor appears explicitly, we pull out some factors and get  
@@ -736,7 +780,7 @@ In this formula the spin structure factor appears explicitly, we pull out some f
  I  =
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda
- \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+ \frac{\iisat}{ 4|\Delta|^{2} }  N
   \left(
    1 + 
     e^{-2W} \left( \frac{4}{ N }  \sum_{m n}  
@@ -749,7 +793,7 @@ After time-of-flight the Debye-Waller factor goes to zero due to the expanding s
  I_{\mathrm{TOF}} =
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda
- \frac{I_{\mathrm{p}}/I_{\mathrm{sat}}}{ 4|\Delta|^{2} }  N
+ \frac{\iisat}{ 4|\Delta|^{2} }  N
 \end{equation}
 giving finally 
 \begin{equation}
@@ -766,7 +810,7 @@ This has the expected form (we got this from David Huse), and it defines the spi
 IMPORTANT REMARK:   We note here that this derivation which relates the
 observed intensity to the spin structure factor relies on the saturation
 parameter being much less than 1.   In our case we have
-$I_{\mathrm{p}}/I_{\mathrm{sat}}\approx 25$ and $\Delta\approx 6.5$ which gives a saturation
+$\iisat\approx 25$ and $\Delta\approx 6.5$ which gives a saturation
 parameter of $s=0.3$ which is less than 1, but maybe not entirely
 negligible. We have performed numerical evaluations of the exact
 expression for the intensity at the detector which considers saturation
@@ -886,7 +930,7 @@ For the numerical calculation we start from Eq.~(\ref{eq:finalIdetector}) and re
  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
      \frac{9}{24\pi} \Lambda 
   \right) \times \\
-  \frac{ e^{-2W} }{ 4 (I_{\mathrm{p}}/I_{\mathrm{sat}})} \sum_{mn} 
+  \frac{ e^{-2W} }{ 4 (\iisat)} \sum_{mn} 
     \frac{ s_{m} s_{n} } { ( 1+s_{m} )( 1+s_{n} ) }
                e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }
     \left(
@@ -906,7 +950,7 @@ We will split this up as
      \frac{9}{24\pi} \Lambda 
   \right) \times \\
   \left[
-  \frac{ e^{-2W} }{ 4 (I_{\mathrm{p}}/I_{\mathrm{sat}})}
+  \frac{ e^{-2W} }{ 4 (\iisat)}
   \left( 
     2 \sum_{m}  
     \frac{ s_{m} }
@@ -963,7 +1007,7 @@ We can then write the intensity as
      \frac{9}{24\pi} \Lambda 
   \right)
   \left[
-  \frac{ e^{-2W} }{ 4 (I_{\mathrm{p}}/I_{\mathrm{sat}})}
+  \frac{ e^{-2W} }{ 4 (\iisat)}
   \left( 
     4 \Phi \Phi^{*}
     + 2i \Upsilon \Phi^{*} 
@@ -983,7 +1027,7 @@ For the numerical evaluation we will use $\frac{\hbar c k \Gamma}{r_{D}^{2}}
   \left[
   \kappa + 
   e^{-2W} \left(  
-  \frac{ | \Upsilon - 2 i \Phi |^{2} }{  2 (I_{\mathrm{p}}/I_{\mathrm{sat}})}
+  \frac{ | \Upsilon - 2 i \Phi |^{2} }{  2 (\iisat)}
    - \xi \right)
   \right] \\ 
 \end{split}

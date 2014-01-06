@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.5.5)  6 JAN 2014 01:40
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.5.5)  6 JAN 2014 02:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -299,24 +299,24 @@ LaTeX Warning: Unused global option(s):
 (./bragg.aux)
 \openout1 = `bragg.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 31.
-LaTeX Font Info:    Try loading font information for LGR+cmr on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
+LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 33.
+LaTeX Font Info:    Try loading font information for LGR+cmr on input line 33.
  (/usr/share/texlive/texmf-dist/tex/generic/babel/lgrcmr.fd
 File: lgrcmr.fd 2008/06/17 v2.3 Greek Computer Modern
 )
-LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    ... okay on input line 33.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -412,16 +412,12 @@ e
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    Try loading font information for U+bbold on input line 204.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 206.
 
 
-(/usr/share/texlive/texmf-dist/tex/latex/bbold/Ubbold.fd) [3]
-
-LaTeX Warning: Reference `eq:source-field' on page 4 undefined on input line 35
-9.
-
-[4] [5] [6] [7]
-Overfull \hbox (1.96301pt too wide) detected at line 900
+(/usr/share/texlive/texmf-dist/tex/latex/bbold/Ubbold.fd) [3] [4] [5] [6]
+[7]
+Overfull \hbox (1.96301pt too wide) detected at line 944
  []$[][] [] []\OML/cmm/m/it/10.95 e[] [] \OT1/cmr/m/n/10.95 + [] [][] []$ []  
  []
 
@@ -433,17 +429,14 @@ Overfull \hbox (1.96301pt too wide) detected at line 900
 [13] <figures/rocking.png, id=71, 1011.78pt x 975.645pt> (./bragg.bbl) [14]
 [15] (./bragg.aux)
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 4154 strings out of 493485
- 58862 string characters out of 3143527
- 140399 words of memory out of 3000000
- 7330 multiletter control sequences out of 15000+200000
+ 4155 strings out of 493485
+ 58867 string characters out of 3143527
+ 140431 words of memory out of 3000000
+ 7331 multiletter control sequences out of 15000+200000
  17933 words of font info for 65 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,19n,43p,673b,289s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -469,7 +462,7 @@ s/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt10.pfb>
-Output written on bragg.pdf (15 pages, 294201 bytes).
+Output written on bragg.pdf (15 pages, 293842 bytes).
 PDF statistics:
  153 PDF objects out of 1000 (max. 8388607)
  104 compressed objects within 2 object streams
