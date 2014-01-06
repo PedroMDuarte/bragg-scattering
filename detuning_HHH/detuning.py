@@ -1,3 +1,7 @@
+
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
 import numpy as np
 import vec3
 import pylab
@@ -14,10 +18,10 @@ from matplotlib import rc
 rc('font',**{'family':'serif'})
 
 
-cols = 3
-rows = 4
+cols = 2
+rows = 2
 
-figure = plt.figure(figsize=(12.,12.))
+figure = plt.figure(figsize=(8.,6.))
 #figure.suptitle('Bragg')
 gs = matplotlib.gridspec.GridSpec( rows,cols, wspace=0.6, hspace=0.42) 
 
@@ -26,23 +30,13 @@ lc = [ 'black', 'brown', 'red', 'gold', 'limegreen', 'blue', 'purple', 'gray','o
 fc = [ 'black', 'brown', 'red', 'gold', 'limegreen', 'blue', 'purple', 'gray','orange','violet']
 m  = [ 'o', 'D', '+', '^', '<', '>','o', 'D', '+', '^', '<', '>']
 
-ax1e = plt.subplot( gs[ 0,0] )
-ax2e = plt.subplot( gs[ 1,0] )
-axRe = plt.subplot( gs[ 2,0] )
-
-ax1i = plt.subplot( gs[ 0,1] )
-ax2i = plt.subplot( gs[ 1,1] )
-axR1ie = plt.subplot( gs[ 2,1] )
+ax1e = plt.subplot( gs[ 1,0] )
+ax2e = plt.subplot( gs[ 1,1] )
+axRe = plt.subplot( gs[ 0,0] )
 
 
-ax1c = plt.subplot( gs[ 0,2] )
-ax2c = plt.subplot( gs[ 1,2] )
-axRc = plt.subplot( gs[ 2,2] )
 
-axRcOD = plt.subplot(gs[3,2])
-
-#axlist = [ax1e, ax2e, axRe, ax1i, ax2i, axR1ie, ax1c, ax2c, axRc] 
-axlist = [ax1e, ax2e, axRe, ax1i, ax2i, axR1ie, ax1c, ax2c, axRc, axRcOD] 
+axlist = [ax1e, ax2e, axRe] 
 for ax in axlist:
   ax.set_xlabel('Detuning ($\Gamma$)')
   # Put vertical lines to show the states
@@ -51,10 +45,7 @@ for ax in axlist:
 
 ax1e.set_ylabel('ANDOR1')
 ax2e.set_ylabel('ANDOR2')
-axRe.set_ylabel('A2(elastic)/A1(elastic)')
-ax1i.set_ylabel('ANDOR1')
-ax2i.set_ylabel('ANDOR2')
-axR1ie.set_ylabel('A1(inelastic)/A1(elastic)')
+axRe.set_ylabel('A2/A1')
 
 def plotunc( ax, x, dat, lcolor, fcolor, marker, labelstr, alpha=1.0):
     print "plotting ", labelstr
@@ -66,117 +57,82 @@ def plotunc( ax, x, dat, lcolor, fcolor, marker, labelstr, alpha=1.0):
                 alpha = alpha, \
                 marker=marker, mfc=fcolor, \
                 label=labelstr)
-    if ax == axRcOD:
+    if ax == axRe:
         detdat = np.transpose( np.vstack(( x, unumpy.nominal_values(dat) )))
         np.savetxt( 'detuningSim.dat', detdat)
     #plotunc( axRcOD, x, a2_o/a1_o , lc[i], fc[i],\
 
 
 #nafms = [4,6,8,10,12,16,20,24,32,34,38,40]
-nafms = [2,4,6,7,8,9,10,16]
+nafms = [4,5,6,7,8]
 
-plotafmval = [6,7,8,9,10]
+plotafmval = [4,5,6,7,8]
 plotafmdat = []
 for i,nafm in enumerate(nafms):
-   
-    print "\nWorking on nafm = %d" % nafm 
-    # Initialize crystal
     N = 40 
-    A1 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA1))
-    A2 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA2))
-
-    Nr = 320
-    A1.loadCS(Nr)
-    A2.loadCS(Nr)
-
-
-    a1 = []
-    a2 = []
-    x = np.hstack(( np.linspace(-400,-20,50), \
-                    np.linspace(-20,20,101), \
-                    np.linspace(20,400,50)))
-    for det in x:
-        a1i = A1.sigma_incoh_det( Nr, det, 0.)
-        a2i = A2.sigma_incoh_det( Nr, det, 0.)
-        a1e = A1.sigma_coh_det( Nr, det, 0.)
-        a2e = A2.sigma_coh_det( Nr, det, 0.)
+    Nr = 200
+    dirname = 'detuningsimdat/' 
+    fname = '_N%02d_nafm%02d_Nr%04d.dat'%(N,nafm,Nr)
+    x = np.hstack(( np.linspace(-50,-25,5), \
+                    np.linspace(-20,20,21), \
+                    np.linspace(25,50,5)))
+    try:
+        a1 = np.loadtxt( dirname + 'A1'+fname) 
+        a2 = np.loadtxt( dirname + 'A2'+fname) 
+    except:
+        print "\nWorking on nafm = %d" % nafm 
+        # Initialize crystal
+        A1 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA1))
+        A2 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA2))
     
-        a1.append( [a1e.nominal_value, a1e.std_dev, a1i.nominal_value,\
-                    a1e.nominal_value, a1e.std_dev, \
-                    a1e.nominal_value, a1e.std_dev, ])
-        a2.append( [a2e.nominal_value, a2e.std_dev, a2i.nominal_value,\
-                    a2e.nominal_value, a2e.std_dev, \
-                    a2e.nominal_value, a2e.std_dev, ])
     
-    a1 = np.array( a1) 
-    a2 = np.array( a2) 
+        a1 = []
+        a2 = []
+        for det in x:
+            print det, 
+            sys.stdout.flush()
+            a1e = A1.I_( Nr=Nr, detuning=det, ) / A1.I_( Nr=Nr, detuning=det, tof=100.)
+            a2e = A2.I_( Nr=Nr, detuning=det, ) / A2.I_( Nr=Nr, detuning=det, tof=100.)
+        
+            a1.append( [a1e.nominal_value, a1e.std_dev])
+            a2.append( [a2e.nominal_value, a2e.std_dev])
+        
+        a1 = np.array( a1) 
+        a2 = np.array( a2) 
+        np.savetxt( dirname + 'A1'+fname, a1) 
+        np.savetxt( dirname + 'A2'+fname, a2) 
      
     # Make the array with uncertainty of the various cross sections
     # for the uncertainty use col=3 which is the standard error
     a1_e = unumpy.uarray( a1[:,0], a1[:,1] )  
-    a1_i = unumpy.uarray( a1[:,2], np.zeros_like(a1[:,0]) )
-    a1_c = unumpy.uarray( a1[:,3], a1[:,4] )  
-    a1_o = unumpy.uarray( a1[:,5], a1[:,6] )  
     a2_e = unumpy.uarray( a2[:,0], a2[:,1] )  
-    a2_i = unumpy.uarray( a2[:,2], np.zeros_like(a2[:,0]) )
-    a2_c = unumpy.uarray( a2[:,3], a2[:,4] )  
-    a2_o = unumpy.uarray( a2[:,5], a2[:,6] )  
 
     # PLOT ANDOR 1 
     plotunc( ax1e, x, a1_e, lc[i], 'None', m[i], 'A1 elastic' + ' Nafm=%d'%nafm)
-    plotunc( ax1i, x, a1_i, lc[i], 'None', m[i], 'A1 inelastic' + ' Nafm=%d'%nafm)
-    plotunc( ax1c, x, a1_c, lc[i], 'None', m[i], 'A1 combined' + ' Nafm=%d'%nafm)
-    print "max a1_i = %f" % unumpy.nominal_values(a1_i).max()
  
     # PLOT ANDOR2
     plotunc( ax2e, x, a2_e, lc[i], 'None', m[i], 'A2 elastic' + ' Nafm=%d'%nafm)
-    plotunc( ax2i, x, a2_i, lc[i], 'None', m[i], 'A2 inelastic' + ' Nafm=%d'%nafm)
-    plotunc( ax2c, x, a2_c, lc[i], 'None', m[i], 'A2 combined' + ' Nafm=%d'%nafm)
 
 
     # PLOT ANDOR2/ANDOR1 ELASTIC RATIO
-    max0 = unumpy.nominal_values(a2_e/a1_e).max()
-    plotunc( axRe, x, a2_e/a1_e/max0 , lc[i], fc[i],\
-             'o', 'Nafm=%d, (x%.2g)'%(nafm,1./max0))
+    plotunc( axRe, x, a2_e/a1_e , lc[i], fc[i],\
+             'o', 'Nafm=%d, (x%.2g)'%(nafm,1./1.))
 
-    # PLOT ANDOR1 INELATIC / ANDOR1 ELASTIC
-    max0 = unumpy.nominal_values(a1_i/a1_e).max()
-    plotunc( axR1ie, x, a1_i/a1_e, lc[i], fc[i],\
-             'o', 'Nafm=%d'%nafm)
-
-    # PLOT ANDOR2/ANDOR1 COMBINED RATIO
-    plotunc( axRc, x, a2_c/a1_c , lc[i], fc[i],\
-             'o', 'Nafm=%d'%nafm)
-
-    # PLOT ANDOR2/ANDOR1 COMBINED PLUS OD RATIO
-    plotunc( axRcOD, x, a2_o/a1_o , lc[i], fc[i],\
-             'o', 'Nafm=%d'%nafm)
     if nafm in plotafmval:
-        plotafmdat.append((x,a2_o/a1_o,i,nafm)) 
-
- 
+        plotafmdat.append((x,a2_e/a1_e,i,nafm)) 
 
 
-ax1e.set_yscale('log')
-ax2e.set_yscale('log')
-ax1i.set_yscale('log')
-ax2i.set_yscale('log')
-ax1c.set_yscale('log')
-ax2c.set_yscale('log')
-#axR.set_yscale('log')
+#ax1e.set_yscale('log')
+#ax2e.set_yscale('log')
 
-lims=100.
+lims=50.
 for ax in axlist:
+  ax.grid()
   ax.set_xlim(-lims,lims)
   ax.legend(loc='best', numpoints=1, prop={'size':5})
 
-Rlims=500.
+Rlims=50.
 axRe.set_xlim(-Rlims,Rlims)
-Rlims=1000.
-axR1ie.set_xlim(-Rlims,Rlims)
-Rlims=40.
-axRc.set_xlim(-Rlims,Rlims)
-axRcOD.set_xlim(-Rlims,Rlims)
 
 gs.tight_layout(figure, rect=[0.,0.,1.0,0.91])
 #plt.show()
@@ -228,8 +184,8 @@ def plotsim( ax, x, dat, lcolor, fcolor, marker, labelstr, alpha=1.0):
     ratiores = np.mean( unumpy.nominal_values(dat[res]))
     normTOF = 0.4/0.66
     normTOF = 1.0
-    ax.errorbar( x, normTOF*unumpy.nominal_values(dat)/ratiores,\
-                yerr=0.*normTOF*unumpy.std_devs(dat)/ratiores,\
+    ax.errorbar( x, unumpy.nominal_values(dat),\
+                yerr=0.*unumpy.std_devs(dat),\
                 capsize=0., elinewidth = 1. ,\
                 fmt='.', ecolor=lcolor, mec=lcolor, \
                 mew=1.0, ms=3.,\

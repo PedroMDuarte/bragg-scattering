@@ -51,10 +51,6 @@ class crystal():
                                            0:self.latsize ]
 
         # default values for scattering parameters
-        self.set_detuning( 0. )
-        self.set_pbragg( 250. )
-        self.lBragg = braggvectors.l671
-        self.sunits( ) 
 
         if kin_out == None:
             self.set_kvectors( braggvectors.kin, braggvectors.kout ,\
@@ -62,11 +58,17 @@ class crystal():
         else:
             self.set_kvectors( kin_out[0], kin_out[1],\
                                braggvectors.kipol)
-        
-        self.set_v0( [20.,20.,20.] ) 
-        
-        
+        self.set_pbragg( 250. )
+        self.set_detuning( 0. )
+        self.lBragg = braggvectors.l671
 
+        self.set_v0( [20.,20.,20.] ) 
+        self.set_timeofflight( 0. ) 
+        self.pol()
+        self.debyewaller()
+
+        self.SumsDone = False
+        self.SpinsInit = False
         # crystal visualization settings
         self.fig = None
         self.axes = None
@@ -96,67 +98,64 @@ class crystal():
         self.font_size = 20
         #---scatter options---
         self.point_size = 216
-   
- 
-    def sunits(self ): 
-        # lBragg is the wavelength of the Bragg probe in nm
-        self.sunits = 9. * (self.lBragg**2.) / 16 / (np.pi**2) 
-        
 
-    def set_pbragg( self, pbragg):
-        self.pbragg = 250.
-        w0 = 0.05 #cm 
-        Isat = 5.21 # mW/cm^2
-        self.isat = 2.*(pbragg/1000.) / np.pi / (w0**2) / Isat
-
-    def set_kvectors( self, kin, kout, kipol):
-        self.kin = kin
-        self.kout = kout
-        self.kipol = kipol
-        self.pol()
-        self.Crandom = None
-        self.Srandom = None
-
-    def set_v0( self, v0):
-        self.v0 = v0
-
-    def set_timeofflight( self, t):
-        self.timeofflight = t
-
-    def set_detuning( self, det):
-        self.det = det
-        self.d12 = 76./5.9 
-        # det is with respect to in between 1 and 2
-        # The units are linewidths 
-        self.det2 = self.det + self.d12/2.
-        self.det1 = self.det - self. d12/2.
-
-
-    def shuffle_spins(self):
-        # First make a completely afm ordered lattice
-        self.spin = (self.x + self.y + self.z)%2 - 0.5
-        # Then isolate the central afm core by using a mask
+        # Helper objects for faster spin-shuffling:
+        # Mask for isolating the AFM domain 
         afm0 = (self.latsize-self.afmsize) /2 
         afm1 = afm0 + self.afmsize
-        mask =   (self.x >= afm0) & (self.x < afm1) \
+        self.mask =   (self.x >= afm0) & (self.x < afm1) \
                & (self.y >= afm0) & (self.y < afm1) \
-               & (self.z >= afm0) & (self.z < afm1)  
-        maspin = np.ma.array( self.spin , mask = mask)
-        # Get the spins on the metallic core and 
-        # randomize their arrangement
-        metal = maspin.compressed()
-        metal.reshape( metal.size )
-        np.random.shuffle(metal) 
-     
+               & (self.z >= afm0) & (self.z < afm1)
+        self.shell = np.where(~self.mask)  
+ 
+        # A completely afm ordered lattice
+        self.spin0 = (self.x + self.y + self.z)%2 - 0.5
+        maspin = np.ma.array( self.spin0 , mask = self.mask)
+        # Get the spins on the metallic core 
+        self.metal = maspin.compressed()
+        self.metal.reshape( self.metal.size )
+
+    def shuffle_spins(self):
+        '''Calling this method creates a random distribution of the spins 
+           in the lattice.  The spin values are +/- 0.5
+            ''' 
+        # A completely afm ordered lattice
+        self.spin = (self.x + self.y + self.z)%2 - 0.5
+        # Randomize the spins on the metalic shell
+        np.random.shuffle(self.metal) 
         # Then assign the randomized spins to the metallic
         # shell of the crystal 
-        shell =  np.where(~mask) 
-        for i in range(shell[0].size):
-            maspin[ shell[0][i], shell[1][i], shell[2][i] ] = metal[i]
-            self.spin[ shell[0][i], shell[1][i], shell[2][i] ] = metal[i]
+        self.spin[ self.shell ] = self.metal
 
-    ###############
+    def init_spins(self, Nr):
+        '''This function precalculates random distributions of spins 
+           for use later on by the functions that calculate the sums'''
+        self.RandomSpins = []
+        for i in range(Nr):
+            self.shuffle_spins()
+            self.RandomSpins.append( self.spin )
+        self.SpinsInit = True
+   
+    def test_spin_distribution(self):
+        '''This method verfies that the AFM core is indeed AFM
+           ordered''' 
+        sdiff = self.spin - self.spin0 
+        core  = np.ma.array( sdiff, mask = ~self.mask ) 
+        shell = np.ma.array( sdiff, mask = self.mask )
+ 
+        #print "CORE:"
+        #print core
+        #print 
+        #print "SHELL:"
+        #print shell
+
+        print "CORE  deviation from AFM = %.2f" % np.sum(core.compressed()**2)
+        print "SHELL deviation from AFM = %.2f" % np.sum(shell.compressed()**2)
+        
+
+    #####################################################
     #  METHODS USED TO VISUALIZE THE SPIN DISTRIBUTION         
+    #####################################################
     def make_plot(self):
         # setup plot
         # Figure instance for Bloch sphere plot
@@ -179,14 +178,47 @@ class crystal():
                            color = 'blue', marker='o', s=self.point_size)
 
         self.axes.scatter( spindn[0], spindn[1], spindn[2],
-                           color = 'blue', marker='o', s=self.point_size)
+                           color = 'red', marker='o', s=self.point_size)
     def show(self):
         self.make_plot()
         if self.fig:
             show(self.fig)
-    ###############
+
+    
+    #####################################################
+    #  METHODS USED TO SET AND CALCULATE GENERAL SCATTERING PROPERTIES         
+    #####################################################
+    def set_kvectors( self, kin, kout, kipol):
+        self.kin = kin
+        self.kout = kout
+        self.kipol = kipol
+        self.pol()
+        self.Crandom = None
+        self.Srandom = None
+
+    def set_pbragg( self, pbragg):
+        self.pbragg = pbragg
+        w0 = 0.05 #cm 
+        Isat = 5.21 # mW/cm^2
+        self.isat = 2.*(pbragg/1000.) / np.pi / (w0**2) / Isat
+
+    def set_detuning( self, det):
+        self.det = det
+        self.d12 = 76./5.9 
+        # det is with respect to in between 1 and 2
+        # The units are linewidths 
+        self.det2 = self.det + self.d12/2.
+        self.det1 = self.det - self. d12/2.
+        self.SumsDone = False
+
+    def set_v0( self, v0):
+        self.v0 = v0
+
+    def set_timeofflight( self, t):
+        self.timeofflight = t
 
     def pol(self):
+        '''This method calculates the sum over final polarizations'''
         try:
           kin = self.kin
           kout = self.kout
@@ -220,7 +252,7 @@ class crystal():
         
         polsum = 0.
         for i,pout in enumerate([out1, out2]):
-            term =  abs((pout*splus) * (sminus*inpol))**2.
+            term =  abs( (splus * pout)*(inpol*sminus) )**2.
             polsum = polsum + term
         if verbose:
             print "\tSum over output pol (vectors) = ", polsum
@@ -240,46 +272,13 @@ class crystal():
             b.add_arrow( -kin/abs(kin), origin, 'red')
             b.add_arrow( -kin/abs(kin), -kin/abs(kin) + in1/2., 'black')
             b.add_arrow( -kin/abs(kin), -kin/abs(kin) + in2/2., 'black')
-
             b.add_arrow( origin, kout/abs(kout), 'red')
             b.add_arrow( origin, out1/2., 'black')
             b.add_arrow( origin, out2/2., 'black')
-        
             b.show()
         return self.polsum
 
     def debyewaller(self):
-        try:
-          kin = self.kin
-          kout = self.kout
-          kipol = self.kipol
-        except Exception as e:
-          print "k vectors have not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
-       
-        try:
-          v0 = self.v0
-        except Exception as e:
-          print "v0 has not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
- 
-        K = kin - kout
-       
-        dwx = np.exp( - (K.x * self.a / np.pi)**2. / 2. / np.sqrt(v0[0])) 
-        dwy = np.exp( - (K.y * self.a / np.pi)**2. / 2. / np.sqrt(v0[1]))
-        dwz = np.exp( - (K.z * self.a / np.pi)**2. / 2. / np.sqrt(v0[2]))
-
-        dw = dwx * dwy * dwz
-        if verbose:
-            print "\tDebye-Waller factor = ", dw
-        self.dw = dw
-        return self.dw
-
-    def debyewaller_time( self):
         try:
           kin = self.kin
           kout = self.kout
@@ -305,8 +304,15 @@ class crystal():
           print "program will stop"
           print e
           exit()
-
+ 
         K = kin - kout
+       
+        dwx = np.exp( - (K.x * self.a / np.pi)**2. / 2. / np.sqrt(v0[0])) 
+        dwy = np.exp( - (K.y * self.a / np.pi)**2. / 2. / np.sqrt(v0[1]))
+        dwz = np.exp( - (K.z * self.a / np.pi)**2. / 2. / np.sqrt(v0[2]))
+
+        # This is the Debye-Waller factor at TOF = 0 
+        dw0 = dwx * dwy * dwz
 
         # The debye-waller factor goes down as a function
         # of time due to the initial spread in momentum of 
@@ -362,299 +368,129 @@ class crystal():
         #print "dpx = %e" % dpx 
         #print "t = %.2f" % t 
    
-
         dwx = np.exp( - (K.x * dpx * t / mass )**2 )
         dwy = np.exp( - (K.y * dpy * t / mass )**2 )
         dwz = np.exp( - (K.z * dpz * t / mass )**2 )
 
         dw = dwx * dwy * dwz
+
+        # The total Debye-Waller factor including 
+        # initial value and time of flight deca
+        DW = dw0 * dw 
         if verbose:
-            print "\tDebye-Waller TOF factor = ", dw
-        self.dwtof = dw
-        return self.dwtof
-
-    def alpha_beta( self):
-        try:
-          det = self.det
-        except Exception as e:
-          print "detuning has not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
-
-        f1 = -1. / ( 2 * self.det1 + 1j)
-        f2 = -1. / ( 2 * self.det2 + 1j)
-
-        self.alpha = 1/4. * np.abs( f1+f2 )**2.
-        self.beta  = np.abs( f1-f2  )**2.
-        
-        if verbose:    
-            print "\n\t--- Alpha and Beta ---"
-            print "\tdet = ", det
-            print "\talpha = ", self.alpha
-            print "\tbeta = ", self.beta
-
-    def alpha_beta_Pbroad( self):
-        try:
-          det = self.det
-        except Exception as e:
-          print "detuning has not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
-        try:
-          isat = self.isat 
-        except Exception as e:
-          print "isat (from Pbragg) has not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
-
-        f1 = -1. / ( 2 * self.det1/np.sqrt(1+isat) + 1j)
-        f2 = -1. / ( 2 * self.det2/np.sqrt(1+isat) + 1j)
-
-        self.alpha_Pbroad = 1/4. * np.abs( f1+f2 )**2.
-        self.beta_Pbroad  = np.abs( f1-f2  )**2.
-        
-        if verbose:    
-            print "\n\t--- Alpha and Beta Power Broadened---"
-            print "\tdet = ", det
-            print "\talpha = ", self.alpha_Pbroad
-            print "\tbeta = ", self.beta_Pbroad
-        return self.alpha_Pbroad, self.beta_Pbroad
-
-    def coherent(self):
-        '''Returns fraction of scattering that is elastic'''
-        try:
-          det = self.det
-        except Exception as e:
-          print "detuning has not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
-        try:
-          isat = self.isat 
-        except Exception as e:
-          print "isat (from Pbragg) has not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
-
-        # Saturation parameter
-        SP = 2. * isat * ( 0.5 / (1.+4.*(self.det1**2)) + 0.5 / (1.+4.*(self.det2**2))) 
-        self.coh =  1. / (1. + SP)
-        return self.coh
+            print "\tDebye-Waller factor for v0=%.2 Er, TOF=%.2 us"%(v0,t), DW
+        self.DW = DW
+        return self.DW
 
     def ODfactor(self):
-
         #Average distance for photon to travel to outside of sample (nm)
         dz = self.latsize * self.a / 2. 
- 
         #On-resonace cross section of single atom (nm^2)
         sigm = 3.*np.pi*(self.lBragg/2./np.pi)**2 
-
         #Lorentzian lineshape
         sigm = sigm * ( 0.5/ (1+4*self.det1**2) + 0.5/ (1+4*self.det2**2) ) 
- 
         #Density (1 per site)
         nc = 1. / (self.a**3) 
-
         #Optical density 
         OD = nc * sigm * dz
         #print "Optical density at det = %.2f --> OD = %.3f . e^(-OD) = %e" % (det,OD,np.exp(-OD)) 
-         
         self.odfactor = np.exp(-1.*OD) 
         return self.odfactor
 
-    ############# CRYSTAL AND MAGNETIC STRUCTURE SUMS
-
-    def S( self, ki, kf ):
-        if verbose and False:
-            print (ki.x - kf.x)*self.a
-            print (ki.y - kf.y)*self.a
-            print (ki.z - kf.z)*self.a
-        phase = np.exp( 1j * (ki.x-kf.x)*self.x*self.a + \
-                        1j * (ki.y-kf.y)*self.y*self.a + \
-                        1j * (ki.z-kf.z)*self.z*self.a )
-        sfactor = np.abs( np.sum( phase*self.spin ) )**2 - np.sum( np.abs(phase*self.spin)**2)
-        if verbose:
-            print "\tS = ", sfactor
-        return sfactor
-
-    def C( self, ki, kf ):
-        if verbose and False:
-            print (ki.x - kf.x)*self.a
-            print (ki.y - kf.y)*self.a
-            print (ki.z - kf.z)*self.a
-        
-        phase = np.exp( 1j * (ki.x-kf.x)*self.x*self.a + \
-                        1j * (ki.y-kf.y)*self.y*self.a + \
-                        1j * (ki.z-kf.z)*self.z*self.a )
-        cfactor = np.abs( np.sum( phase ) )**2 - np.sum( np.abs(phase)**2)
-        if verbose:
-            print "\tC = ", cfactor
-        return cfactor
-
-
-    def CS_random( self, Nr): 
-        try:
-          kin = self.kin
-          kout = self.kout
-        except Exception as e:
-          print "k vectors have not been defined in the crystal"
-          print "program will stop"
-          print e
-          exit()
- 
-        Csum =[]
-        Ssum =[]
+    #####################################################
+    #  CALCULATION OF THE FINAL EXPRESSION FOR THE INTENSITY 
+    #####################################################
+    def Sums_random(self, Nr):
+        Q = self.kout-self.kin  
+        phase = np.exp( 1j * Q.x * self.x*self.a + \
+                        1j * Q.y * self.y*self.a + \
+                        1j * Q.z * self.z*self.a )
+   
+        self.Nr = Nr 
+        self.Sums = []
         for i in range(Nr):
-            self.shuffle_spins()
-            Ssum.append( self.S(kin, kout))
-            Csum.append( self.C(kin, kout))
-     
-        return np.array( Csum ), np.array( Ssum)
-
-
+            delta = self.det - self.RandomSpins[i] * self.d12 
+            satparam = 2 * self.isat / (  1 + 4*np.power( delta, 2 ) ) 
         
-    def saveCS(self,Nr, C, S):
-        tag =  khash( self.latsize, self.afmsize, Nr, self.kin, self.kout, self.kipol) 
-        try:
-            CSdict = pickle.load( open(CSdictfile,"rb") ) 
-        except:
-            CSdict = {} 
-        CSdict['C'+tag]=C
-        CSdict['S'+tag]=S
-        pickle.dump( CSdict, open(CSdictfile,"wb") ) 
-    
-    
-    def loadCS(self,Nr):
-        tag =  khash( self.latsize, self.afmsize, Nr, self.kin, self.kout, self.kipol) 
-        try:
-            CSdict = pickle.load( open(CSdictfile,"rb") )
-            Cr, Sr =  CSdict['C'+tag], CSdict['S'+tag] 
-            #print "\nLoaded C, S values from pickle file:\n\t%s" % tag
-            self.Crandom = Cr
-            self.Srandom = Sr 
-        except:
-            print "\nError loading C, S from pickle file:\n\t%s" % tag
-            print "C,S will be calculated"
-            C, S = self.CS_random( Nr)
-            self.saveCS(Nr, C, S)
-            self.Crandom = C
-            self.Srandom = S
-
-        return self.Crandom,self.Srandom
-
-    def loadCSlcorr(self, Nsize, Lc):
-        x, y, z = np.mgrid[ 0:Nsize, \
-                            0:Nsize, \
-                            0:Nsize ]
-        x = x - Nsize/2
-        y = y - Nsize/2
-        z = z - Nsize/2
-
-        Ntot = len(x.flat) 
+            # Upsilon - 2i Phi 
+            UpsPhi = np.absolute( \
+                          np.sum( satparam / ( 1 + satparam ) \
+                                  * phase * (1 - 2*1j*delta) ) )**2
         
-        # S factor
-        Q = (self.kout - self.kin)
-        q = (braggvectors.kA2 - braggvectors.kin )
-        for i in range(3): 
-          q[i] = np.abs(q[i])
-        spins = np.exp( 1j * self.a * ( q[0]*x + q[1]*y + q[2]*z ) ) 
-        phase = np.exp( 1j * self.a * ( Q[0]*x + Q[1]*y + Q[2]*z ) )
-        lcorr = np.exp(-1. * np.sqrt( x**2 + y**2 + z**2 ) / Lc ) 
-        sfactor = Ntot *  np.sum( spins*phase*lcorr )
-
-        tol = 1e-16
-        sfactor = np.real( sfactor ) 
-
-        
-        # C factor
-        cfactor = Ntot *  np.sum( phase )
-        cfactor = np.real( cfactor ) 
-        
-        self.Clcorr = cfactor
-        self.Slcorr = sfactor
-
-        return cfactor, sfactor
+            # Kappa
+            kappa = np.sum( satparam / (1  + satparam ) )
+            # Xi  
+            xi = np.sum( satparam / (1 + satparam)**2 )
+            self.Sums.append( (UpsPhi, kappa, xi) )
+        self.SumsDone = True
+ 
+    def Intensity_random(self, Nr):
+        iarray=[]
+        if not self.SpinsInit:
+            self.init_spins(Nr)
+        if not self.SumsDone:
+            self.Sums_random(Nr)  
+      
+        for i in range(Nr):
+            UpsPhi = self.Sums[i][0] 
+            kappa  = self.Sums[i][1]
+            xi     = self.Sums[i][2]
+            iarray.append( self.polsum * ( kappa + \
+                             self.DW * ( UpsPhi/(2*self.isat) - xi ))  ) 
+        iarray=np.array( iarray ) 
+        return ufloat( np.mean( iarray), stats.sem( iarray) )
 
     ############# FUNCTIONS TO FACILITATE THE CREATION OF PLOTS
 
-    def dw_v0( self, v0):
+    def dw_( self, v0, tof):
         '''This function is used to plot the lattice depth dependence 
            of the Debye-Waller factor''' 
         self.set_v0([v0,v0,v0])
+        self.set_timeofflight( tof ) 
         return self.debyewaller()
 
-    def dw_time( self, time): 
-        '''This function is used to plot the time dependence of the
-           Debye-Waller factor''' 
-        self.set_timeofflight(time)
-        return self.debyewaller_time() 
+    def I_tof( self, Nr, tof):
+        self.set_timeofflight( tof )
+        self.debyewaller() 
+        return  self.Intensity_random( Nr )
 
-    def sigma_incoh_det( self, Nr, det, time):
-        '''This function is used to plot the inelastic cross section 
-           dependence on detuning, and time'''
+    def I_( self, Nr=10, detuning=0., v0=20., tof=0., pbragg=250.):
+        self.set_detuning( detuning )
+        self.set_v0([v0,v0,v0])
+        self.set_timeofflight( tof )
+        self.set_pbragg( pbragg )
+        self.debyewaller()
+        self.SumsDone = False 
+        return  self.Intensity_random( Nr )
+        
+        
+def debye_waller_Q( innum, cam, v0, TOF ):
+    N = 40. 
+    nafm = 8.
+    kinput = braggvectors.ksquad[ innum ]  
+    if cam == 'A1': 
+        koutput = braggvectors.kA1
+    elif cam == 'A2':
+        koutput = braggvectors.kA2 
+    else:
+         raise Exception("Camera is not defined")
+    crys = crystal( N, nafm, braggvectors.l1064/2, (kinput, koutput) )
+    Q = (koutput - kinput) / abs(koutput) *532. / 671. 
+    #print 'in=%d, cam=%s'%(innum,cam), 'Q = ', Q
+    return crys.dw_(v0, TOF), Q
 
-        self.set_detuning(det)
-        self.set_timeofflight(time)
-        if self.Crandom == None or self.Srandom==None:
-            self.loadCS(Nr)
-        self.alpha_beta_Pbroad()
-
-        crystalpart = self.alpha_Pbroad * ( self.x.size )
-
-        magneticpart = self.beta_Pbroad * ( self.x.size )
-
-        vals =  self.sunits * self.polsum \
-               * ( crystalpart + magneticpart)
-        return ufloat( vals, 0. ) 
-
-    def sigma_coh_det( self, Nr, det, time):
-        '''This function is used to plot the elastic cross section 
-           dependence on detuning, and time'''
-
-        self.set_detuning(det)
-        self.set_timeofflight(time)
-        if self.Crandom == None or self.Srandom==None:
-            self.loadCS(Nr)
-        self.alpha_beta_Pbroad()
-       
-        crystalpart = self.alpha_Pbroad * ( self.x.size + \
-                      self.debyewaller_time() * self.Crandom * \
-                      self.coherent() * self.ODfactor() )
-
-        magneticpart = self.beta_Pbroad * ( self.x.size + \
-                      self.debyewaller_time() * self.Srandom * \
-                      self.coherent() * self.ODfactor() )
-
-        vals = self.sunits * self.polsum \
-               * ( crystalpart + magneticpart)
-        return ufloat( np.mean(vals), stats.sem(vals) ) 
-
-            
-    def sigma_coh_det_Lc( self, Nsize, det, time, Lc):
-        '''This function is used to plot the elastic cross section 
-           dependence on detuning, and time'''
-
-        self.set_detuning(det)
-        self.set_timeofflight(time)
-        self.loadCSlcorr(Nsize, Lc)
-
-        self.alpha_beta_Pbroad()
-       
-        crystalpart = self.alpha_Pbroad * (
-                      self.debyewaller_time() * self.Clcorr * \
-                      self.coherent() * self.ODfactor() )
-
-        magneticpart = self.beta_Pbroad * ( 
-                      self.debyewaller_time() * self.Slcorr * \
-                      self.coherent() * self.ODfactor() )
-
-        vals = self.sunits * self.polsum \
-               * ( crystalpart + magneticpart)
-        return ufloat( np.mean(vals), 0. ) 
-
-    
+def debye_waller_Q_kin( kinput, cam, v0, TOF ):
+    N = 40. 
+    nafm = 8.
+    if cam == 'A1': 
+        koutput = braggvectors.kA1
+    elif cam == 'A2':
+        koutput = braggvectors.kA2 
+    else:
+         raise Exception("Camera is not defined")
+    crys = crystal( N, nafm, braggvectors.l1064/2, (kinput, koutput) )
+    Q = (koutput - kinput) / abs(koutput) *532. / 671. 
+    #print 'in=%d, cam=%s'%(innum,cam), 'Q = ', Q
+    return crys.dw_(v0, TOF), Q
+ 
  

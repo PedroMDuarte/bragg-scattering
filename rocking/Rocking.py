@@ -1,3 +1,7 @@
+
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
 import numpy as np
 import vec3
 import pylab
@@ -72,22 +76,22 @@ for i,nafm in enumerate(nafms):
     outangles = np.linspace(-alim/nafm**1.5,alim/nafm**1.5,Npts)
    
     # Ralizations for random spins
-    Nr = 12
+    Nr = 32
  
     if False:
         print '\nNafm = %d'%nafm
         print 'Input Rocking' 
         A1.set_kvectors( bv.kinput(0.), bv.kA1, bv.kipol ) 
-        a1_zero = A1.sigma_coh_det( Nr, 0., 0.) 
-        a1_tof = A1.sigma_coh_det( Nr, 0., 1e4) 
+        a1_zero = A1.I_(Nr=Nr, detuning=0., tof=0.) 
+        a1_tof = A1.I_(Nr=Nr, detuning=0., tof=100.) 
         A1.set_kvectors( bv.kinput(alim), bv.kA1, bv.kipol ) 
-        a1_alim = A1.sigma_coh_det( Nr, 0., 0.) 
+        a1_alim = A1.I_(Nr=Nr, detuning=0., tof=0.) 
         #
         A2.set_kvectors( bv.kinput(0.), bv.kA2, bv.kipol ) 
-        a2_zero = A2.sigma_coh_det( Nr, 0., 0.) 
-        a2_tof = A2.sigma_coh_det( Nr, 0., 1e4) 
+        a2_zero = A2.I_(Nr=Nr, detuning=0., tof=0.) 
+        a2_tof = A2.I_(Nr=Nr, detuning=0., tof=100.) 
         A2.set_kvectors( bv.kinput(alim), bv.kA2, bv.kipol ) 
-        a2_alim = A2.sigma_coh_det( Nr, 0., 0.)
+        a2_alim = A2.I_(Nr=Nr, detuning=0., tof=0.)
         print '\tA1( 0. mrad)=',a1_zero
         print '\tA2( 0. mrad)=',a2_zero
         print '\tA2/A1=',a2_zero/a1_zero
@@ -97,16 +101,16 @@ for i,nafm in enumerate(nafms):
         print '\tA2/A1 Long tof =',a2_tof/a1_tof
         print 'Output Rocking' 
         A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
-        a1_zero = A1.sigma_coh_det( Nr, 0., 0.) 
-        a1_tof = A1.sigma_coh_det( Nr, 0., 1e4) 
+        a1_zero = A1.I_(Nr=Nr, detuning=0., tof=0.) 
+        a1_tof = A1.I_(Nr=Nr, detuning=0., tof=100.) 
         A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
-        a1_alim = A1.sigma_coh_det( Nr, 0., 0.) 
+        a1_alim = A1.I_(Nr=Nr, detuning=0., tof=0.) 
         #
         A2.set_kvectors( bv.kin, bv.koutput(0.), bv.kipol ) 
-        a2_zero = A2.sigma_coh_det( Nr, 0., 0.) 
-        a2_tof = A2.sigma_coh_det( Nr, 0., 1e4) 
+        a2_zero = A2.I_(Nr=Nr, detuning=0., tof=0.) 
+        a2_tof = A2.I_(Nr=Nr, detuning=0., tof=100.) 
         A2.set_kvectors( bv.kin, bv.koutput(alim), bv.kipol ) 
-        a2_alim = A2.sigma_coh_det( Nr, 0., 0.)
+        a2_alim = A2.I_(Nr=Nr, detuning=0., tof=0.)
         print '\tA1( 0. mrad)=',a1_zero
         print '\tA2( 0. mrad)=',a2_zero
         print '\tA2/A1=',a2_zero/a1_zero
@@ -118,7 +122,7 @@ for i,nafm in enumerate(nafms):
     # Long time-of-flight normalization factor
     A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
     A2.set_kvectors( bv.kin, bv.kA2, bv.kipol ) 
-    normtof = A2.sigma_coh_det( Nr, 0., 1e4) / A1.sigma_coh_det( Nr, 0., 1e4)
+    normtof = A2.I_(Nr=Nr, detuning=0., tof=100.) / A1.I_(Nr=Nr, detuning=0., tof=100.)
     normtof = normtof.nominal_value
     if i == 0:
         print "\nA2/A1(t0f=10000us) = ",normtof
@@ -136,7 +140,7 @@ for i,nafm in enumerate(nafms):
         for angle in inangles:
             A1.set_kvectors( bv.kinput(angle), bv.kA1, bv.kipol ) 
             A2.set_kvectors( bv.kinput(angle), bv.kA2, bv.kipol ) 
-            sig =  A2.sigma_coh_det( Nr, 0., 0.) / A1.sigma_coh_det( Nr, 0., 0.)
+            sig =  A2.I_(Nr=Nr, detuning=0., tof=0.) / A1.I_(Nr=Nr, detuning=0., tof=0.)
             inrock.append( sig.nominal_value) 
             inrockerr.append( sig.std_dev)
         np.savetxt( 'rockingdat/inrock'+fname, inrock)
@@ -155,7 +159,7 @@ for i,nafm in enumerate(nafms):
         for angle in outangles:
             A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
             A2.set_kvectors( bv.kin, bv.koutput(angle), bv.kipol ) 
-            sig = A2.sigma_coh_det( Nr, 0., 0.) / A1.sigma_coh_det( Nr, 0., 0.)
+            sig = A2.I_(Nr=Nr, detuning=0., tof=0.) / A1.I_(Nr=Nr, detuning=0., tof=0.)
             outrock.append( sig.nominal_value)
             outrockerr.append( sig.std_dev)
         np.savetxt( 'rockingdat/outrock'+fname, outrock)

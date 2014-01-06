@@ -46,10 +46,10 @@ MANTAdw = []
 A1dw = []
 A2dw = []
 
-v0 = np.linspace( 0., 50., 200)
-MANTAdw = np.array( [ MANTA.dw_v0( v ) for v in v0 ] ) 
-A1dw = np.array( [ A1.dw_v0( v ) for v in v0 ] ) 
-A2dw = np.array( [ A2.dw_v0( v ) for v in v0 ] ) 
+v0 = np.linspace( 0.1, 50., 200)
+MANTAdw = np.array( [ MANTA.dw_( v, 0. ) for v in v0 ] ) 
+A1dw = np.array( [ A1.dw_( v, 0. ) for v in v0 ] ) 
+A2dw = np.array( [ A2.dw_( v, 0. ) for v in v0 ] ) 
 
 axDW.plot( v0, MANTAdw ,\
             '-', c='green', lw=2.,\

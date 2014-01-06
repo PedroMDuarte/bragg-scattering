@@ -19,7 +19,7 @@ from matplotlib import rc
 rc('font',**{'family':'serif'})
 
 N = 40 
-nafm = 8
+nafm = 6
 
 
 # Plot the decay of the debye-waller factor 
@@ -38,8 +38,7 @@ lw=1.5
 Er = 20. 
 def plotdw( ax, kin, kout, c='black', lt='-', label=None):
     crys = afm.crystal( N, nafm, bv.l1064/2, (kin,kout) ) 
-    crys.set_v0([Er, Er, Er])
-    y = np.array( [ crys.dw_time(t) for t in time ] ) 
+    y = np.array( [ crys.dw_(Er,t) for t in time ] ) 
     ax.plot( time, y, lt, c=c, lw=lw, label=label)  
 
 
@@ -85,22 +84,27 @@ ax = plt.subplot( gs2[0,0] )
 axA1 = plt.subplot( gs2[1,0] )
 axA2 = plt.subplot( gs2[1,1] )
 
-time =  np.linspace( 0., 100., 1000)
-Nr = 320 
-normTOF = A2.sigma_coh_det(Nr,0.,100.) / A1.sigma_coh_det(Nr,0.,100.)
-R_DWtof = [A2.sigma_coh_det(Nr,0.,t)/A1.sigma_coh_det(Nr,0.,t) / normTOF  for t in time ]
+time =  np.linspace( 0., 10., 100)
+Nr = 20
+normTOF1 = A1.I_tof(Nr, 100.)
+normTOF2 = A2.I_tof(Nr, 100.)
+normTOF  = normTOF2 / normTOF1 
 
-normTOF1 = A1.sigma_coh_det(Nr,0.,100.) 
-A1_DWtof = [A1.sigma_coh_det(Nr,0.,t)/normTOF1  for t in time ]
-normTOF2 = A2.sigma_coh_det(Nr,0.,100.)
-A2_DWtof = [A2.sigma_coh_det(Nr,0.,t)/normTOF2  for t in time ]
+R_DWtof=[]
+A1_DWtof=[]
+A2_DWtof=[]
+for t in time:
+    a1t = A1.I_tof(Nr, t)
+    a2t = A2.I_tof(Nr, t)
+    R_DWtof.append( a2t/a1t / normTOF) 
+    A1_DWtof.append( a1t / normTOF1 )
+    A2_DWtof.append( a2t / normTOF2 )
 
-print
-print normTOF
 
-detRES = A1.d12 /2. 
-normRES = A2.sigma_coh_det(Nr,detRES,0.) / A1.sigma_coh_det(Nr,detRES,0.) 
-print normRES
+detRES = A1.d12 /2.
+normRES1 = A1.I_(Nr=Nr, detuning=detRES, tof=0.)  
+normRES2 = A2.I_(Nr=Nr, detuning=detRES, tof=0.)  
+normRES  = normRES2 / normRES1 
 normRES = normRES / normTOF
 ax.axhspan( normRES.nominal_value - 0.03,\
              normRES.nominal_value + 0.03,\
@@ -115,7 +119,7 @@ lcolor='blue'
 fcolor='lightblue'
 labelstr='N=40, nafm=8, %.1f$E_{r}$' % Er
 ax.errorbar(time, a2a1, yerr=a2a1err,\
-            capsize=0., elinewidth = 1. ,\
+            capsize=0., elinewidth = 0.8 ,\
             fmt='.-', ecolor=lcolor, mec=lcolor, \
             mew=1.0, ms=3.,\
             alpha = 1.0, \
@@ -125,21 +129,27 @@ ax.grid()
 ax.set_xlabel('time of flight ($\mu$s)')
 labelstr='N=40, nafm=8, %.1f$E_{r}$ A1' % Er
 y = np.array( [val.nominal_value for val in A1_DWtof ] ) 
+yerr = np.array( [val.std_dev for val in A1_DWtof ] ) 
 np.savetxt('DW100_A1_%.1fEr.dat' % Er, np.transpose( np.vstack( (time,y))))
-axA1.plot(time, y,\
-            '.-', color=lcolor, mfc=fcolor, \
+axA1.errorbar(time, y, yerr=yerr,\
+            capsize=0., elinewidth = 0.8 ,\
+            fmt='.-', ecolor=lcolor, mec=lcolor, \
             mew=1.0, ms=3.,\
             alpha = 1.0, \
-            marker='o', label=labelstr)
-
+            marker='o', mfc=fcolor, label=labelstr)
+ 
 labelstr='N=40, nafm=8, %.1f$E_{r}$ A2' % Er
 y = np.array( [val.nominal_value for val in A2_DWtof ] ) 
+yerr = np.array( [val.std_dev for val in A2_DWtof ] ) 
 np.savetxt('DW100_A2_%.1fEr.dat' % Er, np.transpose( np.vstack( (time,y))))
-axA2.plot(time, y,\
-            '.-', color=lcolor, mfc=fcolor, \
+axA2.errorbar(time, y, yerr=yerr,\
+            capsize=0., elinewidth = 0.8 ,\
+            fmt='.-', ecolor=lcolor, mec=lcolor, \
             mew=1.0, ms=3.,\
             alpha = 1.0, \
-            marker='o', label=labelstr)
+            marker='o', mfc=fcolor, label=labelstr)
+
+ax.grid()
 ax.set_ylabel(r'$\frac{S_{\mathrm{B}}}{S_{\mathrm{db}}}$',rotation=0,fontsize=24,labelpad=10)
 
 

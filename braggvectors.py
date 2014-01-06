@@ -28,10 +28,10 @@ print "HHH Bragg angle wrt Q = ", braggTH * 180. / np.pi
 # Calculate angle for HHH Bragg condition
 # with respect to y axis, when coming from 
 # under lattice beam 2. 
-from scipy.optimize import root
+from scipy.optimize import fsolve
 def cond(x):
     return np.sin(x)-np.cos(x) + 3./2. * l671 / l1064
-braggTH2 = (root(cond, 0.).x)[0]
+braggTH2 = fsolve(cond, 0.)
 print "HHH Bragg angle wrt -y axis = ", braggTH2 * 180. / np.pi
 
 

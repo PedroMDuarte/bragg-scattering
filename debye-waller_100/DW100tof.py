@@ -20,11 +20,11 @@ rc('font',**{'family':'serif'})
 
 N = 40 
 nafm = 8
+Er = 20. 
 
 A1 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin100,bv.kA1))
 A2 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin100,bv.kA2))
 MANTA = afm.crystal(N, nafm, bv.l1064/2, (bv.kin100,bv.kMANTA))
-Er = 20. 
 A1.set_v0([Er, Er, Er])
 A2.set_v0([Er, Er, Er])
 MANTA.set_v0([Er, Er, Er])
@@ -60,10 +60,10 @@ figure3.suptitle('')
 axDW = plt.subplot( gs3[0,0] )
 
 time =  np.linspace( 0., 30., 200) 
-MANTADWtof = np.array([MANTA.dw_time(t)  for t in time ])
-A1DWtof = np.array([A1.dw_time(t)  for t in time ])
-A2DWtof = np.array([A2.dw_time(t)  for t in time ])
-mitDWtof = np.array([AMIT.dw_time(t) for t in time ])
+MANTADWtof = np.array([MANTA.dw_(Er,t)  for t in time ])
+A1DWtof = np.array([A1.dw_(Er,t)  for t in time ])
+A2DWtof = np.array([A2.dw_(Er,t)  for t in time ])
+mitDWtof = np.array([AMIT.dw_(15.,t) for t in time ])
 
 axDW.plot( time, MANTADWtof ,\
             '.-', mec='green', c='green',\
@@ -114,27 +114,27 @@ axMANTA = plt.subplot( gs2[0,1] )
 axA1 = plt.subplot( gs2[1,0] )
 axA2 = plt.subplot( gs2[1,1] )
 
-time =  np.linspace( 0., 100., 1000)
-Nr = 320 	
+time =  np.linspace( 0., 10., 100)
+Nr = 20 	
 
 det = -13.
+normTOFM = MANTA.I_tof(Nr, 100.)
+normTOF1 = A1.I_tof(Nr, 100.)
+normTOF2 = A2.I_tof(Nr, 100.)
+normTOF = normTOFM / normTOF1 
 
-normTOF = MANTA.sigma_coh_det(Nr,det,100.) / A1.sigma_coh_det(Nr,det,100.)
-R_DWtof = [MANTA.sigma_coh_det(Nr,det,t)/A1.sigma_coh_det(Nr,det,t) / normTOF  for t in time ]
-A1_DWtof = [A1.sigma_coh_det(Nr,det,t)  for t in time ]
-A2_DWtof = [A2.sigma_coh_det(Nr,det,t)  for t in time ]
-MANTA_DWtof = [MANTA.sigma_coh_det(Nr,det,t)  for t in time ]
-
-print
-print normTOF
-
-detRES = A1.d12 /2. 
-normRES = MANTA.sigma_coh_det(Nr,detRES,0.) / A1.sigma_coh_det(Nr,detRES,0.) 
-print normRES
-normRES = normRES / normTOF
-ax.axhspan( normRES.nominal_value - 0.03,\
-             normRES.nominal_value + 0.03,\
-             facecolor='gray', alpha=0.6, linewidth=0)
+R_DWtof =[]
+A1_DWtof=[]
+A2_DWtof=[]
+MANTA_DWtof=[]
+for t in time:
+    a1t = A1.I_tof(Nr, t)
+    a2t = A2.I_tof(Nr, t)
+    mt = MANTA.I_tof(Nr, t) 
+    R_DWtof.append( mt/a1t / normTOF ) 
+    A1_DWtof.append( a1t / normTOF1)
+    A2_DWtof.append( a2t / normTOF2)
+    MANTA_DWtof.append( mt / normTOFM )
 
 
 a2a1 = np.array( [s.nominal_value for s in R_DWtof])
@@ -154,30 +154,36 @@ ax.errorbar(time, a2a1, yerr=a2a1err,\
 
 labelstr='N=40, nafm=8, %.1f$E_{r}$ M' % Er
 y = np.array( [val.nominal_value for val in MANTA_DWtof ] ) 
+yerr = np.array( [val.std_dev for val in MANTA_DWtof ] ) 
 np.savetxt('DW100_MANTA_%.1fEr.dat' % Er, np.transpose( np.vstack( (time,y))))
-axMANTA.plot(time, y,\
-            '.-', color=lcolor, mfc=fcolor, \
+axMANTA.errorbar(time, y, yerr=yerr,\
+            capsize=0., elinewidth = 1. ,\
+            fmt='.-', ecolor=lcolor, mec=lcolor, \
             mew=1.0, ms=3.,\
             alpha = 1.0, \
-            marker='o', label=labelstr)
+            marker='o', mfc=fcolor, label=labelstr)
 
 labelstr='N=40, nafm=8, %.1f$E_{r}$ A1' % Er
 y = np.array( [val.nominal_value for val in A1_DWtof ] ) 
+yerr = np.array( [val.std_dev for val in A1_DWtof ] ) 
 np.savetxt('DW100_A1_%.1fEr.dat' % Er, np.transpose( np.vstack( (time,y))))
-axA1.plot(time, y,\
-            '.-', color=lcolor, mfc=fcolor, \
+axA1.errorbar(time, y, yerr=yerr,\
+            capsize=0., elinewidth = 1. ,\
+            fmt='.-', ecolor=lcolor, mec=lcolor, \
             mew=1.0, ms=3.,\
             alpha = 1.0, \
-            marker='o', label=labelstr)
+            marker='o', mfc=fcolor, label=labelstr)
 
 labelstr='N=40, nafm=8, %.1f$E_{r}$ A2' % Er
 y = np.array( [val.nominal_value for val in A2_DWtof ] ) 
+yerr = np.array( [val.std_dev for val in A2_DWtof ] ) 
 np.savetxt('DW100_A2_%.1fEr.dat' % Er, np.transpose( np.vstack( (time,y))))
-axA2.plot(time, y,\
-            '.-', color=lcolor, mfc=fcolor, \
+axA2.errorbar(time, y, yerr=yerr,\
+            capsize=0., elinewidth = 1. ,\
+            fmt='.-', ecolor=lcolor, mec=lcolor, \
             mew=1.0, ms=3.,\
             alpha = 1.0, \
-            marker='o', label=labelstr)
+            marker='o', mfc=fcolor, label=labelstr)
 
 ax.set_ylabel(r'$\frac{S_{\mathrm{B}}}{S_{\mathrm{db}}}$',rotation=0,fontsize=24,labelpad=10)
 axMANTA.set_ylabel('MANTA',labelpad=10,fontsize=14)	

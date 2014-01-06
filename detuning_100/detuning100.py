@@ -24,18 +24,8 @@ nafm = 8
 A1 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin100,bv.kA1))
 A2 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin100,bv.kA2))
 MANTA = afm.crystal(N, nafm, bv.l1064/2, (bv.kin100,bv.kMANTA))
-Er = 20. 
-A1.set_v0([Er, Er, Er])
-A2.set_v0([Er, Er, Er])
-MANTA.set_v0([Er, Er, Er])
-
-A1.set_pbragg(750.)
-A2.set_pbragg(750.)
-MANTA.set_pbragg(750.)
 
 
-# Plot the decay of MANTA/A1 
-# as a function of time  
 figure2 = plt.figure(figsize=(8.,7.))
 gs2 = matplotlib.gridspec.GridSpec( 2,2) 
 ax = plt.subplot( gs2[0,0] )
@@ -43,19 +33,31 @@ axMANTA = plt.subplot( gs2[0,1] )
 axA1 = plt.subplot( gs2[1,0] )
 axA2 = plt.subplot( gs2[1,1] )
 
-detuningX =  np.linspace( -30., 30., 1000)
-Nr = 320 
+detuningX =  np.linspace( -30., 30., 50)
+Nr = 20
+Er = 20. 
+PBragg = 500.
 
-R_det = [MANTA.sigma_coh_det(Nr, det, 0.)/A1.sigma_coh_det(Nr,det,0.) for det in detuningX ]
-A1_det = [A1.sigma_coh_det(Nr,det,0.) for det in detuningX ]
-A2_det = [A2.sigma_coh_det(Nr,det,0.) for det in detuningX ]
-MANTA_det = [MANTA.sigma_coh_det(Nr,det,0.) for det in detuningX ]
+R_det  = []
+A1_det = []
+A2_det = []
+MANTA_det = []
+for det in detuningX:
+    print det
+    m  = MANTA.I_( Nr=Nr, detuning=det, tof=0., pbragg=PBragg, v0=Er)
+    a1 = A1.I_( Nr=Nr, detuning=det, tof=0., pbragg=PBragg, v0=Er)
+    a2 = A2.I_( Nr=Nr, detuning=det, tof=0., pbragg=PBragg, v0=Er)
+    
+    R_det.append( m/a1 )
+    A1_det.append( a1 ) 
+    A2_det.append( a2 ) 
+    MANTA_det.append( m ) 
 
 
 
 a2a1 = np.array( [s.nominal_value for s in R_det])
 a2a1err = np.array( [s.std_dev for s in R_det] ) 
-np.savetxt('det100_%.1fEr.dat' % Er, np.transpose( np.vstack( (detuningX,a2a1))))
+np.savetxt('det100_%.1fPBragg.dat' % PBragg, np.transpose( np.vstack( (detuningX,a2a1))))
 
 
 lcolor='blue'
@@ -99,7 +101,7 @@ ax.set_ylabel(r'$\frac{S_{\mathrm{B}}}{S_{\mathrm{db}}}$',rotation=0,fontsize=24
 axMANTA.set_ylabel('MANTA',labelpad=10,fontsize=14)	
 axA1.set_ylabel('ANDOR1',labelpad=10,fontsize=14)
 axA2.set_ylabel('ANDOR2',labelpad=10,fontsize=14)
-titlestr='N=%d,  nafm=%d,  %.1f$E_{r}$' % (N,nafm,Er)
+titlestr='N=%d,  nafm=%d,  %.1f$E_{r}$,  %.1f uW' % (N,nafm,Er, PBragg)
 figure2.suptitle(titlestr)
 
 
@@ -112,7 +114,7 @@ for axs in [ax, axMANTA, axA1, axA2]:
     axs.set_xlim(-30.,30.)
 
 gs2.tight_layout(figure2, rect=[0,0.0,1.0,0.96])
-outfile = 'detuning_plot_%.1fEr.png' % Er
+outfile = 'detuning_plot_%.1fEr_%.1fuW.png' % (Er,PBragg)
 figure2.savefig(outfile, dpi=250)
 
 
