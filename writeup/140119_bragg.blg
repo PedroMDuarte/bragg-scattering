@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: 140119_bragg.aux
+The style file: osa.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: bragg.bib
+You've used 2 entries,
+            2048 wiz_defined-function locations,
+            515 strings with 3768 characters,
+and the built_in function-call counts, 559 in all, are:
+= -- 23
+> -- 19
+< -- 0
++ -- 6
+- -- 4
+* -- 35
+:= -- 51
+add.period$ -- 2
+call.type$ -- 2
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 2
+duplicate$ -- 22
+empty$ -- 89
+format.name$ -- 6
+if$ -- 162
+int.to.chr$ -- 0
+int.to.str$ -- 2
+missing$ -- 0
+newline$ -- 9
+num.names$ -- 2
+pop$ -- 19
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 60
+stack$ -- 0
+substring$ -- 0
+swap$ -- 6
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 20
+warning$ -- 0
+while$ -- 2
+width$ -- 3
+write$ -- 12

@@ -199,7 +199,7 @@ class crystal():
     def set_pbragg( self, pbragg):
         self.pbragg = pbragg
         w0 = 0.05 #cm 
-        Isat = 5.21 # mW/cm^2
+        Isat = 5.12 # mW/cm^2
         self.isat = 2.*(pbragg/1000.) / np.pi / (w0**2) / Isat
 
     def set_detuning( self, det):

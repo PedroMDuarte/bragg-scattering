@@ -1,0 +1,1220 @@
+\documentclass[11pt,letter]{article}
+\usepackage[top=0.65in,bottom=0.9in,left=0.85in,right=0.85in]{geometry}
+
+%\def\baselinestretch{1.25}
+\def\baselinestretch{1.0}
+
+\usepackage[greek, english]{babel}
+\usepackage{multicol}
+
+\usepackage[draft]{graphicx}
+\usepackage[export]{adjustbox}
+
+
+% The use of the times package forces the use of the type-1 times
+% roman font, but the times roman font does not look nice.
+% Besides the times roman font still does not print correctly on
+% the dopy printer.
+%\usepackage{times}
+
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{bbold}
+\usepackage{parskip}
+
+\newcommand{\bv}[1]{\ensuremath{\bm{#1}}}
+\newcommand{\Lc}{\ensuremath{L_{\mathrm{c}}}}
+\newcommand{\dsig}[1]{\ensuremath{ \frac{ d\,\sigma_{#1} }{d\,\Omega} }}
+
+\newcommand{\iisat}{\ensuremath{I_{\mathrm{p}}/I_{\mathrm{sat}}}}
+\newcommand{\itof}{\ensuremath{I_{\infty} }}
+
+\begin{document}
+
+\section{Scattering of light by an array of atoms}
+
+In our experiment we observe the scattering of photons from atoms confined in
+an optical lattice, here we treat this situation by obtaining the the field
+scattered from a single atom and then summing the field contributions from all
+the atoms coherently at the location of our detector.  The main goal of this
+document is to find the connection between the intensity that we measure in our
+cameras and the spin structure factor as it is calculated by the theorists in
+our collaboration.  
+
+\subsection{Electric field and intensity due to a single atom}
+
+To calculate the scattered field, one uses the source-field expression, which
+relates the radiated field to the emitting dipole moment, this is derived in
+the standard textbooks~\cite{loudon2000quantum,cohen1998atom}.  The field at
+the position of the detector $\bv{r}_{D}$ is given by
+\begin{equation} 
+    E^{(+)}( \bv{r}_{D}, t) = 
+    \eta e^{- i \omega_{L} ( t -r_{D}/c) } 
+    S_{-}\left(t - \frac{ r_{D} }{c} \right)
+    \label{eq:source-field} 
+\end{equation} where $\eta$
+is a proportionality factor that we will address later on.  The time-averaged
+intensity at the detector is 
+\begin{equation}
+\label{eq:Idef}
+\begin{split}
+\langle I (t) \rangle = & 
+    \langle E^{(-)}(\bv{r}_{D}, t) E^{(+)}(\bv{r}_{D}, t) \rangle \\
+   = & |\eta|^{2} \langle S_{+}(t-r_{D}/c)S_{-}(t-r_{D}/c) \rangle  \\
+   = & |\eta|^{2} \langle S_{+}S_{-} \rangle \\
+   = & |\eta|^{2} \rho_{ee}  
+\end{split} 
+\end{equation}
+In the third line the time dependence is dropped since we are interested in the
+steady state solution.  We can write the $S_{\pm}$ operators of the atoms as 
+\begin{equation} 
+    S_{\pm} = \langle S_{\pm} \rangle + \delta S_{\pm} 
+\end{equation}
+which defines the difference, $\delta S$, between $S_{\pm}$ and its average
+value.   Writing $S_{\pm}$ this way allows us to distinguish between two
+components in the radiated light,  the radiation of the average dipole $\langle
+S_{\pm}\rangle$ which is the radiation of a classical oscillating dipole with a
+phase that is well defined relative to the incident laser field, and the
+radiation form the $\delta S_{\pm}$ component which does not have a phase that
+is well defined relative to the incident field because it comes form the
+fluctuating part of the atomic dipole.  The intensity is then a sum of coherent
+and incoherent parts 
+\begin{equation} 
+I  = \eta^{2} \langle S_{+}\rangle \langle S_{-} \rangle 
+   + \eta^{2} \langle \delta S_{+} \delta S_{-} \rangle 
+\end{equation}
+where we have used the fact that by definition $\langle \delta S_{\pm}
+\rangle = 0$. The first and second terms of this equation are the coherent
+and incoherent intensity which can be calculated by using the
+steady-state solutions to the optical Bloch equations given by
+\begin{gather} 
+    \langle S_{\pm} \rangle =  u \pm i v  \\
+    u =  \frac{ \Delta }{ \Gamma  \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
+         \frac{s}{ 1 + s } \\
+    v =  \frac{ 1 } { 2 \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
+         \frac{s}{1+s} \\
+\end{gather}
+where $s$ is the saturation parameter for an incident probe with intensity
+$I_{\mathrm{p}}$:
+\begin{equation}
+s = \frac{ 2  \iisat } { 1 + 4(\Delta/\Gamma)^{2} } 
+  =  \frac{ s_{0} } { 1 + 4(\Delta/\Gamma)^{2} }
+\end{equation}
+and we have defined $s_{0} = 2 \iisat$. 
+The coherent and incoherent intensities are
+\begin{equation}
+\begin{split} 
+    \frac{1}{\eta^{2}}  I_{\mathrm{coh}} = &
+        \frac{1}{2} \frac{s}{(1+s)^{2} } 
+      = \rho_{ee}  \frac{1}{1+s} \\
+    \frac{1}{\eta^{2}}  I_{\mathrm{incoh}}  = & 
+        \langle S_{+}S_{-} \rangle - \langle S_{+} \rangle \langle S_{-} \rangle
+      = \frac{1}{2} \frac{s^{2}}{(1+s)^{2}} = \rho_{ee} \frac{s}{1+s}
+ \label{eq:coh-incoh} 
+\end{split}
+\end{equation}
+Note that if we add up coherent and incoherent part we get the more familiar
+result $I=\eta^{2} \rho_{ee}$, where the total intensity is simply proportional
+to the population of the excited state.
+
+
+\subsection{Scattering cross-section}
+
+Now we will turn onto the evaluation of $\eta$, the proportionality factor
+between the field and the emitting dipole.  Knowledge of $\eta$ will allow us
+to sum coherently the field from a collection of atoms. 
+
+We start by considering the  transition matrix element between the following
+initial and final states of the atom+photon system: 
+\begin{equation}
+\begin{split}
+    | \varphi_{i} \rangle = & | g ; \bv{k}\bv{\varepsilon} \rangle \\
+    | \varphi_{f} \rangle = & | g ; \bv{k}'\bv{\varepsilon}' \rangle \\
+\end{split}
+\end{equation}
+These states represent the absorption and re-emission of a single photon by the
+atom, with two possibly different initial and final photon states.
+ 
+The transition rate to from $i\rightarrow f$ is given by 
+\begin{equation}
+    \label{eq:transitionRate}
+    w_{fi} = \frac{2\pi}{\hbar} | \mathcal{T}_{fi} |^{2} \delta(E_{f}-E_{i})
+\end{equation}
+Where we use the notation in~\cite{cohen1998atom} (see Exercise~5 on pg. 530),
+and $\mathcal{T}_{fi}$ is given by
+\begin{equation}
+    \mathcal{T}_{fi} = \frac{  
+        \langle g; \bv{k}'\bv{\varepsilon}'| H_{I}' | e; 0 \rangle 
+        \langle e; 0 | H_{I}' | g; \bv{k}\bv{\varepsilon} \rangle }
+        { \hbar\omega - \hbar\omega_{0} + i\hbar (\Gamma/2 ) }
+\end{equation} 
+where $H_{I}'$ is the interaction Hamiltonian
+\begin{equation}
+    H_{I}' = -\bv{d} \cdot \bv{E}_{\perp} ( \bv{r} ) 
+\end{equation}
+and\footnote{Notice that the presence of $\epsilon_{0}$ reveals that we are
+using SI units, following the treatment in~\cite{cohen1998atom}.}
+\begin{equation}
+    \bv{E}_{\perp}(\bv{r}) = i \sum_{j} 
+        \left[ \frac{ \hbar \omega_{j} }{ 2\varepsilon_{0} L^{3}}  \right]^{1/2}
+        \left( \hat{a}_{j}\bv{\varepsilon}_{j} e^{i\bv{k}_{j}\cdot\bv{r}} 
+              - \hat{a}_{j}^{+}\bv{\varepsilon}_{j}^{*} e^{-i\bv{k}_{j}
+                \cdot\bv{r}} 
+        \right)
+\end{equation}
+Notice that there is an intermediate excited state $|e;0\rangle$, since the
+absorption-emission event is a second order process.
+
+Using the expressions for $H_{I}'$ and $\bv{E}_{\perp}(\bv{r})$ we obtain for
+the matrix element 
+\begin{equation}
+   \langle e; 0 | H_{I}' | g; \bv{k}\bv{\varepsilon} \rangle = 
+       -i \sqrt{ \frac{ \hbar \omega }{2 \varepsilon_{0} L^{3} }} 
+      \langle e | (\bv{d} \cdot \bv{\varepsilon}^{*} ) 
+       e^{-i\bv{k}\cdot\bv{r}}| g \rangle
+\end{equation}
+At this point the textbook treatment usually assumes that the atom is at the
+origin and that the size of the atom wavefunction is very small compared to
+$|\bv{k}|^{-1}$, and so the exponential inside the matrix element typically
+does not show up.  In our case the atom is in a lattice site and its center of
+mass state is one of the harmonic oscillator states of a lattice well is large
+enough that the exponential term cannot be neglected.  
+ 
+The states $|e\rangle$ and $|g\rangle$ include the center of mass and internal
+states of the atom.  We separate the center of mass part, and keep the labels
+$e$, $g$ for the internal states. Also, we denote the center of mass initial
+and final states as $| u \rangle$ and $|u'\rangle$ respectively, and the center
+of mass state of the intermediate excited state as $| v\rangle$, we have
+\begin{equation}
+   \langle e; 0 | H_{I}' | g; \bv{k}\bv{\varepsilon} \rangle = 
+       -i \sqrt{ \frac{ \hbar \omega }{2 \varepsilon_{0} L^{3} }} 
+      \langle e | \bv{d} \cdot \bv{\varepsilon}^{*} | g \rangle 
+      \langle v | e^{-i\bv{k}\cdot\bv{r}} | u \rangle
+\end{equation}
+and similarly
+\begin{equation}
+   \langle g; \bv{k}'\bv{\varepsilon}' | H_{I}' | e; 0\rangle = 
+       i \sqrt{ \frac{ \hbar \omega' }{2 \varepsilon_{0} L^{3} }} 
+      \langle g | \bv{d} \cdot \bv{\varepsilon}' | e \rangle 
+      \langle u' | e^{i\bv{k}'\cdot\bv{r}} | v \rangle
+\end{equation}
+This gives for the matrix element
+\begin{equation}
+    \mathcal{T}_{fi} = \sum_{v} \frac{\sqrt{\omega \omega'}}
+                                     {2\varepsilon_{0} L^{3}}
+    \frac{ 
+      \langle g | \bv{d} \cdot \bv{\varepsilon}' | e \rangle 
+      \langle e | \bv{d} \cdot \bv{\varepsilon}^{*} | g \rangle 
+      \langle u'| e^{i\bv{k}'\cdot\bv{r}} | v \rangle 
+      \langle v | e^{-i\bv{k}\cdot\bv{r}} | u  \rangle
+       }
+        { \omega - \omega_{0} + i (\Gamma/2 ) }
+\end{equation}
+where we have summed over all possible intermediate center of mass states.
+Note that the sum can be taken out using the closure relation
+$\sum_{v}|v\rangle\langle v| = \mathbb{1}$. 
+%We note here that the phase factors $i\bv{k}\cdot\bv{r}$ that appear due to
+%the center of mass motion of the atom are uncorrelated.   This comes out that
+%way because the scattering of a photon is second order: first the photon gets
+%absorbed and then it gets reemitted at a later time.   In neutron scattering
+%for example, the scattering process is first order, represented by a contact
+%interaction between the neutron and the nuclei in the crystal,  In this case
+%the phase factor due to the center of mass motion shows up as \begin{equation}
+%\langle  e^{i (\bv{k}'-\bv{k}) \cdot \bv{r}} \rangle_{\mathrm{CM}}
+%\end{equation} The norm squared of this term is the Debye-Waller factor.   It
+%is necessary to consider if the uncorrelated expectation values that appear in
+%the second order photon scattering are correct.  To this effect one needs to
+%consider the time between absorption and emission processes which is on the
+%order of $\Gamma$, the linewidth of the excited state.   This is much larger
+%that the typical harmonic oscillator frequency in a lattice site, which is
+%about 400 kHz for a lithium atom in a 50 recoil lattice.   With this in mind
+%we may think about photon scattering as an effectively first order process
+%(scattering and emission happen much quicker than the atom's center of mass
+%can move)  and we may take the liberty of writing the transition matrix
+%element which includes the center of mass motion as \begin{equation}
+%\begin{split} \langle \mathcal{T}_{fi} \rangle_{\mathrm{CM}} = & \left \langle
+%\frac{  \langle g; \bv{k}'\bv{\varepsilon}'| H_{I}' | e; 0 \rangle \langle b;
+%0 | H_{I}' | g; \bv{k}\bv{\varepsilon} \rangle } { \hbar\omega -
+%\hbar\omega_{0} + i\hbar (\Gamma/2 ) } \right \rangle _{\mathrm{CM}} \\ =&
+%\frac{\sqrt{\omega \omega'}}{2\varepsilon_{0} L^{3}} \frac{ \langle g | \bv{d}
+%\cdot \bv{\varepsilon}' | e \rangle \langle e | \bv{d} \cdot \bv{\varepsilon}
+%| g \rangle \langle  e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} \rangle_{\mathrm{CM}} }
+%{ \omega - \omega_{0} + i (\Gamma/2 ) } \end{split} \end{equation} where the
+%more famliar Debye-Waller factor shows up.  
+
+In our experiment we are driving a sigma-minus transition so we can consider
+only the projection of $\bv{d}$ onto $\bv{\varepsilon}_{-}$ 
+\begin{equation}
+     \langle e | \bv{d} \cdot \bv{\varepsilon}^{*} | g \rangle  \equiv
+     d_{-} (\bv{\varepsilon}_{-}  \cdot \bv{\varepsilon}^{*} )
+\end{equation} 
+which leads to 
+\begin{equation}
+    \mathcal{T}_{fi}  = 
+    \frac{\sqrt{\omega \omega'}}{2\varepsilon_{0} L^{3}}
+    \frac{ |d_{-}|^{2}  (\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} )}
+        { \omega - \omega_{0} + i (\Gamma/2 ) }
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
+\end{equation}
+We use the relation between $|d_{-}|^{2}$ and the linewidth of the transition
+\begin{equation} 
+    |d_{-}|^{2} =  3\pi \varepsilon_{0} \hbar
+  \left( \frac{c}{\omega_{0}} \right)^{3}  \Gamma
+\end{equation}
+and also the approximation $\omega' \approx \omega \approx \omega_{0}$ for the
+square root in the denominator to obtain
+\begin{equation}
+    \mathcal{T}_{fi} =
+    \frac{ 3 } {k^{2}} 
+    \frac{ \pi \hbar c } {  L^{3} } 
+        (\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} )
+    \frac{ \Gamma/2  }
+        { \omega - \omega_{0} + i (\Gamma/2 ) }
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
+\end{equation}
+
+To obtain the scattering rate of photons towards a certain solid angle
+$\Omega'$, we must sum over all values of $k'$ in the direction of $\Omega'$.
+The number of final states with energy between $\hbar c k'$ and $\hbar c ( k' +
+\mathrm{d}k')$  whose wave vector points inside the solid angle $\mathrm{d}
+\Omega'$ equals 
+\begin{equation}
+    \rho( \hbar c k') \hbar c \mathrm{d} k' \mathrm{d} \Omega ' 
+  = \frac{L^{3}}{8 \pi^{3} }  k'^{2} \mathrm{d} k' \mathrm{d} \Omega' 
+\end{equation}
+where $\rho$ is the density of states, which is a function of the photon energy
+$\hbar c k$.  We use the density of states to replace the sum over $k'$ with an
+integral,  and obtain the total transition rate in the direction~$\Omega'$: 
+\begin{equation}
+\begin{split}
+  \sum_{f} w_{fi} = & 
+   \frac{2\pi}{\hbar}  \mathrm{d} \Omega' 
+      \int_{0}^{\infty} \frac{k'^{2} \mathrm{d} k' }{ (2\pi / L^{3} ) ^{3} } 
+   | \mathcal{T}_{fi} |^{2} 
+   \delta( \hbar c k' - \hbar c k )  \\ 
+   = & 
+   \mathrm{d} \Omega' \frac{9}{4 k^{2}} \frac{ c } {L^{3} }
+        |(\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} ) |^{2}
+    \left|
+    \frac{ \Gamma/2  }
+        { \omega - \omega_{0} + i (\Gamma/2 ) }  
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
+     \right| ^{2} \\ 
+   = & 
+   \mathrm{d} \Omega' \frac{9}{4 k^{2}} \frac{ c } {L^{3} }
+        |(\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} ) |^{2}
+    \frac{ (\Gamma/2)^{2}  }
+        { \Delta^{2} +  (\Gamma/2 )^{2} }
+    \left|
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
+\right| ^{2} \\ 
+\end{split} 
+\end{equation}
+If we consider the flux corresponding to the state of the initial photon $\phi
+= c/L^{3}$ then we can define the differential cross section 
+\begin{equation}
+ \frac{ \mathrm{d} \sigma } { \mathrm{d} \Omega'} =  
+    \frac{\sum_{f} w_{fi} } { \mathrm{d} \Omega' \phi} = 
+    \frac{9}{4 k^{2}} 
+        |(\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} ) |^{2}
+    \frac{ (\Gamma/2)^{2}  }
+        { \Delta^{2} +  (\Gamma/2 )^{2} }
+    \left|
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
+\right| ^{2}  
+\end{equation}
+From here we can write down the intensity on a detector located at $\bv{r}_{D}$
+in the direction of $\mathrm{d} \Omega'$ as \footnote{Later on we will sum over
+output polarizations and final center of mass states of the atom, since our
+detection is insensitive to them.}
+\begin{equation}
+\begin{split}
+I  =& \frac{1}{r_{D}^{2}} \frac{ \mathrm{d} \sigma } { \mathrm{d} \Omega'}
+      I_{\mathrm{p}} 
+   =  \frac{1}{r_{D}^{2}} \frac{ \mathrm{d} \sigma } { \mathrm{d} \Omega'}
+      \frac{\hbar c k^{3}\Gamma}{6 \pi} 
+      \frac{ I_{\mathrm{p}}}{I_{\mathrm{sat}}}  \\ 
+   =& \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{4 (6\pi)} 
+        |(\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} ) |^{2}
+    \left|
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
+  \right| ^{2}
+     \frac{ s_{0}/2   }
+        { 4(\Delta/\Gamma)^{2} + 1 }
+\end{split}
+\end{equation}
+We identify the last fraction in this product as $\rho_{ee}$ (in the limit of
+low intensity). Comparing with Eq.~\ref{eq:coh-incoh} we can write down an
+expression for $\eta$, 
+\begin{equation}
+  \eta = \left[ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} \right]^{1/2} 
+        (\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} ) 
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}} | u  \rangle
+\end{equation}
+With an exact expression for $\eta$ we can obtain the field radiated by each
+atom and proceed to sum the field coherently for a collection of atoms. 
+
+\subsection{Summation for a collection of atoms} 
+
+For a collection of atoms, the resulting field is the sum of the field produced
+by each individual atom, so we have  
+\begin{equation}
+\begin{split}
+\langle I (t) \rangle = & 
+    \left\langle \left( \sum_{m} E_{m}^{(-)}(\bv{r}_{D}, t) \right)
+            \left( \sum_{n} E_{n}^{(+)}(\bv{r}_{D}, t) \right) \right\rangle \\
+\end{split} 
+\end{equation}
+where we have labeled the atoms with the indices $m$ and $n$.  We insert the
+source-field expression from Eq.~\ref{eq:source-field} (dropping the time
+dependence) 
+\begin{equation}
+\begin{split}
+ I = &
+    \sum_{mn}  \eta_{m}\eta_{n}^{*}  
+              \left\langle S_{m+}S_{n-} \right\rangle
+\end{split} 
+\end{equation}
+Using $S=\langle S \rangle + \delta S$, as we did above to obtain the coherent
+and incoherent parts of the intensity, we obtain
+\begin{equation}
+\begin{split}
+ I  = &
+    \sum_{mn}  \eta_{m}\eta_{n}^{*} \left(
+              \langle S_{m+}\rangle \langle S_{n-} \rangle  
+            + \langle \delta S_{m+} \delta S_{n-} \rangle \right) \\
+    = & 
+    \sum_{mn}  \eta_{m}\eta_{n}^{*} 
+        \langle  S_{m+}\rangle \langle S_{n-} \rangle 
+   + \sum_{n} | \eta_{n}|^{2} \langle \delta S_{n+} \delta S_{n-} \rangle 
+\end{split} 
+\end{equation}
+The steady state solutions of the optical Bloch equations are used again to
+evaluate the expectation values and we obtain for $I$
+\begin{multline}
+ I = 
+  \sum_{mn}  \eta_{m}\eta_{n}^{*}
+    \left(
+    \frac{ \Delta_{m} }{ \Gamma  \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
+    \frac{s_{m}}{ 1 + s_{m} } 
+   + i 
+    \frac{ 1 } { 2 \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
+    \frac{s_{m}}{1+s_{m}} 
+    \right) 
+    \left(
+    \frac{ \Delta_{n} }{ \Gamma  \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
+    \frac{s_{n}}{ 1 + s_{n} } 
+   - i 
+    \frac{ 1 } { 2 \sqrt{ I_{\mathrm{p}} / I_{\mathrm{sat}}} } 
+    \frac{s_{n}}{1+s_{n}} 
+    \right) \\
+   + \sum_{n} | \eta_{n}|^{2} \frac{1}{2} \frac{ s_{n}^{2} } 
+                                               { (1 + s _{n} )^{2} } 
+\end{multline}
+\begin{multline}
+ I  = 
+  \sum_{mn}  \eta_{m}\eta_{n}^{*}
+    \frac{ s_{m} s_{n} } { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
+    \left(
+        \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
+      + \frac{1}{4}  
+    \right)  
+   + \sum_{n} | \eta_{n}|^{2} \frac{1}{2} \frac{ s_{n}^{2} } 
+                                               { (1 + s _{n} )^{2} } 
+\end{multline}
+The last term here is the incoherently scattered part due to the fluctuating
+fraction $\delta S_{\pm}$ of the atomic dipole.  The cross terms do not appear
+in this sum because $\langle \delta S_{m+} \delta S_{n-}\rangle =0$ for $m\neq
+n$,  this is in fact why this part is identified as the incoherent scattering. 
+
+We proceed to split up the first sum into same-atom ($n=m$) and different atom
+($n<m$) parts 
+\begin{multline}
+ I  = 
+  \sum_{m<n} 
+    \frac{ s_{m} s_{n} } { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
+    \left(
+        \eta_{m}\eta_{n}^{*}
+    \left(
+        \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
+      + \frac{1}{4}  
+    \right)  \right. \\
+   \left.  + 
+        \eta_{n}\eta_{m}^{*}
+    \left(
+        \frac{ \Delta_{n} \Delta_{m} }{ \Gamma^{2} } 
+      + i \frac{ \Delta_{m} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      + \frac{1}{4}  
+    \right) 
+    \right)  \\
+  + \sum_{n}  |\eta_{n}|^{2}
+    \frac{ s_{n} s_{n} } { (\iisat) ( 1+s_{n} )( 1+s_{n} ) }
+    \left(
+        \frac{ \Delta_{n} \Delta_{n} }{ \Gamma^{2} } 
+      + \frac{1}{4}  
+    \right) \\ 
+   + \sum_{n} | \eta_{n}|^{2} \frac{1}{2} \frac{ s_{n}^{2} } 
+                                               { (1 + s _{n} )^{2} } 
+\end{multline}
+
+\begin{multline}
+ I  = 
+  \sum_{m<n} 
+    \frac{ s_{m} s_{n} } { (I/I_{\mathrm{sat}}) ( 1+s_{m} )( 1+s_{n} ) }
+    2 \Re\left[ 
+        \eta_{m}\eta_{n}^{*}
+    \left(
+        \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
+      + \frac{1}{4}  
+    \right) \right] \\
+  + \sum_{n}  |\eta_{n}|^{2}
+    \frac{1}{2}	\frac{ s_{n} } { ( 1+s_{n} )^{2} }
+   + \sum_{n} | \eta_{n}|^{2} \frac{1}{2} \frac{ s_{n}^{2} } 
+                                               { (1 + s _{n} )^{2} } 
+\end{multline}
+
+With this expression in hand we focus our attention on the terms
+$\eta_{m}\eta_{n}^{*}$ and $|\eta_{n}|^{2}$.  We start with the latter 
+\begin{equation}
+ |\eta_{n}|^{2} =  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} 
+       | (\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} ) |^{2}
+      \langle u | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | u'  \rangle
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | u  \rangle
+\end{equation}
+and notice that we have to sum over output polarizations $\bv{\varepsilon}'$
+and final center of mass states  $u'$, since our detector does not care about
+either. We obtain 
+\begin{equation}
+\begin{split}
+ \sum_{\bv{\varepsilon}' u'}|\eta_{n}|^{2} = & 
+    \sum_{ u'} \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} 
+      \sum_{\bv{\varepsilon}'} | (\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                       (\bv{\varepsilon}^{*}\cdot \bv{\varepsilon}_{-} ) |^{2}
+      \langle u | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | u'  \rangle
+      \langle u' | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | u  \rangle \\
+ = & \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} \Lambda 
+      \langle u | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}}  e^{i(\bv{k}'-\bv{k}) 
+      \cdot\bv{r}_{n}} | u  \rangle \\
+ = & \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} \Lambda \\ 
+\end{split}
+\end{equation}
+where we have used the closure relation $\sum{u'}|u'\rangle\langle u'| =
+\mathbb{1}$, and have defined for brevity 
+\begin{equation}
+ \Lambda = 
+  \sum_{\bv{\varepsilon}' }
+        | (\bv{\varepsilon}_{+}\cdot \bv{\varepsilon}' )
+                        (\bv{\varepsilon}\cdot \bv{\varepsilon}_{-} ) |^{2} 
+\end{equation} 
+
+Similarly, for $\eta_{m}\eta_{n}^{*}$
+\begin{equation}
+\begin{split}
+ \sum_{\bv{\varepsilon}' u'_{m} u'_{n}} \eta_{m}\eta_{n}^{*} = & 
+    \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} \Lambda
+ \sum_{u'_{m} u'_{n}} 
+      \langle u_{n} | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | u'_{n}  \rangle
+      \langle u'_{m} | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}_{m}} | u_{m}  \rangle \\
+\end{split}
+\end{equation}
+In this case we cannot use the closure relation because $n,m$ refer to
+different atoms.   We simplify the treatment by considering only final states
+for the atom that are the same as the initial state $u'=u$ (these are going to
+have the largest matrix elements anyways). In the sum over $u'_{m},u'_{n}$ only
+$u'_{m}=u_{m}$ and $u'_{n}=u_{n}$ contribute.  We take the center of mass state
+of the atoms to be the ground state of the single lattice site harmonic
+oscillator.  This leaves us with 
+\begin{equation}
+\begin{split}
+ \sum_{\bv{\varepsilon}' } \eta_{m}\eta_{n}^{*} = & 
+  \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} \Lambda
+      \langle 0_{n} | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | 0_{n}  \rangle
+      \langle 0_{m} | e^{i(\bv{k}'-\bv{k}) \cdot\bv{r}_{m}} | 0_{m}  \rangle \\
+\end{split}
+\end{equation}
+
+\subsubsection{Debye-Waller factor} 
+
+For each center of mass expectation value we perform a translation $\bv{R}_{n}$
+of the coordinate system such that the position of the $n^{\text{th}}$ atom has
+a zero expectation value $\langle \bv{r}_{n} \rangle = 0$.  A phase factor
+comes out that depends on the position $\bv{R}_{n}$ of the lattice site in
+which the atom is located:
+\begin{equation}
+      \langle 0_{n} | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | 0_{n}  \rangle 
+    = e^{-i(\bv{k}'-\bv{k}) \cdot\bv{R}_{n}} 
+      \langle 0_{n} | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | 0_{n}  \rangle
+\end{equation} 
+We then use the equality $\langle e^{\hat{A}} \rangle = e^{\frac{1}{2} \langle
+\hat{A}^{2} \rangle }$, which is valid for a simple harmonic oscillator, where
+$\hat{A}$ is any linear combination of displacement and momentum operators of
+the oscillator.  This leaves us with
+\begin{equation}
+\begin{split}
+      \langle 0_{n} | e^{-i(\bv{k}'-\bv{k}) \cdot\bv{r}_{n}} | 0_{n}  \rangle 
+    = & e^{-i(\bv{k}'-\bv{k}) \cdot\bv{R}_{n}} 
+      e^{ -\frac{1}{2} \left\langle 
+          [ (\bv{k}'-\bv{k}) \cdot\bv{r}_{n} ]^{2} \right\rangle } \\
+    = & e^{ -i \bv{Q} \cdot \bv{R}_{n}} 
+      e^{ -\frac{1}{2} \left\langle [ \bv{Q} \cdot\bv{r}_{n} ]^{2} \right\rangle } \\ 
+    = & e^{ -i \bv{Q} \cdot \bv{R}_{n}}
+      \prod_{i=x,y,z} e^{ - \frac{1}{2}Q_{i}^{2}\langle r_{ni} ^{2} \rangle } \\ 
+    = & e^{ -i \bv{Q} \cdot \bv{R}_{n}}
+      e^{-W} 
+\end{split}
+\end{equation} 
+where we have defined the momentum transfer $\bv{Q} = \bv{k}' - \bv{k}$,  and
+the Debye-Waller factor $e^{-2W}$. 
+
+Putting this back in the expression for $\eta_{m}\eta_{n}^{*}$ we get
+\begin{equation}
+\begin{split}
+ \sum_{\bv{\varepsilon}' } \eta_{m}\eta_{n}^{*} = & 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} \Lambda
+       e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } e^{-2W} 
+\end{split}
+\end{equation}
+And if we now return to the expression for the intensity at the detector we
+have 
+\begin{multline}
+ I  = 
+  \sum_{m<n} 
+    \frac{ s_{m} s_{n} } 
+         { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
+    2 \Re\left[ 
+            \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+            \frac{9}{24\pi}  \Lambda
+               e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } e^{-2W}  
+    \left(
+        \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
+      + \frac{1}{4}  
+    \right) \right] \\ 
+  + \sum_{n}  \frac{1}{2}
+    \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+    \frac{9}{24\pi} \Lambda
+    \frac{ s_{n} } { 1 + s_{n} } 
+\end{multline}
+
+\begin{multline}
+\label{eq:finalIdetector}
+ I  =
+ \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) \times \\
+  \sum_{m<n} 
+    \frac{ s_{m} s_{n} } 
+         { (\iisat) ( 1+s_{m} )( 1+s_{n} ) }
+    2 \Re\left[ 
+               e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } e^{-2W}  
+    \left(
+        \frac{ \Delta_{m} \Delta_{n} }{ \Gamma^{2} } 
+      + i \frac{ \Delta_{n} }{ 2 \Gamma } 
+      - i \frac{ \Delta_{m} }{ 2 \Gamma } 
+      + \frac{1}{4}  
+    \right) \right]  
+  + \sum_{n}  \frac{1}{2}
+    \frac{ s_{n} } { 1 + s_{n} } 
+\end{multline}
+It is good to see that for a large time-of-flight, where the Debye-Waller
+factor goes to zero due to large extent of the expanding atom wavefunctions,
+this formula reduces to the the standard uncorrelated scattering for $N$ atoms,
+$I=N\rho_{ee}$ with $\rho_{ee} = \frac{1}{2} \frac{s}{1+s}$.  
+
+{\small Note:  To see this more clearly and at the same time check the
+prefactors that show up in this expression, we can evaluate the total photon
+scattering rate  $\Gamma_{\mathrm{scatt}}= \frac{1}{\hbar c k}\int I r_{D}^{2}
+\mathrm{d}\Omega $,  for which we use $\int \Lambda \mathrm{d} \Omega =
+\frac{8\pi}{3}$ to obtain
+\begin{equation}
+\Gamma_{\mathrm{scatt}} =  \Gamma \frac{1}{2} \frac{s}{1+s} = \Gamma \rho_{ee}
+\end{equation} 
+ 
+}
+
+
+\subsection{ Large detuning limit} 
+
+We start from Eq.~(\ref{eq:finalIdetector}) and concentrate on the two sums,
+the first of which is 
+\begin{equation} 
+  \frac{  e^{-2W}}{2\iisat} \Re 
+  \sum_{m<n} 
+               e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+    \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }
+    \left(
+         4\Delta_{m} \Delta_{n} 
+      + 2i \Delta_{n} 
+      - 2i \Delta_{m}
+      + 1
+    \right)  
+\end{equation}
+where for simplicity we have now written the detunings in units of $\Gamma$.
+We will split this up further into four terms 
+\begin{align} 
+  \frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 4 \Delta_{m} \Delta_{n} \\
+  \frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{n}  \\
+  -\frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) } 2 i \Delta_{m}  \\
+  \frac{  e^{-2W}}{2\iisat} \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ s_{m} s_{n} } {( 1+s_{m} )( 1+s_{n} ) }   
+\end{align}
+
+For a detuning such that $4\Delta_{m}^{2}, 4\Delta_{n}^{2} \gg 1 $ we have
+\begin{equation}
+  \frac{s}{1+s} \approx \frac{2 \iisat }
+                             { 4 \Delta^{2} + 2 \iisat }
+\end{equation}
+
+and the four terms above go respectively to  
+\begin{align} 
+     e^{-2W} 2(\iisat)\Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ 4 \Delta_{m} \Delta_{n} } 
+           {(4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+ }  \\
+     e^{-2W} 2(\iisat)\Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ 2 i \Delta_{n} } 
+           {(4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+ }   \\
+    -e^{-2W} 2(\iisat) \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ 2 i \Delta_{m} } 
+           {(4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+ }   \\
+     e^{-2W} 2(\iisat)\Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      \frac{ 1} { (4 \Delta_{m}^{2} + 2 \iisat)(4 \Delta_{n}^{2} + 2 \iisat)
+}   
+\end{align}
+%\begin{align} e^{-2W} 2(\iisat) \Re \sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} -
+%\bv{R}_{n} ) } \frac{1}{ 4 \Delta_{m} \Delta_{n} }  \\ e^{-2W} 2(\iisat) \Re
+%\sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } \frac{i}{ 8 \Delta_{n}
+%\Delta_{m}^{2}} \\ - e^{-2W} 2(\iisat) \Re \sum_{m<n} & e^{ i \bv{Q}(
+%\bv{R}_{m} - \bv{R}_{n} ) } \frac{i}{ 8 \Delta_{n}^{2} \Delta_{m} } \\ e^{-2W}
+%2(\iisat) \Re \sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } \frac{1}{
+%16 \Delta_{m}^{2} \Delta_{n}^{2} } \end{align}
+Furthermore, if we detune the light in between the two spin states then we can
+use, $\Delta_{m}^{2} = \Delta^{2}$ and  $\Delta_{m} = 2|\Delta|S_{zm}$, where
+$S_{zm}=\pm\frac{1}{2}$ is the spin state of the atom in site $m$, to obtain
+\begin{align} 
+     e^{-2W} 2(\iisat)
+      \frac{ 16 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat)^{2} }  
+       \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}\\
+     e^{-2W} 2(\iisat)
+      \frac{ 4 i |\Delta| } 
+           {(4 \Delta^{2} + 2 \iisat)^{2} }  
+      \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zn}  \\
+    -e^{-2W} 2(\iisat) 
+      \frac{ 4 i |\Delta|} 
+           {(4 \Delta^{2} + 2 \iisat)^{2} }  
+      \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+        S_{zm} \\
+     e^{-2W} 2(\iisat)
+      \frac{ 1} { (4 \Delta^{2} + 2 \iisat)^{2} }   
+       \Re \sum_{m<n} & 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+\end{align}
+%\begin{align} e^{-2W} \frac{2\iisat}{ |\Delta|^{2} }  \Re \sum_{m<n} & e^{ i
+%\bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } S_{zm}S_{zn}  \\ e^{-2W} \frac{2\iisat}{ 4
+%|\Delta|^{3} }  \Re \sum_{m<n} & e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } i
+%S_{zn} \\ - e^{-2W} \frac{2\iisat}{ 4 |\Delta|^{3} }  \Re \sum_{m<n} & e^{ i
+%\bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } i S_{zm} \\  e^{-2W}
+%\frac{2I/I_{\mathrm{sat}}}{ 16 |\Delta|^{4} }  \Re \sum_{m<n} & e^{ i \bv{Q}(
+%\bv{R}_{m} - \bv{R}_{n} ) } \end{align}
+We identify the first term and the last term as related to the spin structure
+factor and crystal structure factor.
+%%%%% that appear in Ted's %%%%paper.   We have also two other terms show up
+%here, which Ted discards in his %%%%derivation, see more details on
+%Sec.~\ref{sec:Ted}.    As was stated at the %%%%beginning of this document,
+%our main goal here is to connect the intensity %%%%measured by our cameras
+%with the spin-structure factor that is calculated by the %%%%theorists.   
+In this last equation we see that the first term, the one related to the spin
+structure factor, is going to have the main contribution to the intensity
+because it goes as $ |\Delta|^{-2} $, whereas the other terms go as larger
+powers of $1/|\Delta|$.  If we neglect terms other than the first one,  we
+obtain
+\begin{equation}
+\begin{split} 
+ I  =  & 
+ \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) \left[
+     e^{-2W}
+      \frac{ 16 \Delta^{2} (\iisat)  } 
+           {(4 \Delta^{2} + 2 \iisat)^{2} }  
+       2 \Re \sum_{m<n}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+  + \sum_{n}  \frac{1}{2} \frac{2 \iisat }{ 4 \Delta^{2} + 2 \iisat }
+\right]  \\ 
+ =  & \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) 
+  \frac{ \iisat }{ 4 \Delta^{2} + 2 \iisat }
+  \left[
+      \frac{ e^{-2W}16 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat) }  
+       2 \Re \sum_{m<n}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+  + N 
+\right]  \\ 
+\end{split}
+\end{equation}
+We note that, since exchanging indexes in the summand results in its complex
+conjugate, $2\Re\sum_{m<n} \equiv \sum_{m\neq n}$.  We also use $\sum_{m\neq n}
+\equiv \sum_{mn} - \sum_{m=n}$ to obtain  
+\begin{equation}
+\begin{split} 
+ I 
+&  =
+  \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) 
+  \frac{ \iisat }{ 4 \Delta^{2} + 2 \iisat }
+  \left[
+      \frac{ e^{-2W}16 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat) } 
+   \left( \sum_{mn} - \sum_{m=n} \right) 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+  + N 
+   \right]  \\ 
+&  =
+  \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) 
+  \frac{ \iisat }{ 4 \Delta^{2} + 2 \iisat }
+  \left[
+      \frac{ e^{-2W}4 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat) } 
+   \left( 4\sum_{mn}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+     - N \right)
+  + N 
+   \right]  \\ 
+\end{split}
+\label{eq:iscatt-large-detuning}
+\end{equation}
+At this point we consider a measurement of the intensity after a large
+time-of-flight (TOF), denoted as $\itof$.  After TOF, the Debye-Waller factor
+goes to zero due to the expanding size of the atomic wavefunction, so we have 
+\begin{equation}
+\begin{split} 
+ \itof
+&  =
+  \left( 
+ \frac{\hbar c k \Gamma}{r_{D}^{2}}  
+     \frac{9}{24\pi} \Lambda 
+  \right) 
+  \frac{ \iisat }{ 4 \Delta^{2} + 2 \iisat } N 
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split} 
+ \frac{I}{\itof} 
+&  =
+      \frac{ e^{-2W}4 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat) } 
+   \left(
+      \frac{4}{N}\sum_{mn}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+     - 1 \right)
+  + 1 
+\end{split}
+\label{eq:IscattQ}
+\end{equation}
+
+\subsection{Measurement of the structure factor} 
+
+The theorists in our collaboration calculate the spin structure factor
+$S(\bv{Q})$, which is defined as 
+\begin{equation}
+   S(\bv{Q}) =  
+      \frac{4}{N}\sum_{mn}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+\end{equation}
+From inspection of Eq.~\ref{eq:IscattQ} we see that a measurement of $I/\itof$
+can be related to the spin structure factor by 
+\begin{equation}
+\begin{split} 
+ \frac{I}{\itof} 
+&  =
+      \frac{ e^{-2W}4 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat) } 
+   \left( S(\bv{Q})
+     - 1 \right)
+  + 1 
+\end{split}
+\end{equation}
+
+At this point we introduce the notation
+\begin{equation}
+ \frac{I}{\itof} \equiv I_{\bv{Q}} 
+   \ \ \ \ \ \ \  \ \ \ \ \ \ \ \  
+      c \equiv \frac{ e^{-2W}4 \Delta^{2}  } 
+           {(4 \Delta^{2} + 2 \iisat) }
+   \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ 
+    S(\bv{Q}) \equiv S_{\bv{Q}}
+\end{equation} 
+\begin{equation}
+  I_{\bv{Q}} = c ( S_{\bv{Q}} - 1 ) + 1 
+\end{equation}
+ 
+If we perform the measurement in a deep enough lattice, then the Debye-Waller
+factor $e^{-2W} \rightarrow 1 $ .   Furthermore, if we select an intensity such
+that $ \iisat \ll 2\Delta^{2} $  this reduces to an equivalence between the TOF
+normalized intensity and the spin structure factor:
+\begin{equation}
+  I_{\bv{Q}} = S_{\bv{Q}} 
+\end{equation}
+
+To compare with the calculations from the theorists we solve for $S_{\bv{Q}}$
+and find
+\begin{equation} 
+  S_{\bv{Q}} = 1 + \left( I_{\bv{Q}}  - 1
+\right)/c 
+\end{equation}
+
+In our experiment we are using $\iisat \approx 15$ and $\Delta = 6.5$.   We
+perform the measurement at a lattice depth of 50$E_{R}$.  For this parameters
+we have the following: 
+\begin{equation}
+\begin{split}
+  e^{-2W} & =  0.81\\
+  1  +   \frac{\iisat}{2\Delta^{2} } & =  1.18\\  
+\end{split}
+\end{equation} 
+
+\begin{equation} 
+  S_{\bv{Q}} - 1  =   1.45 (I_{t} - 1)
+\end{equation}
+
+\subsection{Magneto-association and contributions from doubly occupied sites} 
+
+In our experiment we have the possibility to  magneto-associate (MA) the atoms
+in doubly occupied sites prior to a measurement of the scattered light.  The
+formed molecules  are insensitive to the probe light and do not scatter any
+light at all. In this section we study the implications of MA for the
+comparison between experimental measurements and the structure factor as
+calculated by the theorists. 
+
+We start from Eq.~\ref{eq:iscatt-large-detuning} and will separate the sums
+over atoms in singly and doubly occupied sites.  We have for the intensity
+\begin{equation}
+\begin{split} 
+ I 
+&  = \frac{ \itof  }{N} 
+  \left[ 4 c 
+   \left( \sum_{mn} - \sum_{m=n} \right) 
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+  + \sum_{n}  
+   \right]  \\ 
+&  = \frac{ \itof }{N} 
+  \left[ 
+      4 c \sum_{mn}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) } 
+      S_{zm}S_{zn}
+    -  c  \sum_{n} 
+  + \sum_{n}  
+   \right]  \\ 
+\end{split}
+\end{equation}
+
+With MA prior to the intensity measurement, there is no contribution to the
+scattered light from atoms in doubly occupied sites, so denoting as
+$\mathcal{S}$ the set of singly occupied sites, we have 
+\begin{equation}
+\begin{split} 
+ I_{\text{MA}} 
+&  = \frac{ \itof }{N} 
+  \left[ 
+      4 c \sum_{m\in \mathcal{S}}  
+      e^{ i \bv{Q} \bv{R}_{m} } S_{zm} 
+      \sum_{n\in \mathcal{S} } 
+      e^{ -i \bv{Q} \bv{R}_{n} } S_{zn} 
+    -  c  \sum_{n\in \mathcal{S}} 
+  + \sum_{n \in \mathcal{S}}  
+   \right]  \\ 
+&  = \frac{ \itof }{N} 
+  \left[ 
+      4 c \sum_{m\in \mathcal{S}}  
+      e^{ i \bv{Q} \bv{R}_{m} } S_{zm} 
+      \sum_{n\in \mathcal{S} } 
+      e^{ -i \bv{Q} \bv{R}_{n} } S_{zn} 
+    -  c N(1-D)  + N(1-D) 
+   \right]  \\ 
+\end{split}
+\end{equation}
+where $D$ is the fraction of atoms in doubly occupied sites.  
+
+Denoting the set of atoms in doubly occupied sites as $\mathcal{D}$, we point
+out that 
+\begin{equation}
+ \sum_{m \in \mathcal{D} }  e^{ \pm i \bv{Q} \bv{R}_{m}} S_{zm} = 0 
+\end{equation}
+since the contributions cancel out in pairs as $   e^{ \pm i \bv{Q} \bv{R}_{m}}
+( +1/2 - 1/2 ) = 0 $.  This allows us to remove the $\in \mathcal{S}$
+constraint in the remaining sums, 
+\begin{equation}
+ \sum_{m \in \mathcal{S} }  e^{ \pm i \bv{Q} \bv{R}_{m}} S_{zm} = 
+ \sum_{m}  e^{ \pm i \bv{Q} \bv{R}_{m}} S_{zm}  
+\end{equation}
+
+and obtain for the intensity after MA 
+\begin{equation}
+\begin{split} 
+ I_{\text{MA}}  
+&  = \frac{ \itof }{N} 
+  \left[ 
+      4 c \sum_{m}  
+      e^{ i \bv{Q} \bv{R}_{m} } S_{zm} 
+      \sum_{n } 
+      e^{ -i \bv{Q} \bv{R}_{n} } S_{zn} 
+    -  c N(1-D)  + N(1-D) 
+   \right]  \\ 
+&  =  \itof 
+  \left[ c S_{\bv{Q}}
+    -  c (1-D)  + (1-D) 
+   \right]  \\ 
+\end{split}
+\end{equation}
+
+We introduce the simplifying notation
+\begin{equation}
+ \frac{ I_{\mathrm{MA}} } { \itof } \equiv I_{\bv{Q}m} 
+\end{equation}
+and simplify for the spin structure factor we obtain 
+\begin{equation}
+S_{\bv{Q}} = \frac{1}{c}\left( I_{\bv{Q}m}  - 1 \right) 
+             - \frac{D}{c}(c-1)  + 1 
+\end{equation}
+
+To measure the fraction of atoms in doubly occupied sites, $D$, we can make a
+measurement of the scattered intensity after MA and a large TOF.  Combined with
+the TOF measurement without MA we have 
+\begin{equation}
+  D = 1 - \frac{I_{\text{MA},\infty}}{ \itof } \equiv 1 - I_{s} 
+\end{equation} 
+giving finally 
+\begin{equation}
+S_{\bv{Q}} = \frac{1}{c}\left( I_{\bv{Q}m}  - 1 \right) 
+            + \frac{c-1}{c}\left(  I_{s}   - 1\right)   + 1 
+\end{equation}
+where we recall 
+\begin{equation}
+ I_{\bv{Q}m} = \frac{ I_{\text{MA}}}{\itof}  
+ \ \ \ \ \ \ \ \ \ \ \ 
+ I_{s} = \frac{ I_{\text{MA},\infty} } {\itof} 
+\end{equation}
+
+\subsection{Data at short time-of-flight} 
+
+In the above section we considered $\itof$, a measurement of the intensity with
+a time-of-flight long enough such that the Debye-Waller factor $e^{-2W}
+\rightarrow 0 $.   For some of the data we have taken, the TOF is 6~$\mu$s,
+which in some cases is not long enough for the Debye-Waller factor be
+negligible.  In this section we look at the determination of $S_{\bv{Q}}$ with
+time-of-flight data for which one cannot assume $e^{-2W} \rightarrow 0 $.  
+
+We recall that the Debye-Waller factor is defined as
+\begin{equation}
+    e^{-2W} = 
+      \prod_{i=x,y,z} e^{ -Q_{i}^{2}\langle r_{i} ^{2} \rangle } 
+\end{equation}
+where $Q_{i}$ is the $i^{\text{th}}$ component of the momentum transfer $\bv{Q}
+= \bv{k}' - \bv{k}$,  with $\bv{k}'$ and $\bv{k}$ the wave vectors of the
+outgoing and incoming light respectively.  The time-of-flight dependence of the
+Debye-Waller factor is through the expanding size of the atomic wavefunctions.
+For an in-situ picture $\langle r_{i}^{2}\rangle$ corresponds to the position
+spread of the lattice site's harmonic oscillator ground state.  After the atoms
+are released from the lattice the spread of the wavefunction satisfies 
+\begin{equation}
+\begin{split} 
+  \langle r_{i}^{2} \rangle_{t} = &
+   \langle r_{i}^{2} \rangle_{0} + 
+  \frac{t^{2}}{m^{2}} \langle p_{i}^{2} \rangle_{0} \\
+  = &  \langle r_{i}^{2} \rangle_{0} + 
+  \frac{t^{2}}{m^{2}} \frac{\hbar^{2}}{4  \langle r_{i}^{2} \rangle_{0} } \\
+\end{split}
+\end{equation} 
+
+In a harmonic oscillator potential we have 
+\begin{equation}
+    \langle r^{2} \rangle = \frac{\hbar}{2 m \omega}
+\end{equation}
+and since in a lattice of depth $V_{0}$ recoils,  $\hbar \omega = 2 E_{R}
+\sqrt{V_{0}}$  
+\begin{equation}
+    \langle r^{2} \rangle = \frac{a^{2}}{ 2 \pi^{2} \sqrt{V_{0}} }
+\end{equation}
+where $a$ is the lattice spacing. 
+
+We then have for the Debye-Waller factor as a function of time-of-flight
+\begin{equation}
+\begin{split}
+    [e^{-2W}]_{t} = &  
+      \prod_{i=x,y,z} \exp\left[  -Q_{i}^{2} 
+      \left(  \frac{a^{2}}{ 2 \pi^{2} \sqrt{V_{0}}} 
+            + \frac{ h^{2} \sqrt{V_{0}} }{8 a^{2}} 
+              \frac{ t^{2}}{m^{2} }\right) \right] \\
+    =& [e^{-2W}]_{0} \prod_{i=x,y,z} \exp\left[  -Q_{i}^{2} 
+            \frac{ h^{2} \sqrt{V_{0}} }{8 a^{2}} 
+              \frac{ t^{2}}{m^{2} } \right] \\
+    =& [e^{-2W}]_{0} \prod_{i=x,y,z} \exp\left[ -\frac{\sqrt{V_{0}}}{2}
+           \left( \frac{ Q_{i} h }{2 m a  } \right)^{2}  t^{2}   \right] \\
+    =& [e^{-2W}]_{0} \exp\left[ -\frac{\sqrt{V_{0}}}{2}
+           \left( \frac{ |\bv{Q}| h }{2 m a  } \right)^{2}  t^{2}   \right] \\
+\end{split}
+\end{equation}
+
+We now define the time dependent correction factor 
+\begin{equation}
+   c(t) =   \frac{ [e^{-2W}]_{t} 4 \Delta^{2}  } 
+           {4 \Delta^{2} + 2 \iisat }  
+\end{equation}
+The measured intensity after time-of-flight $t$ is 
+\begin{equation}
+\begin{split} 
+ \frac{I(t)}{\itof} 
+&  = c(t) ( S_{\bv{Q}} - 1 ) + 1 
+\end{split}
+\end{equation}
+Consider two measurements, one at $t=0$, the other one at $t=T$,
+\begin{equation}
+ \frac{ I(t=0) }{\itof} =  c(0)( S_{\bv{Q}} -1) + 1 
+ \ \ \ \ \ \ \ \ \ \ 
+  \frac{ I(t=T) }{\itof} =  c(T)( S_{\bv{Q}} -1) + 1 
+\end{equation}
+\begin{equation} 
+ \frac{ I(t=0)}{ I(t=T)} = 
+ \frac{ c(0)( S_{\bv{Q}} - 1 ) + 1}{ c(T)( S_{\bv{Q}} - 1) + 1} 
+      \equiv I_{\bv{Q}}(T) 
+\end{equation}
+which can be solved to give
+\begin{equation} 
+  S_{\bv{Q}} = \frac{ 1 - c(0) - I_{\bv{Q}}(T)( 1- c(T))}
+                    { I_{\bv{Q}}(T)c(T) - c(0) } 
+\end{equation}
+
+\subsection{Simultaneous measurement of the structure factor for two different
+values of $\bv{Q}$}
+
+In the sections above we have shown how to measure the spin structure factor
+$S_{\bv{Q}}$  by measuring the scattered intensity in-situ and after
+time-of-flight.  An issue that arises with this measurement is that the in-situ
+and TOF measurements require two different realizations of the experiment.  
+
+In our setup we have the possibility of measuring the scattered intensity at
+two different output angles.  One of the angles corresponds to a momentum
+transfer $\bv{Q} = \frac{2\pi}{a} ( \frac{1}{2}\, \frac{1}{2}\, \frac{1}{2} )
+\equiv \bv{\pi}$,  which offers the possibility of measuring the staggered
+magnetization of the system, i.e. the degree of antiferromagnetic ordering.
+The other angle corresponds to a momentum transfer $\bv{Q} = \frac{2\pi}{a}(
+0.4,\, -0.1,\, -0.04 ) \equiv \bv{\theta}$.  The structure factor can also be
+measured at this value of $\bv{Q}$ and compared with theoretical calculations.
+Also, this momentum transfer does not measure the staggered magnetization, so
+it may be used as a normalization for the measurement at $\bv{Q}=\bv{\pi}$
+
+For the measurements at $\bv{\pi}$ and $\bv{\theta}$ we have (without
+magneto-association)
+\begin{equation}
+   S_{\bv{\pi}} = (I_{\bv{\pi}} - 1 + c)/c  
+  \ \ \ \ \ \ \ \ \ \ 
+   S_{\bv{\theta}} = (I_{\bv{\theta}} - 1 + c)/c  
+\end{equation}
+\begin{equation}
+  \frac{ S_{\bv{\pi}} }{ S_{\bv{\theta}}} = 
+  \frac{ I_{\bv{\pi}} - 1 + c }{ I_{\bv{\theta}} - 1 + c } 
+\end{equation}
+We recall that $I_{\bv{Q}} = I(\bv{Q}) / \itof (\bv{Q})$.  To make use of the
+simultaneous measurement of $I$ at $\bv{Q}= \bv{\pi}, \bv{\theta}$ we define 
+\begin{equation}
+  \left. 
+  \left( \frac{ I(\bv{\pi})}{I(\bv{\theta})} \right)  \middle/  
+  \left( \frac{ \itof(\bv{\pi})}{\itof(\bv{\theta})} \right)  
+  \right.  \equiv I_{\bv{\pi}/\bv{\theta}}
+\end{equation}
+This measurement consists of an in-situ measurement of the ratio
+$I(\bv{\pi})/I(\bv{\theta})$  and a TOF measurement of the same ratio
+in a subsequent realization of the experiment.  We then have 
+\begin{equation}
+   S_{\bv{\pi}}  = S_{\bv{\theta}}
+  \frac{ I_{\bv{\pi}/\bv{\theta}} - ( 1 - c )/I_{\bv{\theta}} }
+        { 1 - (1 - c)/I_{\bv{\theta}} } 
+\end{equation}
+This measurement is an alternative to the measurement of $S_{\bv{\pi}}$
+directly from $I_{\bv{\pi}}$,  it offers the added advantage that the recording
+of the ratio $I(\bv{\pi})/I(\bv{\theta})$ in a single shot may result in a
+reduction of the noise in the signal.   
+
+From what we have seen so far, the noise in the signal is dominated by the
+repeatability of the experimental realizations.  That is, the noise exceeds the
+detection noise ( variance of the intensity measurement without atoms), and it
+also exceeds the shot to shot variation from atom number and probe
+intensity/polarization fluctuations.    With this realization-dominated noise, a
+significant reduction in the error associated with $S_{\bv{\pi}}$ is not
+expected with the simultaneous measurement.  Nevertheless, this alternate
+measure should be consistent with $S_{\bv{\pi}}$ as obtained directly from
+$I_{\bv{\pi}}$.  
+
+ 
+
+\bibliographystyle{osa}
+\bibliography{bragg}
+
+\end{document}
+
+
+
+

@@ -408,3 +408,16 @@ if verbose:
     ###print (kA2/abs(kA2)).get_spherical()
     ###print "kMANTA",kMANTA/abs(kMANTA)
     ###print (kMANTA/abs(kMANTA)).get_spherical()
+
+    print 
+    print "Bragg vector Q1"
+    print "kInput  HHH = ", kin
+    print "kOutput HHH = ", kA1
+    print "Q HHH = ", kA1 - kin
+    print "Q * (532/2/np.pi) = ",  (532/np.pi/2)*(kA1-kin)  
+    print 
+    print "Bragg vector Q2"
+    print "kInput  HHH = ", kin
+    print "kOutput HHH = ", kA2 
+    print "Q HHH = ", kA2 - kin
+    print "Q * (532/2/np.pi) = ",  (532/np.pi/2)*(kA2-kin)  
