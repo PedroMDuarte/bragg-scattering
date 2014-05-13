@@ -1,21 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.5.5)  30 JAN 2014 15:14
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.2.1)  12 MAY 2014 18:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **bragg.tex
 (./bragg.tex
 LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, et
-hiopic, farsi, arabic, pinyin, croatian, bulgarian, ukrainian, russian, slovak,
- czech, danish, dutch, usenglishmax, ukenglish, finnish, french, basque, ngerma
-n, german, swissgerman, ngerman-x-2012-05-30, german-x-2012-05-30, monogreek, g
-reek, ibycus, ancientgreek, hungarian, bengali, tamil, hindi, telugu, gujarati,
- sanskrit, malayalam, kannada, assamese, marathi, oriya, panjabi, italian, lati
-n, latvian, lithuanian, mongolian, mongolianlmc, nynorsk, bokmal, indonesian, e
-speranto, coptic, welsh, irish, interlingua, serbian, serbianc, slovenian, friu
-lan, romansh, estonian, romanian, armenian, uppersorbian, turkish, afrikaans, i
-celandic, kurmanji, polish, portuguese, galician, catalan, spanish, swedish, th
-ai, loaded.
+Babel <3.9f> and hyphenation patterns for 78 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
@@ -64,23 +54,26 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks15
 )
-(/var/lib/texmf/tex/generic/babel/babel.sty
-Package: babel 2008/07/08 v3.8m The Babel package
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2013/05/16 v3.9f The Babel package
 
-(/usr/share/texlive/texmf-dist/tex/generic/babel/greek.ldf
-Language: greek 2005/03/30 v1.3l Greek support from the babel system
+(/usr/share/texlive/texmf-dist/tex/generic/babel-greek/greek.ldf
+Language: greek 2013/07/19 v1.6 Greek support for the babel system
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2008/07/08 v3.8m Babel common definitions
+File: babel.def 2013/05/16 v3.9f Babel common definitions
 \babel@savecnt=\count90
 \U@D=\dimen111
 )
-Loading the definitions for the Greek font encoding
-(/usr/share/texlive/texmf-dist/tex/generic/babel/lgrenc.def
-File: lgrenc.def 2008/06/17 v2.3 Greek Encoding
-))
-(/usr/share/texlive/texmf-dist/tex/generic/babel/english.ldf
-Language: english 2005/03/30 v3.3o English support from the babel system
+(/usr/share/texlive/texmf-dist/tex/latex/greek-fontenc/lgrenc.def
+File: lgrenc.def 2013/07/16 v0.9 LGR Greek font encoding definitions
+
+(/usr/share/texlive/texmf-dist/tex/latex/greek-fontenc/greek-fontenc.def
+File: greek-fontenc.def 2013/07/18 v0.9.1 Common Greek font encoding definition
+s
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2012/08/20 v3.3p English support from the babel system
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
@@ -165,13 +158,13 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 Package: adjustbox 2012/05/21 v1.0 Adjusting TeX boxes (trim, clip, ...)
 
 (/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2008/08/13 v2.6a package option processing (HA)
+Package: xkeyval 2012/10/14 v2.6b package option processing (HA)
 
 (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
 \XKV@toks=\toks16
 \XKV@tempa@toks=\toks17
 \XKV@depth=\count101
-File: xkeyval.tex 2008/08/13 v2.6a key=value parser (HA)
+File: xkeyval.tex 2012/10/14 v2.6b key=value parser (HA)
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/adjustbox/adjcalc.sty
 Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
@@ -224,7 +217,7 @@ Package: setspace 2011/12/19 v6.7a set line spacing
 \f@ncyO@orf=\skip53
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2000/07/18 v2.13 AMS math features
+Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip54
 
 For additional information on amsmath, use the `?' option.
@@ -244,20 +237,20 @@ Package: amsbsy 1999/11/29 v1.2d
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count104
-LaTeX Info: Redefining \frac on input line 211.
+LaTeX Info: Redefining \frac on input line 210.
 \uproot@=\count105
 \leftroot@=\count106
-LaTeX Info: Redefining \overline on input line 307.
+LaTeX Info: Redefining \overline on input line 306.
 \classnum@=\count107
 \DOTSCASE@=\count108
-LaTeX Info: Redefining \ldots on input line 379.
-LaTeX Info: Redefining \dots on input line 382.
-LaTeX Info: Redefining \cdots on input line 467.
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
 \Mathstrutbox@=\box54
 \strutbox@=\box55
 \big@size=\dimen134
-LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \macc@depth=\count109
 \c@MaxMatrixCols=\count110
 \dotsspace@=\muskip10
@@ -278,8 +271,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
 \multlinegap=\skip55
 \multlinetaggap=\skip56
 \mathdisplay@stack=\toks22
-LaTeX Info: Redefining \[ on input line 2666.
-LaTeX Info: Redefining \] on input line 2667.
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2004/02/26 v1.1c Bold Symbol Support (DPC/FMi)
@@ -316,11 +309,10 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
 LaTeX Font Info:    ... okay on input line 54.
 LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 54.
 LaTeX Font Info:    Try loading font information for LGR+cmr on input line 54.
- (/usr/share/texlive/texmf-dist/tex/generic/babel/lgrcmr.fd
+ (/usr/share/texlive/texmf-dist/tex/generic/babel-greek/lgrcmr.fd
 File: lgrcmr.fd 2008/06/17 v2.3 Greek Computer Modern
 )
 LaTeX Font Info:    ... okay on input line 54.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -415,102 +407,268 @@ e
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    Try loading font information for U+bbold on input line 238.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 244.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/bbold/Ubbold.fd) [3] [4] [5] [6]
-[7] [8] [9] [10] [11] [12] [13] [14]
-Overfull \hbox (1.31168pt too wide) in paragraph at lines 1354--1386
+[7] [8] [9] [10] [11]
+<figures_140308/Noise_hist_p.png, id=54, 925.056pt x 693.792pt>
+File: figures_140308/Noise_hist_p.png Graphic file (type png)
+
+<use figures_140308/Noise_hist_p.png>
+Package pdftex.def Info: figures_140308/Noise_hist_p.png used on input line 110
+4.
+(pdftex.def)             Requested size: 491.43513pt x 368.5761pt.
+
+<figures_140308/Noise_hist.png, id=56, 925.056pt x 693.792pt>
+File: figures_140308/Noise_hist.png Graphic file (type png)
+
+<use figures_140308/Noise_hist.png>
+Package pdftex.def Info: figures_140308/Noise_hist.png used on input line 1124.
+
+(pdftex.def)             Requested size: 491.43513pt x 368.5761pt.
+
+<figures_140308/CrystalSize_plot.png, id=57, 693.792pt x 520.05492pt>
+File: figures_140308/CrystalSize_plot.png Graphic file (type png)
+
+<use figures_140308/CrystalSize_plot.png>
+Package pdftex.def Info: figures_140308/CrystalSize_plot.png used on input line
+ 1135.
+(pdftex.def)             Requested size: 491.43513pt x 368.36867pt.
+
+<figures_140308/spi-variance.png, id=58, 722.7pt x 238.491pt>
+File: figures_140308/spi-variance.png Graphic file (type png)
+
+<use figures_140308/spi-variance.png>
+Package pdftex.def Info: figures_140308/spi-variance.png used on input line 114
+8.
+(pdftex.def)             Requested size: 491.43513pt x 162.17535pt.
+ [12] [13 <./figures_140308/Noise_hist_p.png>] [14 <./figures_140308/Noise_hist
+.png>] [15 <./figures_140308/CrystalSize_plot.png> <./figures_140308/spi-varian
+ce.png>] [16] [17]
+<figures_140308/rocking-fourier.png, id=85, 361.35pt x 246.1195pt>
+File: figures_140308/rocking-fourier.png Graphic file (type png)
+
+<use figures_140308/rocking-fourier.png>
+Package pdftex.def Info: figures_140308/rocking-fourier.png used on input line 
+1399.
+(pdftex.def)             Requested size: 294.86407pt x 200.83536pt.
+ [18 <./figures_140308/rocking-fourier.png (PNG copy)>] <figures_140308/Rocking
+_20.png, id=92, 614.295pt x 542.025pt>
+File: figures_140308/Rocking_20.png Graphic file (type png)
+
+<use figures_140308/Rocking_20.png>
+Package pdftex.def Info: figures_140308/Rocking_20.png used on input line 1431.
+
+(pdftex.def)             Requested size: 294.86407pt x 260.1773pt.
+
+<figures_140308/Rocking_30.png, id=93, 614.295pt x 542.025pt>
+File: figures_140308/Rocking_30.png Graphic file (type png)
+
+<use figures_140308/Rocking_30.png>
+Package pdftex.def Info: figures_140308/Rocking_30.png used on input line 1439.
+
+(pdftex.def)             Requested size: 294.86407pt x 260.1773pt.
+
+<figures_140308/Rocking_40.png, id=94, 614.295pt x 542.025pt>
+File: figures_140308/Rocking_40.png Graphic file (type png)
+
+<use figures_140308/Rocking_40.png>
+Package pdftex.def Info: figures_140308/Rocking_40.png used on input line 1447.
+
+(pdftex.def)             Requested size: 294.86407pt x 260.1773pt.
+
+<figures_140308/Rocking_50.png, id=95, 614.295pt x 542.025pt>
+File: figures_140308/Rocking_50.png Graphic file (type png)
+
+<use figures_140308/Rocking_50.png>
+Package pdftex.def Info: figures_140308/Rocking_50.png used on input line 1455.
+
+(pdftex.def)             Requested size: 294.86407pt x 260.1773pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[19 <./figures_140308/Rocking_20.png>] [20 <./figures_140308/Rocking_30.png> <.
+/figures_140308/Rocking_40.png>] [21 <./figures_140308/Rocking_50.png>]
+[22] [23] [24] [25]
+Overfull \hbox (1.31168pt too wide) in paragraph at lines 1871--1903
 [][] 
  []
 
-[15]
-Overfull \hbox (8.70056pt too wide) in paragraph at lines 1396--1435
+[26]
+Overfull \hbox (8.70056pt too wide) in paragraph at lines 1913--1952
 [][] 
  []
 
-<figures_140128/sdat_average_m.png, id=69, 505.89pt x 621.522pt>
+<figures_140128/sdat_average_m.png, id=128, 505.89pt x 621.522pt>
 File: figures_140128/sdat_average_m.png Graphic file (type png)
 
 <use figures_140128/sdat_average_m.png>
 Package pdftex.def Info: figures_140128/sdat_average_m.png used on input line 1
-477.
+994.
 (pdftex.def)             Requested size: 442.28862pt x 543.39418pt.
- [16] [17 <./figures_140128/sdat_average_m.png>] <figures_140129/densityInspec_
-7776.png, id=81, 289.08pt x 289.08pt>
-File: figures_140129/densityInspec_7776.png Graphic file (type png)
+ [27] [28 <./figures_140128/sdat_average_m.png>]
+<figures_140130/densityinspec_380a0_avg.png, id=137, 289.08pt x 289.08pt>
+File: figures_140130/densityinspec_380a0_avg.png Graphic file (type png)
 
-<use figures_140129/densityInspec_7776.png>
-Package pdftex.def Info: figures_140129/densityInspec_7776.png used on input li
-ne 1547.
-(pdftex.def)             Requested size: 245.71756pt x 245.71474pt.
+<use figures_140130/densityinspec_380a0_avg.png>
+Package pdftex.def Info: figures_140130/densityinspec_380a0_avg.png used on inp
+ut line 2066.
+(pdftex.def)             Requested size: 196.57104pt x 196.5718pt.
 
-<figures_140129/GR.png, id=82, 722.7pt x 252.945pt>
-File: figures_140129/GR.png Graphic file (type png)
+<figures_140130/GR.png, id=138, 722.7pt x 252.945pt>
+File: figures_140130/GR.png Graphic file (type png)
 
-<use figures_140129/GR.png>
-Package pdftex.def Info: figures_140129/GR.png used on input line 1563.
+<use figures_140130/GR.png>
+Package pdftex.def Info: figures_140130/GR.png used on input line 2082.
 (pdftex.def)             Requested size: 491.43513pt x 172.00418pt.
 
-<figures_140129/docc_average.png, id=83, 325.215pt x 260.172pt>
-File: figures_140129/docc_average.png Graphic file (type png)
+<figures_140130/insitu_D.png, id=139, 260.172pt x 224.037pt>
+File: figures_140130/insitu_D.png Graphic file (type png)
 
-<use figures_140129/docc_average.png>
-Package pdftex.def Info: figures_140129/docc_average.png used on input line 158
-2.
-(pdftex.def)             Requested size: 196.57104pt x 157.25963pt.
- [18] [19 <./figures_140129/densityInspec_7776.png> <./figures_140129/GR.png>]
-<figures_140129/bin_5p5Er_2p7Gr580a0.png, id=94, 722.7pt x 433.62pt>
-File: figures_140129/bin_5p5Er_2p7Gr580a0.png Graphic file (type png)
+<use figures_140130/insitu_D.png>
+Package pdftex.def Info: figures_140130/insitu_D.png used on input line 2100.
+(pdftex.def)             Requested size: 196.57104pt x 169.2785pt.
 
-<use figures_140129/bin_5p5Er_2p7Gr580a0.png>
-Package pdftex.def Info: figures_140129/bin_5p5Er_2p7Gr580a0.png used on input 
-line 1607.
-(pdftex.def)             Requested size: 491.43513pt x 294.86432pt.
+<figures_140130/insitu_density.png, id=140, 281.853pt x 361.35pt>
+File: figures_140130/insitu_density.png Graphic file (type png)
 
-Overfull \hbox (6.66663pt too wide) in paragraph at lines 1622--1674
-[][] [] [] [] 
+<use figures_140130/insitu_density.png>
+Package pdftex.def Info: figures_140130/insitu_density.png used on input line 2
+109.
+(pdftex.def)             Requested size: 196.57104pt x 252.01697pt.
+ [29] [30 <./figures_140130/densityinspec_380a0_avg.png> <./figures_140130/GR.p
+ng> <./figures_140130/insitu_D.png>]
+<figures_140130/111_0580a0.png, id=150, 578.16pt x 346.896pt>
+File: figures_140130/111_0580a0.png Graphic file (type png)
+
+<use figures_140130/111_0580a0.png>
+Package pdftex.def Info: figures_140130/111_0580a0.png used on input line 2135.
+
+(pdftex.def)             Requested size: 491.43513pt x 294.85768pt.
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 -------------------------------[] 
  []
 
-[20 <./figures_140129/docc_average.png>] [21 <./figures_140129/bin_5p5Er_2p7Gr5
-80a0.png>] [22] [23] (./bragg.bbl) [24] (./bragg.aux) ) 
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 bin#     nb     t/tb      Ub/tb[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 -------------------------------[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 000    0.84     0.91       9.97[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 001    0.58     0.79       7.82[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 002    0.34     0.70       6.19[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 003    0.11     0.57       4.13[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2173--2173
+[]\OT1/cmtt/m/n/10.95 004    0.01     0.38       1.49[] 
+ []
+
+[31 <./figures_140130/insitu_density.png>] [32 <./figures_140130/111_0580a0.png
+>] [33]
+Overfull \hbox (7.04106pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 --------------------------------[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 bin#      nb     t/tb         u[] 
+ []
+
+
+Overfull \hbox (7.04106pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 --------------------------------[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 000    0.92      0.91      0.85[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 001    0.63      0.80      0.67[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 002    0.37      0.71      0.54[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 003    0.12      0.59      0.37[] 
+ []
+
+
+Overfull \hbox (1.29237pt too wide) in paragraph at lines 2347--2347
+[]\OT1/cmtt/m/n/10.95 004    0.01      0.39      0.14[] 
+ []
+
+[34] [35] (./bragg.bbl) [36] (./bragg.aux) ) 
 Here is how much of TeX's memory you used:
- 4223 strings out of 493485
- 59770 string characters out of 3143527
- 141051 words of memory out of 3000000
- 7395 multiletter control sequences out of 15000+200000
- 21557 words of font info for 79 fonts, out of 3000000 for 9000
+ 5009 strings out of 493307
+ 74675 string characters out of 6139906
+ 158440 words of memory out of 5000000
+ 8311 multiletter control sequences out of 15000+600000
+ 21557 words of font info for 79 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,19n,43p,353b,274s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texlive/texm
-f-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
-2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cmextra/cmmib6.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on bragg.pdf (24 pages, 1263005 bytes).
+ 38i,21n,43p,353b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/font
+s/type1/public/bbold-type1/bbold10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/bbold-type1/bbold7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb
+x8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cmextra/cmmib6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cmextra/cmmib7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cmextra/cmmib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmtt8.pfb>
+Output written on bragg.pdf (36 pages, 4520954 bytes).
 PDF statistics:
- 197 PDF objects out of 1000 (max. 8388607)
- 133 compressed objects within 2 object streams
+ 266 PDF objects out of 1000 (max. 8388607)
+ 168 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 

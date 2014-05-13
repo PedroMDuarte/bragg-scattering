@@ -110,8 +110,8 @@ for i,N in enumerate(Ns):
         np.savetxt(dirname+ 'pafms'+fname, pafms)    
     
     
-    Nstr = '$L=%d$' % N
-    plotCS( axR, pafms, RATIO, lc[i], fc[i], 'o', 'N=%d'%N)
+    Nstr = '$N^{1/3}=%d$' % N
+    plotCS( axR, pafms, RATIO, lc[i], fc[i], 'o', Nstr)
     plotCS( axA1, pafms, A1_, lc[i], fc[i], 'o', Nstr)  
     plotCS( axA2, pafms, A2_, lc[i], fc[i], 'o', Nstr)
 

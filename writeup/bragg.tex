@@ -56,7 +56,7 @@
 \section{Scattering of light by an array of atoms}
 
 In our experiment we observe the scattering of photons from atoms confined in
-an optical lattice, here we treat this situation by obtaining the the field
+an optical lattice, here we treat this situation by first obtaining  the field
 scattered from a single atom and then summing the field contributions from all
 the atoms coherently at the location of our detector.  The main goal of this
 document is to find the connection between the intensity that we measure in our
@@ -83,21 +83,27 @@ intensity at the detector is
 \langle I (t) \rangle = & 
     \langle E^{(-)}(\bv{r}_{D}, t) E^{(+)}(\bv{r}_{D}, t) \rangle \\
    = & |\eta|^{2} \langle S_{+}(t-r_{D}/c)S_{-}(t-r_{D}/c) \rangle  \\
+\end{split}
+\end{equation}
+In the steady state $\langle S_{+}(t) S_{-}(t) \rangle$ does not depend on $t$,
+so
+\begin{equation}
+\begin{split} 
+\langle I (t) \rangle  
    = & |\eta|^{2} \langle S_{+}S_{-} \rangle \\
    = & |\eta|^{2} \rho_{ee}  
 \end{split} 
 \end{equation}
-In the third line the time dependence is dropped since we are interested in the
-steady state solution.  We can write the $S_{\pm}$ operators of the atoms as 
+We can write the $S_{\pm}$ operators of the atoms as 
 \begin{equation} 
     S_{\pm} = \langle S_{\pm} \rangle + \delta S_{\pm} 
 \end{equation}
 which defines the difference, $\delta S$, between $S_{\pm}$ and its average
 value.   Writing $S_{\pm}$ this way allows us to distinguish between two
-components in the radiated light,  the radiation of the average dipole $\langle
+components in the radiated light:  the radiation of the average dipole $\langle
 S_{\pm}\rangle$ which is the radiation of a classical oscillating dipole with a
 phase that is well defined relative to the incident laser field, and the
-radiation form the $\delta S_{\pm}$ component which does not have a phase that
+radiation from the $\delta S_{\pm}$ component which does not have a phase that
 is well defined relative to the incident field because it comes form the
 fluctuating part of the atomic dipole.  The intensity is then a sum of coherent
 and incoherent parts 
@@ -905,6 +911,9 @@ and therefore
 \label{eq:IscattQ}
 \end{equation}
 
+
+
+
 \section{Measurement of the structure factor} 
 
 The theorists in our collaboration calculate the spin structure factor, $S$,
@@ -963,6 +972,514 @@ we have the following:
   S_{\bv{Q}} - 1  =   1.45 \times (\iq - 1)
 \end{equation}
 
+\newpage
+
+\subsection{Noise considerations} 
+
+We want to consider the statistical fluctuations in the quantity $S_{\bv{Q}}$
+due to the possibly random orientation of the spins.  $S_{\bv{Q}}$ is defined
+as 
+\begin{equation}
+S_{\bv{Q}} =  
+      \frac{4}{N}
+      \sum_{mn}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }  
+      S_{zm}S_{zn}
+\end{equation}
+Notice that this quantity can also be written as 
+\begin{equation}
+S_{\bv{Q}} =  
+      \frac{4}{N}
+      \sum_{m}  
+      e^{ i \bv{Q} \cdot\bv{R}_{m}  }  
+      S_{zm} 
+      \sum_{n}  
+      e^{ -i \bv{Q} \cdot\bv{R}_{n}  }  
+      S_{zn} =  
+      \frac{4}{N}
+      \left| \sum_{m}  
+      e^{ i \bv{Q} \cdot \bv{R}_{m} }  
+      S_{zm} \right|^{2}
+\end{equation}
+%We can write out the propagation of uncertainty: \begin{equation}
+%\text{Var}(S_{\bv{Q}}) =  \delta( S_{\bv{Q}})^{2}  = \left[ \frac{4}{N}
+%\delta\left( \left| \sum_{m}  e^{ i \bv{Q} \cdot \bv{R}_{m} }  S_{zm}
+%\right|^{2} \right) \right]^{2}  +  \left[  S_{\bv{Q}} \frac{ \delta(N) }{ N}
+%\right]^{2} \end{equation} where the letter $\delta$ representes the square
+%root of the variance of a quantity. 
+In other words, $S_{\bv{Q}}$ can be written as the norm squared of a sum over
+the spin arrangement.   When looking at the Bragg angle  (that is when $\bv{Q}
+= (\pi,\pi,\pi)$) the exponential term in the sum can only take the values
+$\pm1$, so the sum will be a real number.  If the sample is not ordered, the
+distribution of the spins in the lattice is completely random and the sum can
+be represented as the total distance traveled in a random walk where the length
+of each step is 1/2 and the probability of taking a step +1/2 is  $p=0.5$.
+When the sample has some order, the random walk will be biased,  with $p>0.5$
+in general and $p=1$ for a completely ordered sample.
+
+To simplify matters let us take the factor of 1/2 out of the spin variable and
+consider the random walk with unit step.   We have then that
+\begin{equation} 
+       \sum_{m}  
+      e^{ i \bv{\pi} \cdot \bv{R}_{m} }    
+      S_{zm} =   \frac{1}{2} X_{N} 
+\end{equation}
+where $X_{N}$ is a random variable the represents the total distance traveled
+in a random walk with unit step after $N$ steps.   The probability density
+function for $X_{N}$ is a binomial distribution 
+\begin{equation}
+  P(X_{N}=k) = \binom{N}{ (N+k)/2 } p^{(N+k)/2} (1-p)^{(N-k)/2} 
+\end{equation}
+which in the limit of a large number of steps can be approximated by a Gaussian
+probability distribution.  Using $q=1-p$ this is
+% I got this result from http://www.math.uah.edu/stat/bernoulli/Walk.html
+\begin{equation}
+  P(X_{N}=k) =  \frac{1}{\sqrt{2\pi}\sqrt{4 N pq}} 
+\exp\left[ -\frac{1}{2}\frac{(k-N(p-q))^{2}}{4 N pq }  \right]
+\end{equation}
+The probability density function for $X_{N}^{2}$ can be obtained from $P(X_{N}=k)$ as 
+\begin{equation}
+\begin{split}
+  P( X_{N}^{2} = y ) & = \frac{1}{2\sqrt{y}} [P( X_{N}=\sqrt{y})+P(X_{N}=-\sqrt{y})] \\
+   & =
+ \frac{1}{2\sqrt{y}} 
+   \frac{1}{\sqrt{2\pi}\sqrt{4 N pq}} 
+  \left(
+\exp\left[ -\frac{1}{2}\frac{(\sqrt{y}-N(p-q))^{2}}{4 N pq }  \right] + 
+\exp\left[ -\frac{1}{2}\frac{(-\sqrt{y}-N(p-q))^{2}}{4 N pq }  \right]  \right)
+\end{split}
+\end{equation}
+where it needs to be kept in mind that $y\geq 0$.   
+
+We can go one step further and notice that since 
+\begin{equation}
+  S_{\bv{\pi}} = \frac{ X_{N}^{2} }{N} 
+\end{equation} 
+the probability density function for $S_{\bv{\pi}}$ is 
+\begin{equation}
+\begin{split}
+  P( S_{\bv{\pi}} = s ) & = \frac{\sqrt{N}}{2\sqrt{s}} 
+     \left[ P( X_{N}=\sqrt{sN}) + P( X_{N}=-\sqrt{sN}) \right] \\
+   & =
+   \frac{\sqrt{N/s}}{2\sqrt{2\pi}\sqrt{4 N pq}}
+   \left( 
+    \exp\left[ -\frac{1}{2}\frac{(\sqrt{sN}-N(p-q))^{2}}{4 N pq }  \right]
+ +   \exp\left[ -\frac{1}{2}\frac{(-\sqrt{sN}-N(p-q))^{2}}{4 N pq }  \right]
+   \right)
+\end{split}
+\end{equation}
+
+The mean and variance of this probability density function can be calculated
+analytically by doing the integrals in Mathematica,  the results are
+\begin{equation}
+\begin{split} 
+  \text{Mean}( S_{\bv{\pi}} ) & = N(2p-1)^{2} + 4pq \\ 
+  \text{Var}( S_{\bv{\pi}} ) &  = 16pq( N(2p-1)^{2} + 2pq ) 
+\end{split}
+\end{equation}
+
+For a completely random spin distribution we have $p=1/2$ which gives
+$\overline{S_{\bv{\pi}}}=1$  and $\delta(S_{\bv{\pi}}) =
+\sqrt{\text{Var}(S_{\bv{\pi}})}=\sqrt{2}$, which is independent of $N$.  This
+variance is quite large, it is in fact larger than the mean value.   In our
+experiment we take a number of shots $n_{s}$, where each shot is a measurement
+of $S_{\bv{\pi}}$.  If we happened to be looking at an unordered sample
+($p=0.5$), the uncertainty in the mean of $S_{\bv{\pi}}$ is then given by
+\begin{equation}
+  \delta\left(\overline{S_{\bv{\pi}}}\,\right) = \sqrt{2/n_{s}}
+\end{equation} 
+If we want this uncertainty to go to the 0.1 level we would need to average
+$n_{s} = 2/(0.1^{2}) = 200$ shots.  We typically take some 10 shots, which for
+an unordered sample gives us
+$\delta\left(\overline{S_{\bv{\pi}}}\,\right)=0.44$.
+
+\subsubsection{Random realizations of $S_{\bv{\pi}}$}
+
+We have run some numerical tests with sets of randomly ordered spins.   The
+results from evaluating  $S_{\bv{\pi}}$ numerically can be compared with the
+probability density function obtained in the previous section,  this comparison
+in shown in Fig.~\ref{fig:spi-noise}.
+
+\begin{figure}
+\centering \includegraphics[width=\textwidth]{figures_140308/Noise_hist_p.png}
+\caption[Fluctuations in $S_{\bv{\pi}}$]{\small Distribution of $S_{\bv{\pi}}$
+for randomly ordered spins.  The spin ordering is parameterized by the
+parameter $p$ as described in the text.  The probability density function
+$P(S_{\bv{\pi}})$ as derived in the text is shown by the blue line.  The thin
+black line denotes the mean of the distribution and the shaded gray area
+denotes $\pm1$ standard deviations. }
+\label{fig:spi-noise}
+\end{figure}
+
+
+\subsubsection{Results for an AFM ordered core} 
+
+We can also consider a sample which has an AFM ordered domain of size
+$L_{\text{AFM}}$ at the center and then a randomly ordered shell on the
+outside.  Care is taken to make sure the spin mixture is balanced.  Numerically
+realizing random distributions of the spins in the shell we can obtain the
+distributions of $S_{\bv{\pi}}$ as a function of system size and size of the
+AFM domain.  The results are shown in Fig.~\ref{fig:crystal-size}. 
+\begin{figure}
+\centering \includegraphics[width=\textwidth]{figures_140308/Noise_hist.png}
+\caption[Fluctuations in $S_{\bv{\pi}}$]{\small Distribution of $S_{\bv{\pi}}$
+for randomly ordered spins.  The spin ordering is parameterized by the size of
+the AFM domain as described in the text.  The thin black line denotes the mean
+and the shaded gray area denotes $\pm1$ standard deviations.  }
+\label{fig:crystal-size}
+\end{figure}
+
+The mean values of the expected results at our detection cameras are shown for
+various values of $N$ and $L_{\text{AFM}}$ in Fig.~\ref{fig:crystal-size-mean}. 
+\begin{figure}
+\centering \includegraphics[width=\textwidth]{figures_140308/CrystalSize_plot.png}
+\caption[Mean value of $S_{\bv{\pi}}$]{\small Mean value of $S_{\bv{\pi}}$
+for randomly ordered spins.  The spin ordering is parameterized by the size of
+the AFM domain as described in the text. }
+\label{fig:crystal-size-mean}
+\end{figure}
+
+By plotting the mean, standard deviation and their ratio for the quantity
+$S_{\bv{\pi}}$ we can see that the relative fluctuations only go down for
+values of $S_{\bv{\pi}}$ significantly larger than 1,  which is a regime that
+would only be attained below the Neel transition.   This is shown in
+Fig.~\ref{fig:spi-variance}.
+\begin{figure}
+\centering \includegraphics[width=\textwidth]{figures_140308/spi-variance.png}
+\caption[Mean value and variance of $S_{\bv{\pi}}$]{\small Mean value,
+variance, and their ratio for $S_{\bv{\pi}}$ are plotted for different values
+of $p$, and $N$.  }
+\label{fig:spi-variance}
+\end{figure}
+
+
+\newpage
+
+
+\subsection{Angular dependence of $S_{\bv{Q}}$ }
+
+In this section we wish to obtain the analytical dependence of the spin
+structure factor $S_{\bv{Q}}$ as a function of $\bv{Q}$.   We assume that the
+spin-spin correlation function has a correlation length $L_{c}$,  so we can
+write
+\begin{equation}
+ \langle S_{zm}S_{zn} \rangle  =   
+   \frac{1}{4} 
+   e^{-i\bv{\pi}( \bv{R}_{m} - \bv{R}_{n}) } 
+   e^{-|\bv{R}_{m} - \bv{R}_{n}| / L_{c} } 
+\end{equation} 
+Here $\bv{\pi} = \frac{2\pi}{a}(1/2,\,1/2,\,1/2)$ ensures that the spins are
+antiferromagnetically ordered and their correlation decays over a length
+$L_{c}$.  
+
+Our goal is to obtain the spin structure factor, which is defined as  
+\begin{equation}
+\begin{split}
+S_{\bv{Q}} & =  
+      \frac{4}{N}
+      \sum_{mn}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }  
+      \langle S_{zm}S_{zn} \rangle 
+  = 
+      \frac{4}{N}
+      \sum_{mn}  
+      e^{ i \bv{Q}( \bv{R}_{m} - \bv{R}_{n} ) }  
+   \frac{1}{4} 
+   e^{-i\bv{\pi}( \bv{R}_{m} - \bv{R}_{n}) } 
+   e^{-|\bv{R}_{m} - \bv{R}_{n}| / L_{c} } \\ 
+   & = 
+   \frac{1}{N} 
+      \sum_{mn}  
+      e^{ i (\bv{Q}-\bv{\pi})( \bv{R}_{m} - \bv{R}_{n} ) }  
+   e^{-|\bv{R}_{m} - \bv{R}_{n}| / L_{c} }
+\end{split} 
+\end{equation}
+We introduce the vector $\bv{p}=\bv{Q}-\bv{\pi}$ and split the sum into $m=n$
+and $m\neq n$ parts:
+\begin{equation}
+\begin{split} 
+S_{\bv{Q}}  & = 
+   \frac{1}{N}\left(  
+   \sum_{m=n} + 
+      \sum_{m\neq n} \right) 
+      e^{ i \bv{p}( \bv{R}_{m} - \bv{R}_{n} ) }  
+   e^{-|\bv{R}_{m} - \bv{R}_{n}| / L_{c} }  \\
+   & =  
+   1 +  \sum_{m\neq n }  
+      e^{ i \bv{p}( \bv{R}_{m} - \bv{R}_{n} ) }  
+   e^{-|\bv{R}_{m} - \bv{R}_{n}| / L_{c} }  \\
+\end{split}
+\end{equation}
+
+We change one of the indices in the sum according to
+$\bv{R}_{m} = \bv{R}_{n} + \bv{R}_{k}$, which gives
+\begin{equation}
+S_{\bv{Q}} = 1+  
+   \frac{1}{N} 
+      \sum_{n}\sum_{k\neq 0}  
+      e^{ i \bv{p}\bv{R}_{k} } 
+   e^{-|\bv{R}_{k}| / L_{c} }  
+   = 1+ 
+      \sum_{k\neq 0}  
+      e^{ i \bv{p}\bv{R}_{k} } 
+   e^{-|\bv{R}_{k}| / L_{c} }  
+\end{equation}
+Notice that on the second step above we have carried out the sum over $n$,
+assuming that the crystal is sufficiently large such that there are no edge
+effects associated with the translation that was performed upon changing the
+index variables.  This is a valid assumption as long as the correlation length,
+$L_{c}$ is significantly smaller than the size of the entire crystal. 
+
+We will now approximate the sum over $k$ with an integral, $\sum_{k\neq 0}
+\rightarrow a^{-3}\int_{\mathbb{R}^{3}} \mathrm{d}^{3}\mathbb{R}$,  where $a$
+is the lattice spacing. 
+\begin{equation}
+S_{\bv{Q}} = 1 +  
+      \sum_{k\neq 0 }  
+      e^{ i \bv{p}\bv{R}_{k}  }  
+   e^{-|\bv{R}_{k}| / L_{c} }  
+     =  1 + 
+   \frac{1}{a^{3}} 
+   \int_{\mathbb{R}^{3}} \mathrm{d}^{3}\mathbb{R}  \, 
+      e^{ i \bv{p}\bv{R}_{k}  }  
+   e^{-|\bv{R}_{k}| / L_{c} }  
+\end{equation}
+The integral that remains is the 3D Fourier transform of a spherically
+symmetric function.   We will show below that this can be replaced by the
+Fourier-Bessel transform of the radial function  $e^{-R/L_{c}}$.   
+
+Let's look at the Fourier transform $F(\bv{p})$ of a spherically symmetric
+function $f(R)$, choosing the polar axis to be along $\bv{p}$:
+\begin{equation}
+ F(\bv{p}) = 
+   \int_{\mathbb{R}^{3}} \mathrm{d}^{3}\mathbb{R} \, 
+    e^{i \bv{p}\bv{R}} f(R)  
+    = 
+   \int_{0}^{\infty} \int_{0}^{\pi} \int_{0}^{2\pi} 
+    e^{i p R \cos\theta} f(R) R^{2}\, \mathrm{d}R \,\sin\theta \mathrm{d}\theta\,
+    \mathrm{d}\phi 
+\end{equation}
+We will replace $\theta$ according to $x=\cos\theta$, $\mathrm{d}x =
+\sin\theta\mathrm{d}\theta$. 
+\begin{equation}
+\begin{split}
+ F(\bv{p})  & = 
+   2 \pi \int_{0}^{\infty} f(R) R^{2} 
+   \left[ \int_{-1}^{1} e^{ i pRx} \,\mathrm{d}x \right] \mathrm{d}R
+   =  
+   2 \pi \int_{0}^{\infty} f(R) R^{2} 
+   \left[ \frac{ e^{ipR} - e^{-ipR}}{ipR} \right] \mathrm{d}R \\
+   & =  
+   4 \pi \int_{0}^{\infty} f(R)
+   \frac{ \sin(pR)}{pR}\, R^{2} 
+  \mathrm{d}R
+\end{split}
+\end{equation}
+This last expression is the Fourier-Bessel transform of $f(R)$.   
+
+Applying this result to the integral in the definition of the structure factor,
+we have
+\begin{equation}
+S_{\bv{Q}} = 1 +  
+   \frac{4\pi}{a^{3}}
+   \int_{0}^{\infty}  
+   e^{-R/ L_{c} }  
+   \frac{ \sin(pR)}{pR}\, R^{2} 
+  \mathrm{d}R
+\end{equation}
+
+This last integral can be plugged into Mathematica to obtain
+\begin{equation}
+S_{\bv{Q}} - 1 = 
+    \frac{8\pi}{a^{3}} 	\frac{ L_{c}^{3} }
+     { \left[ 1 + (L_{c} |\bv{Q}-\bv{\pi}|)^{2}  \right]^{2} } 
+\end{equation}
+
+We want to obtain the angular dependence of $S_{\bv{Q}}$ when changing the
+input angle of the probe light used for Bragg scattering.  Suppose the vectors
+$\bv{k}_{\text{in}0}$ and $\bv{k}_{\text{out}0}$ satisfy the Bragg condition,
+such that
+\begin{equation}
+ \bv{k}_{\text{in}0} - 
+ \bv{k}_{\text{out}0}   = \bv{\pi} 
+\end{equation} 
+If we rotate the input direction slightly by an angle $\alpha$, then 
+\begin{equation} 
+ \bv{k}_{\text{in}} = 
+ \bv{k}_{\text{in}0}  +  
+ |\bv{k}_{\text{in}0}|\alpha \bv{\hat{n}}_{0}
+\end{equation}
+where $\bv{\hat{n}}_{0}$ is a unit vector perpendicular to
+$\bv{k}_{\text{in}0}$.  We then have that 
+\begin{equation} 
+ p = | \bv{Q} - \bv{\pi} | = 
+ | \bv{k}_{\text{in}} - 
+ \bv{k}_{\text{out}0}  - \bv{\pi}  | =
+ |\bv{k}_{\text{in}0}  +  
+ |\bv{k}_{\text{in}0}|\alpha \bv{\hat{n}}_{0} - 
+ \bv{k}_{\text{out}0}  - \bv{\pi} |  = 
+ |\bv{k}_{\text{in}0}|\alpha  = \frac{2\pi}{\lambda_{B}} \alpha  
+\end{equation}
+where $\lambda_{B}$ is the wavelength of the Bragg probe.
+
+We then have that for a small angular change $\alpha$ in the input Bragg probe
+\begin{equation}
+S(\alpha) - 1 = 
+    8\pi \frac{ (L_{c}/a)^{3} }
+     { \left[ 1 + \left(\frac{2\pi L_{c}}{\lambda_{B}} \alpha \right)^{2}   \right]^{2} } 
+\end{equation}
+or 
+\begin{equation}
+\frac{S(\alpha) - 1}{ S_{\bv{\pi}}} = 
+     \frac{ 1 }
+   { \left[ 1 + \left(\frac{2\pi L_{c}}{\lambda_{B}} \alpha \right)^{2}  
+        \right]^{2} } 
+  \approx \exp\left[ -2 \left( \frac{2\pi}{\lambda_{B}} L_{c} \alpha\right)^{2} \right]
+\end{equation}
+We see  that the $1/e$ radius of the angular profile is given by
+\begin{equation}
+ \alpha_{1/e} = \frac{ \lambda_{B}}{ 2\pi\sqrt{2}} \frac{1}{L_{c}}  
+  =  \frac{ \lambda_{B}/a}{ 2\pi\sqrt{2}} \frac{1}{L_{c}/a}  
+  =   \frac{0.14}{L_{c}/a} 
+\end{equation}
+
+Alternately we can consider a spin-spin correlation function that is shaped
+like a box of length $L_{\text{AFM}}$: 
+\begin{equation}
+ \langle S_{zm}S_{zn} \rangle  =  
+  \begin{cases}  
+   \frac{1}{4} &   \text{if}\ |\bv{R}_{m}-\bv{R}_{n}| \leq L_{\text{AFM}}\\ 
+   0           &   \text{if}\ |\bv{R}_{m}-\bv{R}_{n}| > L_{\text{AFM}}\\ 
+  \end{cases}
+\end{equation}
+
+In this case we find that 
+\begin{equation}
+\begin{split}
+S_{\bv{Q}} & = 1 +  
+   \frac{4\pi}{a^{3}}
+   \int_{0}^{ L_{\text{AFM}}}  
+   \frac{ \sin(pR)}{pR}\, R^{2} 
+  \mathrm{d}R \\
+   & = 1 + 
+   \frac{4\pi}{a^{3}} \left[
+   \frac{ \sin\left( p L_{\text{AFM}}\right ) 
+              - p L_{\text{AFM}} \cos\left( p L_{\text{AFM}} \right) }
+   { p^{3}} \right]
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+  \frac{ S(\alpha) - 1 }{ S_{\bv{\pi}} } & = 
+   \frac{3}{L_{\text{AFM}}^{3}} 
+   \frac{ \sin\left( \frac{2\pi L_{\text{AFM}}}{\lambda_{B}}\alpha\right ) 
+              - \frac{2\pi\alpha}{\lambda_{B}} L_{\text{AFM}} 
+     \cos\left( \frac{ 2\pi L_{\text{AFM}} }{\lambda_{B}} \alpha\right) }
+   { p^{3}} \\ 
+   & 
+  \approx \exp\left[ - \frac{1}{10} \left( \frac{2\pi}{\lambda_{B}} L_{c} \alpha\right)^{2} \right]
+\end{split}
+\end{equation}
+
+In this case the $1/e$ radius of the angular profile is given by 
+\begin{equation}
+ \alpha_{1/e} = \frac{ \lambda_{B}}{ 2\pi} \sqrt{10} \frac{1}{L_{c}}  
+  =  \frac{ \lambda_{B}/a}{ 2\pi} \sqrt{10} \frac{1}{L_{c}/a}  
+  =   \frac{0.634}{L_{c}/a} 
+\end{equation}
+
+
+The $1/e$ radii obtained for an exponentially decaying correlation and for a
+correlation function that looks like a box differ by a factor of 634/140= 4.52
+which is somewhat unexpected. A comparison of
+the two angular functions is shown in Fig.~\ref{fig:salpha-fourier}. 
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{figures_140308/rocking-fourier.png}
+\caption[Angular variation of $S_{\bv{Q}}$]{\small Angular variation of
+$S_{\bv{Q}}$ as a function of $p=\frac{2\pi\lambda_{B}}{\alpha}$  where
+$\alpha$ is a small angular deviation of the input Bragg beam.  The blue line
+is for the box correlation function and the red line is for the exponential
+decay correlation function. }
+\label{fig:salpha-fourier}
+\end{figure}
+
+
+ 
+
+\subsubsection{Angular dependence of $S_{\bv{Q}}$ for a matrix of randomly
+ordered spins}
+
+We have performed simulations of Bragg scattering on  a 3D lattice of randomly
+ordered spins.  The lattice has an AFM ordered core with size $L_{\text{AFM}}$
+at the center  and a randomly ordered shell on the outside.  The total number
+of spins in the lattice is $N$, and the lattice is a cube with side equal to
+$N^{1/3}$.
+
+Below we will plot the results of varying the angle of incidence of the probe Bragg
+beam, by a small amount around the value that satisfy the Bragg condition.   We
+also show the results of varying the observation angle slightly away from the
+angle that satisfies the Bragg condition.   These two variations are referred
+to as input rocking curve and output rocking curve respectively. 
+
+We show plots of the input and output rocking curve, and the $1/e$ radii of the
+angular distributions as a function of the AFM core size.  We do this for
+crystal sizes of $N^{1/3} = 20, 30, 40, 50$, as shown if
+Figs.~\ref{fig:rocking20}-\ref{fig:rocking50}.   
+\begin{figure}
+\centering \includegraphics[width=0.6\textwidth]{figures_140308/Rocking_20.png}
+\caption[Rocking curve for $N^{1/3}$=20]{\small Rocking curve for $N^{1/3}$=20.
+The blue line is the analytical result for the box function correlations and
+the green line is the analytical result for the exponentially decaying
+correlations.  }
+\label{fig:rocking20}
+\end{figure}
+\begin{figure}
+\centering \includegraphics[width=0.6\textwidth]{figures_140308/Rocking_30.png}
+\caption[Rocking curve for $N^{1/3}$=30]{\small Rocking curve for $N^{1/3}$=30.
+The blue line is the analytical result for the box function correlations and
+the green line is the analytical result for the exponentially decaying
+correlations.  }
+\label{fig:rocking30}
+\end{figure}
+\begin{figure}
+\centering \includegraphics[width=0.6\textwidth]{figures_140308/Rocking_40.png}
+\caption[Rocking curve for $N^{1/3}$=40]{\small Rocking curve for $N^{1/3}$=40.
+The blue line is the analytical result for the box function correlations and
+the green line is the analytical result for the exponentially decaying
+correlations.  }
+\label{fig:rocking40}
+\end{figure}
+\begin{figure}[h]
+\centering \includegraphics[width=0.6\textwidth]{figures_140308/Rocking_50.png}
+\caption[Rocking curve for $N^{1/3}$=50]{\small Rocking curve for $N^{1/3}$=50.
+The blue line is the analytical result for the box function correlations and
+the green line is the analytical result for the exponentially decaying
+correlations.  }
+\label{fig:rocking50}
+\end{figure}
+
+\subsubsection{Remarks about angular distribution}
+
+We see that the numerical simulations using a random matrix with an AFM core
+agree well  with the analytical calculation, which involves taking the 3D
+Fourier transform of a box function.  The main approximation done in the
+analytical calculation was the replacement of the sum over particles with the
+integral over all of space.  Taking the integral over all of space neglects
+anything that is happening at the edge of the system.   This is fine for
+correlation functions that have a finite support, such as the box or the
+exponentially decaying function.   If the system had long range order then an
+integral over all of space would diverge. 
+
+It is surprising that the $1/e$ radius of the angular distribution can be so
+different for the two different correlation functions studied.  They differ by
+a factor of 4. 
+
+\newpage
+. 
+\newpage
+
 \subsection{Magneto-association and contributions from doubly occupied sites} 
 
 In our experiment we have the possibility to  magneto-associate (MA) the atoms
@@ -1019,7 +1536,7 @@ where $D$ is the fraction of atoms in doubly occupied sites.
 Denoting the set of atoms in doubly occupied sites as $\mathcal{D}$, we point
 out that 
 \begin{equation}
- \sum_{m \in \mathcal{D} }  e^{ \pm i \bv{Q} \bv{R}_{m}} S_{zm} = 0 
+ \sum_{m \in \mathcal{D} }  e^{ \pm i \bv{Q} \bv{R}_{m}} S_{AM} = 0 
 \end{equation}
 since the contributions cancel out in pairs as $   e^{ \pm i \bv{Q} \bv{R}_{m}}
 ( +1/2 - 1/2 ) = 0 $.  This allows us to remove the $\in \mathcal{S}$
@@ -1516,11 +2033,12 @@ may resulting in cooling of the system.
 
 To incorporate the effects of inhomogeneity in the comparison between QMC and
 our measurements we will divide our sample into five bins, each with equal
-number of particles and then get the values of the filling $n$ and of $U/t$ for
-each of the bins.  QMC calculations of the structure factor can be performed for
-each bin and then averaged before comparing with the experimental results. 
+number of particles and then get the values of the filling $n$ and the Hubbard
+parameters $U$ and $t$ for each of the bins. QMC
+calculations of the structure factor can be performed for each bin and then
+averaged before comparing with the experimental results. 
 
-To calculate the average value of $n$ and $U/t$ in each bin we need knowledge
+To calculate the average value of the parameters in each bin we need knowledge
 of the density profile of our cloud, as well as knowledge of our optical
 lattice potential. The potential can be calculated from the calibrated beam
 waists and power of our optical lattice beams.   
@@ -1544,23 +2062,24 @@ distribution measured using phase-contrast imaging in a 5.5\,$E_{R}$ lattice
 with 3.0\,$E_{R}$ of green compensation.
 \begin{figure}
 \centering 
-\includegraphics[width=0.5\textwidth]{figures_140129/densityInspec_7776.png}
-\caption[In-situ density distribution]{\small 
-In-situ density distribution in a 5.5\,$E_{R}$ lattice with 3\,$E_{R}$ of green
-compensation.  } \label{fig:in-situ-density}
+%\includegraphics[width=0.5\textwidth]{figures_140129/densityInspec_7776.png}
+\includegraphics[width=0.4\textwidth]{figures_140130/densityinspec_380a0_avg.png}
+\caption[In-situ column density distribution]{\small In-situ column density
+distribution in a 5.5\,$E_{R}$ lattice with 3\,$E_{R}$ of green compensation.
+} \label{fig:in-situ-density}
 \end{figure}
-It can be seen that the distribution is not spherically symmetric and that the
-atoms are pushed to the left of the picture.  The $1/e$ sizes are 15.1~$\mu$m
-and 23.8~$\mu$m.  The number of atoms in the cloud is 360,000.  The density at
+It can be seen that the distribution is not spherically symmetric and that it is some irregularities.  The $1/e$ sizes are 14~$\mu$m
+and 23~$\mu$m.  The number of atoms in the cloud is 330,000.  The density at
 the peak is estimated from the number and the cloud sizes to be
-6.53e12~$\mathrm{cm}^{-3}$ which corresponds to 0.98 atoms per site.   The
-image shown was taken at a scattering length of 326~$a_{0}$.
+6.45e12~$\mathrm{cm}^{-3}$ which corresponds to 0.97 atoms per site.   The
+image shown was taken at a scattering length of 380~$a_{0}$.
 
-If we put 360,000 atoms into the model we obtain the results shown in
+If we put 330,000 atoms into the model we obtain the results shown in
 Fig.~\ref{fig:thermo-green} for various values of the green compensation.  
 \begin{figure}
 \centering 
-\includegraphics[width=\textwidth]{figures_140129/GR.png}
+%\includegraphics[width=\textwidth]{figures_140129/GR.png}
+\includegraphics[width=\textwidth]{figures_140130/GR.png}
 \caption[System parameters in the thermodynamic model]{\small 
 System parameters as a function of scattering length for various values of the
 green compensation.  The model used is the high temperature series expansion. }
@@ -1574,167 +2093,267 @@ experiment is 3\,$E_{R}$, but our observations of the peak density and the
 double occupancy as a function of scattering length do not match the model at
 3\,$E_{R}$ compensation.  Our measurement of the double occupancy in the
 5.5\,$E_{R}$ lattice is shown in Fig.~\ref{fig:docc-5.5} and it resembles the
-curve with a compensation of 2.6\,$E_{R}$ in the model (the $x$ axis in both
-plots is in different units but the points shown correspond between the two
-plots).  
+curve with a compensation of 2.7\,$E_{R}$ in the model.  
 \begin{figure}
 \centering 
-\includegraphics[width=0.4\textwidth]{figures_140129/docc_average.png}
+%\includegraphics[width=0.4\textwidth]{figures_140129/docc_average.png}
+\includegraphics[width=0.4\textwidth]{figures_140130/insitu_D.png}
 \caption[Double occupancy]{\small 
 Double occupancy in the 5.5\,$E_{R}$ lattice. }
 \label{fig:docc-5.5} 
 \end{figure} 
- Our measurement of the
-density at 326~$a_{0}$ is more consistent with 	a compensation of 2.8\,$E_{R}$
-in the model.   The discrepancy between our measurements and the model is most
-likely due to calibration errors and our inexact knowledge of the potential,
-however since the temperature used for the model is $T/t = 1.8$ it is possible
-that the discrepancy is also  due to a lower temperature in our system  than
-the one this model can handle.   In what follows we will use 2.7\,$E_{R}$ in
-the model to split the difference between the peak density and double occupancy
-observation and stay somewhat consistent with our observations.  
+ Our measurement of the density as a function of scattering length is shown in
+Fig.~\ref{fig:dens-5.5} along with the measurement of the atom number. 
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{figures_140130/insitu_density.png}
+\caption[Peak density and atom number]{\small Peak density and atom number in
+the 5.5\,$E_{R}$ lattice. The plateau in the density is characteristic of the
+insulating state.  As the scattering length is increased three-body losses
+become important as it is seen in both the atom number losses and decrease in
+the peak density. }
+\label{fig:dens-5.5} 
+\end{figure}
+Both the density and double occupancy measurements are consistent with a
+compensation of 2.7\,$E_{R}$ in the model.   Discrepancies between our
+measurements and the model is most likely due to calibration errors and our
+inexact knowledge of the potential, however since the temperature used for the
+model is $T/t = 1.8$ it is possible that the discrepancy is also  due to a
+lower temperature in our system  than the one this model can handle.   In what
+follows we will use 2.7\,$E_{R}$ in the model to stay  consistent with our
+observations.  
 
 With all the parameters that go into the model in hand, we can go ahead and
 calculate density distributions.  We then split those density distributions
-into bins with an equal number of atoms and calculate the average filling and
-$U/t$ for each bin.   An example of this calculation for a scattering length of
-580~$a_{0}$, which corresponds to $[U/t]_{0}=11.9$ is shown in
-Fig.~\ref{fig:bin-580a0}.  $[U/t]_{0}$ stands for $U/t$ at the center, which is
-the value that we have been using as the $x$ axis in all our structure factor
-plots so far. 
+into bins with an equal number of atoms and calculate the filling $n$, and the
+Hubbard parameters $U$ and $t$ for each bin.   An example of this calculation
+for a scattering length of 580~$a_{0}$, which corresponds to $U/t$ at the
+center equal to 11.9 is shown in Fig.~\ref{fig:bin-580a0}.
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{figures_140129/bin_5p5Er_2p7Gr580a0.png}
-\caption[Binned density distribution]{\small Binned filling and $U/t$ are shown
-in the left column, panels 1 and 4. The average value in each bin is shown in
-green. The cumulative number up to a certain radius is shown in panel 2,  this
-illustrates how all the bins have the same number of atoms.  The radial
-dependence of other relevant parameters are shown in panels 3, 5, and 6. }
+%\includegraphics[width=\textwidth]{figures_140129/bin_5p5Er_2p7Gr580a0.png}
+\includegraphics[width=\textwidth]{figures_140130/111_0580a0.png}
+\caption[Binned density distribution]{\small Binned filling and Hubbard
+parameters are shown in panels 1, 3, 4, and 5. The average value in each bin is
+shown as the shaded red area. The cumulative number up to a certain radius is
+shown in panel 2,  this illustrates how all the bins have the same number of
+atoms.  The lattice depth and band gap as a function of radius are shown in
+panel 6. }
 \label{fig:bin-580a0} 
 \end{figure} 
 
-Below we proceed to tabulate the binned filling and $U/t$ for the values of 
-$[U/t]_{0}$ that correspond to the data that we have taken in the 5.5\,$E_{R}$ lattice
-\vspace{1em}
+In the averaging of the bins to calculate the structure factor we will assume
+that the entire system is isothermal at some temperature $T$,  this corresponds
+to a reduced temperature $T/t$ at the center of the sample.  In a given bin,
+$b$,  the reduced temperature (which will be relevant for the QMC in the bin)
+is given by \[  \frac{T}{t_{b}} = \left( \frac{T}{t} \right) \frac{t}{t_{b}} \]
+where $t$ is the tunneling at the center of the sample and $t_{b}$ is the
+average tunneling in $b^{\mathrm{th}}$ bin.
 
-{\small
+Table~\ref{table:bin580} shows an example of the binning results for a value
+of $U/t = 11.86$ at the center of the sample.
+\begin{table}
+\centering
+\begin{minipage}[b][10em][b]{0.36\textwidth}
+\begin{verbatim}
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.687 Er
+U/t = 11.860 Er
 
-\begin{minipage}[b][10em][b]{0.25\textwidth}
-\begin{verbatim}
---------------------
-[U/t]_0 =  1.636
-bin#      n     U/t
---------------------
-000    1.24    1.43
-001    0.85    1.17
-002    0.50    0.95
-003    0.16    0.68
-004    0.02    0.29
+At bins:
+bin#     nb     t/tb      Ub/tb     
+-------------------------------
+000    0.84     0.91       9.97
+001    0.58     0.79       7.82
+002    0.34     0.70       6.19
+003    0.11     0.57       4.13
+004    0.01     0.38       1.49
 \end{verbatim}
 \end{minipage}
-\begin{minipage}[b][10em][b]{0.25\textwidth}
-\begin{verbatim}
---------------------
-[U/t]_0 =  4.976
-bin#      n     U/t
---------------------
-000    1.04    4.26
-001    0.71    3.41
-002    0.43    2.75
-003    0.14    1.92
-004    0.02    0.78
-\end{verbatim}
-\end{minipage}
-\begin{minipage}[b][10em][b]{0.25\textwidth}
-\begin{verbatim}
---------------------
-[U/t]_0 =  7.771
-bin#      n     U/t
---------------------
-000    0.93    6.56
-001    0.65    5.19
-002    0.39    4.12
-003    0.12    2.78
-004    0.02    1.08
-\end{verbatim}
-\end{minipage}
-\begin{minipage}[b][10em][b]{0.25\textwidth}
-\begin{verbatim}
---------------------
-[U/t]_0 =  9.713
-bin#      n     U/t
---------------------
-000    0.89    8.19
-001    0.63    6.41
-002    0.37    5.01
-003    0.11    3.36
-004    0.01    1.30
-\end{verbatim}
-\end{minipage}
+\caption[Binning for $U/t=11.86$]{Binning for $U/t=11.86$}
+\label{table:bin580} 
+\end{table}
+The table shows first the values of the parameters at the center of the sample,
+and then for each bin the columns show respectively $n_{b}$, $t/t_{b}$, and
+$U_{b}/t_{b}$.   These three values are what is needed to perform the QMC
+calculation in each bin.  
 
-\vspace{1em}
+Below, in Table~\ref{table:binall}, we produce seven tables like
+Table~\ref{table:bin580} for the seven different values of $U/t$ at the center
+that correspond to our structure factor data in the $5.5\,E_{R}$ lattice.  We
+add a column labeled $u$, which corresponds to the ratio of $U_{b}/t_{b}$ to
+$U/t$ at the center.   
+\begin{table}
+\vspace{4em}
+{ \scriptsize
+\begin{minipage}[b][10em][b]{0.33\textwidth}
+\begin{verbatim}
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.095 Er
+U/t = 1.636 Er
 
-\begin{minipage}[b][10em][b]{0.25\textwidth}
-\begin{verbatim}
---------------------
-[U/t]_0 =  11.86
-bin#      n     U/t
---------------------
-000    0.86    9.89
-001    0.61    7.75
-002    0.37    6.12
-003    0.12    4.10
-004    0.01    1.58
+At bins:
+bin#    nb   t/tb   Ub/tb     u     
+-------------------------------
+000   1.18   0.93   1.42   0.87
+001   0.79   0.83   1.17   0.71
+002   0.45   0.74   0.95   0.58
+003   0.14   0.62   0.67   0.41
+004   0.02   0.41   0.27   0.17
 \end{verbatim}
 \end{minipage}
-\begin{minipage}[b][10em][b]{0.25\textwidth}
+\begin{minipage}[b][10em][b]{0.33\textwidth}
 \begin{verbatim}
---------------------
-[U/t]_0 =  13.905
-bin#      n     U/t
---------------------
-000    0.85   11.60
-001    0.59    8.98
-002    0.36    7.07
-003    0.12    4.76
-004    0.01    1.78
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.288 Er
+U/t = 4.976 Er
+
+At bins:
+bin#    nb   t/tb   Ub/tb     u     
+-------------------------------
+000   0.99   0.91   4.25   0.86
+001   0.66   0.81   3.41   0.69
+002   0.39   0.72   2.75   0.55
+003   0.12   0.60   1.90   0.39
+004   0.02   0.40   0.73   0.16
 \end{verbatim}
 \end{minipage}
-\begin{minipage}[b][10em][b]{0.25\textwidth}
+\begin{minipage}[b][10em][b]{0.33\textwidth}
 \begin{verbatim}
---------------------
-[U/t]_0 =  16.359
-bin#      n     U/t
---------------------
-000    0.84   13.66
-001    0.59   10.57
-002    0.36    8.32
-003    0.12    5.60
-004    0.01    2.10
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.450 Er
+U/t = 7.771 Er
+
+At bins:
+bin#    nb   t/tb   Ub/tb     u     
+-------------------------------
+000   0.89   0.91   6.54   0.84
+001   0.61   0.80   5.19   0.67
+002   0.37   0.71   4.17   0.54
+003   0.12   0.59   2.83   0.37
+004   0.01   0.39   1.05   0.14
 \end{verbatim}
 \end{minipage}
 
+\vspace{8em}
+
+\begin{minipage}[b][10em][b]{0.33\textwidth}
+\begin{verbatim}
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.563 Er
+U/t = 9.713 Er
+
+At bins:
+bin#    nb   t/tb   Ub/tb     u     
+-------------------------------
+000   0.85   0.91   8.17   0.84
+001   0.60   0.80   6.48   0.67
+002   0.36   0.71   5.14   0.53
+003   0.11   0.58   3.42   0.36
+004   0.01   0.38   1.27   0.14
+\end{verbatim}
+\end{minipage}
+\begin{minipage}[b][10em][b]{0.33\textwidth}
+\begin{verbatim}
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.687 Er
+U/t = 11.860 Er
+
+At bins:
+bin#    nb   t/tb   Ub/tb     u     
+-------------------------------
+000   0.84   0.91   9.97   0.84
+001   0.58   0.79   7.82   0.66
+002   0.34   0.70   6.19   0.52
+003   0.11   0.57   4.13   0.35
+004   0.01   0.38   1.49   0.13
+\end{verbatim}
+\end{minipage}
+\begin{minipage}[b][10em][b]{0.33\textwidth}
+\begin{verbatim}
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.806 Er
+U/t = 13.905 Er
+
+At bins:
+bin#    nb   t/tb   Ub/tb     u     
+-------------------------------
+000   0.83   0.91  11.69   0.84
+001   0.58   0.79   9.17   0.66
+002   0.35   0.70   7.25   0.52
+003   0.11   0.57   4.84   0.35
+004   0.01   0.38   1.75   0.13
+\end{verbatim}
+\end{minipage}
+
+\vspace{8em}
+
+\begin{minipage}[b][10em][b]{0.33\textwidth}
+\begin{verbatim}
+-------------------------------
+At center:
+  t = 0.058 Er
+  U = 0.948 Er
+U/t = 16.359 Er
+
+At bins:
+bin#    nb   t/tb   Ub/tb     u     
+-------------------------------
+000   0.83   0.91  13.78   0.84
+001   0.57   0.79  10.80   0.66
+002   0.33   0.70   8.43   0.52
+003   0.10   0.57   5.51   0.34
+004   0.01   0.37   1.98   0.13
+\end{verbatim}
+\end{minipage}
 }
+\caption[Binning for various values of $U/t$]{Binning for various values of $U/t$}
+\label{table:binall} 
+\end{table}
 
-To make matters simpler, and since this treatment is only a crude estimation we
-create a single table averaging the seven tables above,  such that we obtain
-values for the filling and percentage of $[U/t]_{0}$ for a general case.   This
-table is what we suggest should be used to estimate the effect of inhomogeneity
-of our sample on the structure factor.   The column labeled $n$ denotes the
-fillings for each of the five bins,  and the last seven columns denote the
-value of $U/t$ in each of the five bins for the seven values of $[U/t]_{0}$
-that we have in our data. 
+We point out that the $n$, $t/t_{b}$ and $u$ columns do not differ much across
+the different values of $U/t$ at the center.   To simplify the matter, and
+since this treatment is only a crude estimation we create a single table,
+Table~\ref{table:binavg}, which averages the binnings for the seven values of
+$U/t$ at the center.   In this way we obtain a binning with which we can
+represent the inhomogeneity of our sample in a general case.  
 
+\begin{table}
+\centering
+\begin{minipage}[b][10em][b]{0.36\textwidth}
 \begin{verbatim}
------------------------------------------------------------------------------------
-bin#      n    %U/t      1.6      5.0      7.8      9.7     11.9     13.9     16.4 
------------------------------------------------------------------------------------
-000    0.95      85      1.4      4.2      6.6      8.2     10.0     11.8     13.8
-001    0.66      67      1.1      3.3      5.2      6.5      7.9      9.3     10.9
-002    0.40      53      0.9      2.6      4.1      5.2      6.3      7.4      8.7
-003    0.13      36      0.6      1.8      2.8      3.5      4.3      5.0      5.9
-004    0.02      14      0.2      0.7      1.1      1.4      1.7      2.0      2.3
+--------------------------------
+bin#      nb     t/tb         u
+--------------------------------
+000    0.92      0.91      0.85
+001    0.63      0.80      0.67
+002    0.37      0.71      0.54
+003    0.12      0.59      0.37
+004    0.01      0.39      0.14
 \end{verbatim}
+\end{minipage}
+\caption[Binning for general case]{Binning for general case.   To estimate the
+trap averaged structure factor at a temperature $T/t\equiv x$ and with an
+interaction given by $U/t\equiv y$,  a QMC calculation will be performed for
+each bin using filling $n_{b}$, temperature $x(t/t_{b})$ and interaction
+strength $yu$.  }
+\label{table:binavg} 
+\end{table}
+
 
 \subsection{Raw data for $S_{\pi}/S_{\theta}$ and $S_{\pi}$ }
 

@@ -1,0 +1,291 @@
+
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
+import numpy as np
+import vec3
+import pylab
+
+
+import braggvectors as bv
+import afm
+
+ 
+N = 50 
+
+import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib import rc
+rc('font',**{'family':'serif'})
+cols = 2
+rows = 2
+figure = plt.figure(figsize=(8.5,7.5))
+figure.text(0.5,0.95,'CAUTION, THESE ARE SIMULATIONS. NOT REAL DATA',fontsize=15,ha='center')
+#figure.suptitle('Bragg')
+gs = matplotlib.gridspec.GridSpec( rows,cols)
+#wspace=0.6, hspace=0.42)
+
+axinp = plt.subplot( gs[ 0,0] )
+axinp.set_title("$\mathrm{Input\ rocking\ curve,}\ N^{1/3}=%d$"%N)
+axinp.set_xlabel('mrad')
+axinp.set_ylabel(r'$\frac{S_{\mathrm{Q}}-1}{ S_{\mathrm{\pi}} - 1 }$', \
+                 rotation=0, labelpad=15, fontsize=20)
+axout = plt.subplot( gs[ 1,0] )
+axout.set_title("$\mathrm{Output\ rocking\ curve,}\ N^{1/3}=%d$"%N)
+axout.set_ylabel(r'$\frac{S_{\mathrm{Q}}-1}{ S_{\mathrm{\pi}} - 1 }$', \
+                 rotation=0, labelpad=15, fontsize=20)
+axout.set_xlabel('mrad')
+
+import fitlibrary
+
+def plotRock(ax, xdat, ydat, yerrdat, norm, labelstr, lc, fc, **kwargs):
+    xdat = np.array(xdat)
+    ydat = np.array(ydat) /norm
+    yerrdat = np.array(yerrdat)/norm
+
+    # We will plot how much above the norm is A2/A1
+    # in units of the norm 
+    ydat = ydat - 1.
+    maxy = ydat.max()
+    ax.errorbar( xdat, ydat/maxy, yerr=yerrdat/maxy, \
+               capsize=0., elinewidth = 1. ,\
+               fmt='.', ecolor=lc, mec=fc, \
+               mew=1., ms=5.,\
+               marker='o', mfc='lightblue', \
+               label=labelstr+', $S_{\mathbf{\pi}}$=%.2g'%(maxy+1))
+
+    Gaus = True 
+    if Gaus: 
+        # Fit data with a Gaussian
+        fitdat = np.transpose( np.vstack( (xdat,ydat/maxy)))
+        sig0 = kwargs.pop('sig0', 100.)
+        p0 = [1.0, 0.1, sig0]
+        fun = fitlibrary.fitdict['GaussianNoOffset'].function
+        pG, errorG = fitlibrary.fit_function( p0,  fitdat, fun)
+        #print "Fitting with Gaussian:"
+        print "...Fitting with sig0=%.2f --> %.2f"%(sig0, pG[2])
+        print 
+        #print pG
+        #print errorG
+        fitX, fitY = fitlibrary.plot_function(pG, \
+                     np.linspace( xdat.min(), xdat.max(),120),fun) 
+        ax.plot(  fitX, fitY, '-', c=lc, lw=1.0)
+
+        erad = True
+        if erad: 
+            # Returns 1/e^2 radius
+            return np.abs(pG[2]), errorG[2]
+        else:
+            return 2.3548*np.abs(pG[2]), 2.3548*errorG[2]
+    else:
+        # Fit data with a Lorentzian
+        fitdat = np.transpose( np.vstack( (xdat,ydat/maxy)))
+        sig0 = kwargs.pop('sig0', 100.)
+        print "...Fitting with sig0=%.2f"%sig0
+        p0 = [1.0, 0.1, sig0]
+        fun = fitlibrary.fitdict['LorentzianNoOffset'].function
+        pL, errorL = fitlibrary.fit_function( p0,  fitdat, fun)
+        print "Fitting with Lorentzian:"
+        print p0
+        print pL
+        #print errorL
+        fitX, fitY = fitlibrary.plot_function(pL, \
+                     np.linspace( xdat.min(), xdat.max(),120),fun) 
+        ax.plot(  fitX, fitY, '-', c=lc, lw=1.0)
+        return np.abs(pL[2]), errorL[2]
+ 
+lc = [ 'black', 'brown', 'red', 'gold', 'limegreen', 'blue', 'purple', 'gray']
+fc = [ 'black', 'brown', 'red', 'gold', 'limegreen', 'blue', 'purple', 'gray']
+nc = len(lc)
+
+#nafms=[2,4,6,7,8,9,10,12,16,20,24,32,34,38]
+#nafms=[8,9,12,16,24,32]
+#20 
+nafms=[6,8,9,12,16,18]
+#30
+nafms=[8,9,12,16,24,28]
+#40
+nafms=[8,9,12,16,24,32]
+#50
+nafms=[9,12,16,24,32, 36]
+rockingW=[]
+for i,nafm in enumerate(nafms):
+    A1 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA1))
+    A2 = afm.crystal(N, nafm, bv.l1064/2, (bv.kin,bv.kA2))
+    alim = 6000
+    Npts = 20 # was 20
+    inangles = np.linspace(-alim/nafm**1.5,alim/nafm**1.5,Npts)
+    outangles = np.linspace(-alim/nafm**1.5,alim/nafm**1.5,Npts)
+   
+    # Ralizations for random spins
+    Nr = 32
+ 
+    if False:
+        print '\nNafm = %d'%nafm
+        print 'Input Rocking' 
+        A1.set_kvectors( bv.kinput(0.), bv.kA1, bv.kipol ) 
+        a1_zero = A1.I_(Nr=Nr, detuning=0., tof=0.) 
+        a1_tof = A1.I_(Nr=Nr, detuning=0., tof=100.) 
+        A1.set_kvectors( bv.kinput(alim), bv.kA1, bv.kipol ) 
+        a1_alim = A1.I_(Nr=Nr, detuning=0., tof=0.) 
+        #
+        A2.set_kvectors( bv.kinput(0.), bv.kA2, bv.kipol ) 
+        a2_zero = A2.I_(Nr=Nr, detuning=0., tof=0.) 
+        a2_tof = A2.I_(Nr=Nr, detuning=0., tof=100.) 
+        A2.set_kvectors( bv.kinput(alim), bv.kA2, bv.kipol ) 
+        a2_alim = A2.I_(Nr=Nr, detuning=0., tof=0.)
+        print '\tA1( 0. mrad)=',a1_zero
+        print '\tA2( 0. mrad)=',a2_zero
+        print '\tA2/A1=',a2_zero/a1_zero
+        print '\tA1( %.1f mrad)='%alim,a1_alim
+        print '\tA2( %.1f mrad)='%alim,a2_alim
+        print '\tA2/A1=',a2_alim/a1_alim
+        print '\tA2/A1 Long tof =',a2_tof/a1_tof
+        print 'Output Rocking' 
+        A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
+        a1_zero = A1.I_(Nr=Nr, detuning=0., tof=0.) 
+        a1_tof = A1.I_(Nr=Nr, detuning=0., tof=100.) 
+        A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
+        a1_alim = A1.I_(Nr=Nr, detuning=0., tof=0.) 
+        #
+        A2.set_kvectors( bv.kin, bv.koutput(0.), bv.kipol ) 
+        a2_zero = A2.I_(Nr=Nr, detuning=0., tof=0.) 
+        a2_tof = A2.I_(Nr=Nr, detuning=0., tof=100.) 
+        A2.set_kvectors( bv.kin, bv.koutput(alim), bv.kipol ) 
+        a2_alim = A2.I_(Nr=Nr, detuning=0., tof=0.)
+        print '\tA1( 0. mrad)=',a1_zero
+        print '\tA2( 0. mrad)=',a2_zero
+        print '\tA2/A1=',a2_zero/a1_zero
+        print '\tA1( %.1f mrad)='%alim,a1_alim
+        print '\tA2( %.1f mrad)='%alim,a2_alim
+        print '\tA2/A1=',a2_alim/a1_alim
+        print '\tA2/A1 Long tof =',a2_tof/a1_tof
+
+    # Long time-of-flight normalization factor
+    A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
+    A2.set_kvectors( bv.kin, bv.kA2, bv.kipol ) 
+    normtof = A2.I_(Nr=Nr, detuning=0., tof=100.) / A1.I_(Nr=Nr, detuning=0., tof=100.)
+    normtof = normtof.nominal_value
+    if i == 0:
+        print "\nA2/A1(t0f=10000us) = ",normtof
+        print
+  
+
+    fname = '_%.2f_%d__%d__%d_%d'%(alim,Npts,Nr,N,nafm)
+    try:
+        inrock = np.loadtxt( 'rockingdat/inrock'+fname)
+        inrockerr = np.loadtxt( 'rockingdat/inrockerr'+fname)
+        print "Loaded input ",fname," successfully."
+    except: 
+        inrock =[]
+        inrockerr = []
+        for angle in inangles:
+            A1.set_kvectors( bv.kinput(angle), bv.kA1, bv.kipol ) 
+            A2.set_kvectors( bv.kinput(angle), bv.kA2, bv.kipol ) 
+            sig =  A2.I_(Nr=Nr, detuning=0., tof=0.) / A1.I_(Nr=Nr, detuning=0., tof=0.)
+            inrock.append( sig.nominal_value) 
+            inrockerr.append( sig.std_dev)
+        np.savetxt( 'rockingdat/inrock'+fname, inrock)
+        np.savetxt( 'rockingdat/inrockerr'+fname, inrockerr)
+
+    inW,inWerr=plotRock(axinp, inangles, inrock, inrockerr, normtof,'$L_{\mathrm{AFM}}$=%02d'%nafm, lc[i%nc], fc[i%nc], sig0=1000./nafm/2.)
+    
+
+    try:
+        outrock = np.loadtxt( 'rockingdat/outrock'+fname)
+        outrockerr = np.loadtxt( 'rockingdat/outrockerr'+fname)
+        print "Loaded output ",fname," successfully."
+    except: 
+        outrock =[]
+        outrockerr =[]
+        for angle in outangles:
+            A1.set_kvectors( bv.kin, bv.kA1, bv.kipol ) 
+            A2.set_kvectors( bv.kin, bv.koutput(angle), bv.kipol ) 
+            sig = A2.I_(Nr=Nr, detuning=0., tof=0.) / A1.I_(Nr=Nr, detuning=0., tof=0.)
+            outrock.append( sig.nominal_value)
+            outrockerr.append( sig.std_dev)
+        np.savetxt( 'rockingdat/outrock'+fname, outrock)
+        np.savetxt( 'rockingdat/outrockerr'+fname, outrockerr)
+
+    outW,outWerr=plotRock(axout, outangles, outrock, outrockerr, normtof,'$L_{\mathrm{AFM}}$=%02d'%nafm, lc[i%nc], fc[i%nc], sig0=1000./nafm/2.)
+
+    rockingW.append( [inW, inWerr, outW, outWerr])
+
+rockingW = np.array(rockingW) 
+
+# Plot the widths as a function of cristal size
+axinpW = plt.subplot( gs[ 0,1] )
+axoutW = plt.subplot( gs[ 1,1] )
+
+print nafm
+print rockingW[:,0]
+print rockingW[:,1]
+
+axinpW.errorbar( nafms, rockingW[:,0], yerr=rockingW[:,1], \
+           capsize=0., elinewidth = 1. ,\
+           fmt='.', ecolor='black', mec='black', \
+           mew=1., ms=5.,\
+           marker='o', mfc='lightblue')
+axoutW.errorbar( nafms, rockingW[:,2], yerr=rockingW[:,3], \
+           capsize=0., elinewidth = 1. ,\
+           fmt='.', ecolor='black', mec='black', \
+           mew=1., ms=5.,\
+           marker='o', mfc='lightblue')
+
+# Plot the widths that you expect from beam diffraction
+# half 1/e^2 angle = lambda / (pi w0) 
+# w0 = nafm/2 * sitespacing = nafm/2 * lambda/2
+# half 1/e^2 angle = 4 / (pi nafm)
+##xdiff = np.linspace(min(nafms),max(nafms), 100)
+##Wdiff = (1/np.sqrt(2.))*1000. *   4. / (np.pi*xdiff)
+##Wdiff = 650./ xdiff
+##axinpW.plot( xdiff, Wdiff, '-b',label=r'$650 / L_{\mathrm{AFM}}$')
+##axoutW.plot( xdiff, Wdiff, '-b',label=r'$650 / L_{\mathrm{AFM}}$')
+
+# Plot the widths that you expect from Fourier transf. of Box
+xFT = np.linspace(min(nafms),max(nafms), 100)
+WFT = 634. / (xFT)
+axinpW.plot( xFT, WFT, '-b',label=r'$634 / L_{\mathrm{AFM}}$')
+axoutW.plot( xFT, WFT, '-b',label=r'$634 / L_{\mathrm{AFM}}$')
+
+# Plot the widths that you expect from Fourier transf. of Lorentzian
+xFT = np.linspace(min(nafms),max(nafms), 100)
+WFT = 142. / (xFT)
+axinpW.plot( xFT, WFT, '-g',label=r'$142 / L_{\mathrm{AFM}}$')
+axoutW.plot( xFT, WFT, '-g',label=r'$142 / L_{\mathrm{AFM}}$')
+
+axinpW.legend(loc='best',numpoints=1,prop={'size':11},handlelength=1.1,handletextpad=0.5)
+axoutW.legend(loc='best',numpoints=1,prop={'size':11},handlelength=1.1,handletextpad=0.5)
+
+axinpW.set_xlabel('Nafm')
+axoutW.set_xlabel('Nafm')
+axinpW.set_ylabel('Rocking curve\n$1/e$ radius (mrad)',ha='center',labelpad=16)
+axoutW.set_ylabel('Rocking curve\n$1/e$ radius (mrad)',ha='center',labelpad=16)
+#axinpW.set_ylabel('Rocking curve\nFWHM (mrad)',ha='center',labelpad=16)
+#axoutW.set_ylabel('Rocking curve\nFWHM (mrad)',ha='center',labelpad=16)
+
+
+allax = [axinp, axout, axinpW, axoutW]
+for ax in allax:
+    ax.grid()
+
+#axinp.set_ylim(0.,10)
+#axout.set_ylim(0.,10)
+
+
+axinp.legend(bbox_to_anchor=(1.0,1.0),loc='upper right',numpoints=1,prop={'size':5}, \
+           handlelength=1.1,handletextpad=0.5)
+axout.legend(bbox_to_anchor=(1.0,1.0),loc='upper right',numpoints=1,prop={'size':5}, \
+           handlelength=1.1,handletextpad=0.5)
+
+gs.tight_layout(figure, rect=[0,0.0,1.0,0.96])
+outfile = 'Rocking_%02d.png'%N
+figure.savefig(outfile, dpi=250)
+        
+
+
+
+
+
+
+

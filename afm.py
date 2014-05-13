@@ -424,7 +424,7 @@ class crystal():
             self.Sums.append( (UpsPhi, kappa, xi) )
         self.SumsDone = True
  
-    def Intensity_random(self, Nr):
+    def Intensity_random(self, Nr, **kwargs):
         iarray=[]
         if not self.SpinsInit:
             self.init_spins(Nr)
@@ -438,7 +438,10 @@ class crystal():
             iarray.append( self.polsum * ( kappa + \
                              self.DW * ( UpsPhi/(2*self.isat) - xi ))  ) 
         iarray=np.array( iarray ) 
-        return ufloat( np.mean( iarray), stats.sem( iarray) )
+        if kwargs.get('return_array', False):
+            return iarray 
+        else:
+            return ufloat( np.mean( iarray), stats.sem( iarray) )
 
     ############# FUNCTIONS TO FACILITATE THE CREATION OF PLOTS
 
@@ -449,10 +452,11 @@ class crystal():
         self.set_timeofflight( tof ) 
         return self.debyewaller()
 
-    def I_tof( self, Nr, tof):
+    def I_tof( self, Nr, tof, **kwargs):
         self.set_timeofflight( tof )
         self.debyewaller() 
-        return  self.Intensity_random( Nr )
+        return  self.Intensity_random( Nr, **kwargs )
+
 
     def I_( self, Nr=10, detuning=0., v0=20., tof=0., pbragg=250.):
         self.set_detuning( detuning )

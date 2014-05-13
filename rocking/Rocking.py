@@ -19,16 +19,22 @@ from matplotlib import rc
 rc('font',**{'family':'serif'})
 cols = 2
 rows = 2
-figure = plt.figure(figsize=(7.5,7.5))
+figure = plt.figure(figsize=(8.5,7.5))
 figure.text(0.5,0.95,'CAUTION, THESE ARE SIMULATIONS. NOT REAL DATA',fontsize=15,ha='center')
 #figure.suptitle('Bragg')
 gs = matplotlib.gridspec.GridSpec( rows,cols)
 #wspace=0.6, hspace=0.42)
 
 axinp = plt.subplot( gs[ 0,0] )
-axinp.set_title("Input rocking curve, N=%d"%N)
+axinp.set_title("$\mathrm{Input\ rocking\ curve,}\ N^{1/3}=%d$"%N)
+axinp.set_xlabel('mrad')
+axinp.set_ylabel(r'$\frac{S_{\mathrm{Q}}-1}{ S_{\mathrm{\pi}} - 1 }$', \
+                 rotation=0, labelpad=15, fontsize=20)
 axout = plt.subplot( gs[ 1,0] )
-axout.set_title("Output rocking curve, N=%d"%N)
+axout.set_title("$\mathrm{Output\ rocking\ curve,}\ N^{1/3}=%d$"%N)
+axout.set_ylabel(r'$\frac{S_{\mathrm{Q}}-1}{ S_{\mathrm{\pi}} - 1 }$', \
+                 rotation=0, labelpad=15, fontsize=20)
+axout.set_xlabel('mrad')
 
 import fitlibrary
 
@@ -146,7 +152,7 @@ for i,nafm in enumerate(nafms):
         np.savetxt( 'rockingdat/inrock'+fname, inrock)
         np.savetxt( 'rockingdat/inrockerr'+fname, inrockerr)
 
-    inW,inWerr=plotRock(axinp, inangles, inrock, inrockerr, normtof,'$N_{\mathrm{AFM}}$=%02d'%nafm, lc[i%nc], fc[i%nc])
+    inW,inWerr=plotRock(axinp, inangles, inrock, inrockerr, normtof,'$L_{\mathrm{AFM}}$=%02d'%nafm, lc[i%nc], fc[i%nc])
     
 
     try:
@@ -165,7 +171,7 @@ for i,nafm in enumerate(nafms):
         np.savetxt( 'rockingdat/outrock'+fname, outrock)
         np.savetxt( 'rockingdat/outrockerr'+fname, outrockerr)
 
-    outW,outWerr=plotRock(axout, outangles, outrock, outrockerr, normtof,'$N_{\mathrm{AFM}}$=%02d'%nafm, lc[i%nc], fc[i%nc])
+    outW,outWerr=plotRock(axout, outangles, outrock, outrockerr, normtof,'$L_{\mathrm{AFM}}$=%02d'%nafm, lc[i%nc], fc[i%nc])
 
     rockingW.append( [inW, inWerr, outW, outWerr])
 
@@ -196,8 +202,8 @@ axoutW.errorbar( nafms, rockingW[:,2], yerr=rockingW[:,3], \
 # half 1/e^2 angle = 4 / (pi nafm)
 xdiff = np.linspace(min(nafms),max(nafms), 100)
 Wdiff = (1/np.sqrt(2.))*1000. *   4. / (np.pi*xdiff)
-axinpW.plot( xdiff, Wdiff, '-b',label=r'$4/(\sqrt{2}\pi N_{\mathrm{AFM}})$')
-axoutW.plot( xdiff, Wdiff, '-b',label=r'$4/(\sqrt{2}\pi N_{\mathrm{AFM}})$')
+axinpW.plot( xdiff, Wdiff, '-b',label=r'$4000/(\pi\sqrt{2} L_{\mathrm{AFM}})$')
+axoutW.plot( xdiff, Wdiff, '-b',label=r'$4000/(\pi\sqrt{2} L_{\mathrm{AFM}})$')
 axinpW.legend(loc='best',numpoints=1,prop={'size':11},handlelength=1.1,handletextpad=0.5)
 axoutW.legend(loc='best',numpoints=1,prop={'size':11},handlelength=1.1,handletextpad=0.5)
 

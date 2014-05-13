@@ -30,7 +30,7 @@ fitdict['Gaussian'] = gaus1d
 #---------------------- GAUSSIAN WITHOUT OFFSET
 # p0 = amplitude
 # p1 = center
-# p2 = 1/e^2 width
+# p2 = 1/e radius
 gaus1d_no_offset = fits( lambda x,p : p[0]*numpy.exp(-((x-p[1])/p[2])**2) )
 #gaus1d_no_offset = fits( lambda x,p0,p1,p2,p3 : p0*numpy.exp(-((x-p1)/p2)**2) )
 gaus1d_no_offset.fitexpr = 'a[0] * exp( - ( (x-a[1]) / a[2] )**2 )'
@@ -95,6 +95,15 @@ lorentz1d = fits( lambda x,p : p[0]*( 1 / ( numpy.pi * p[2] * ( 1 + (( x - p[1] 
 #lorentz1d = fits( lambda x,p0,p1,p2,p3 : p0*( 1 / ( numpy.pi * p2 * ( 1 + (( x - p1 ) / p2)**2 ) ) ) + p3 )
 lorentz1d.fitexpr = ' a[0]*( 1 / ( pi * a[2] * ( 1 + (( x - a[1] ) / a[2])**2 ) ) ) + a[3] )'
 fitdict['Lorentzian'] = lorentz1d
+
+#---------------------- LORENTZIAN NO OFFSET
+# p0 = amplitude
+# p1 = center
+# p2 = FWHM
+lorentz1d_no_offset = fits( lambda x,p : \
+    (p[0]/numpy.pi) *  (p[2]/2.)  / ( (x-p[1])**2. + (p[2]/2.)**2.  ) ) 
+lorentz1d_no_offset.fitexpr = ' (a[0]/pi) * (a[2]/2]) / ( (x-a[1])**2 + (a[2]/2])**2 ) '
+fitdict['LorentzianNoOffset'] = lorentz1d_no_offset
 
 #---------------------- DOUBLE LORENTZIAN
 # p0 = amplitude
