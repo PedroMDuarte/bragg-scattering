@@ -39,7 +39,7 @@ instr = [ 'HHH', '100', '#1', '#5' ]
 kouts = [ bv.kA1, bv.kA2, bv.kMANTA ]
 camstr = ['A1', 'A2', 'MANTA']
 
-v0  = 50. # lattice depth in Er
+v0  = 20. # lattice depth in Er
 tof = 0.  # tof in usec 
 print "\nv0  = %.1f Er"%v0
 print "tof = %.2f us\n"%tof
